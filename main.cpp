@@ -1,5 +1,4 @@
-#include <iostream>
 int main() {
-std::cout << "test\n";
+printf("test\n");
 return 0;
 }
