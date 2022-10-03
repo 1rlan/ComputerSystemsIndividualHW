@@ -1,4 +1,5 @@
+#include <cstdio>
 int main() {
-printf("test\n");
-return 0;
+        printf("test\n");
+        return 0;
 }
