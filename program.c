@@ -12,7 +12,7 @@ void input(int *array, int size, int change, int counter) {
 
 void make_new_array(int* old_array, int *new_array, int size, int change) {
     int index = -1;
-    for (int i = 0; i < change; ++i) {
+    for (int i = 0; i < size; ++i) {
         if (old_array[i] != change) {
             ++index;
             new_array[index] = old_array[i];
@@ -34,10 +34,12 @@ int main() {
     scanf("%d", &n);
     scanf("%d", &change);
     int old_array[n];
+
     input(old_array, n, change, counter);
     int new_array[counter];
+
     make_new_array(old_array, new_array, n, change);
-    output(new_array, n);
+    output(new_array, counter);
 
     return 0;
 }
