@@ -12,7 +12,7 @@
 [clean.s](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%961/clean.s) - код  ```program.c```  c комментариями и оптимизацией
 
 
-#### Флаги 
+### Флаги 
 Дизасемблирование осуществлялось с использованием флагов:
 ```terminal
 gcc -masm=intel \
