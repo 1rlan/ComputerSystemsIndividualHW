@@ -25,5 +25,14 @@
       ],
       "key": "I"
     }
+  ],
+  "obsidian-git:pull": [
+    {
+      "modifiers": [
+        "Ctrl",
+        "Shift"
+      ],
+      "key": "P"
+    }
   ]
 }
