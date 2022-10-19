@@ -133,13 +133,12 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 277.5
   },
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "0101af1292cf8da5",
+  "active": "7585f437c59fada6",
   "lastOpenFiles": [
     "README.md"
   ]
