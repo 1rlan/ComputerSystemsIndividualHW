@@ -6,15 +6,43 @@
       {
         "id": "b180042712d5df43",
         "type": "tabs",
+        "dimension": 63.25214899713467,
         "children": [
           {
-            "id": "7585f437c59fada6",
+            "id": "24144d5d11e80393",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "README.md",
                 "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "c67213aa3700499a",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          }
+        ]
+      },
+      {
+        "id": "e58d4d9a8ee9f03a",
+        "type": "tabs",
+        "dimension": 36.74785100286533,
+        "children": [
+          {
+            "id": "b748540998c21b88",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -69,7 +97,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "59ea1c34a76c6444",
@@ -133,12 +162,13 @@
       }
     ],
     "direction": "horizontal",
-    "width": 277.5
+    "width": 200,
+    "collapsed": true
   },
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "7585f437c59fada6",
+  "active": "24144d5d11e80393",
   "lastOpenFiles": [
     "README.md"
   ]
