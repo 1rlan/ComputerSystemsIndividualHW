@@ -11,15 +11,15 @@ input:
 	endbr64
 	push	rbp
 	mov	rbp, rsp
-	sub	rsp, 48
+	sub	rsp, 32
 	mov	QWORD PTR -24[rbp], rdi
 	mov	DWORD PTR -28[rbp], esi
 	mov	DWORD PTR -32[rbp], edx
-	mov	QWORD PTR -40[rbp], rcx
 	mov	DWORD PTR -4[rbp], 0
+	mov	DWORD PTR -8[rbp], 0
 	jmp	.L2
 .L4:
-	mov	eax, DWORD PTR -4[rbp]
+	mov	eax, DWORD PTR -8[rbp]
 	cdqe
 	lea	rdx, 0[0+rax*4]
 	mov	rax, QWORD PTR -24[rbp]
@@ -29,7 +29,7 @@ input:
 	mov	rdi, rax
 	mov	eax, 0
 	call	__isoc99_scanf@PLT
-	mov	eax, DWORD PTR -4[rbp]
+	mov	eax, DWORD PTR -8[rbp]
 	cdqe
 	lea	rdx, 0[0+rax*4]
 	mov	rax, QWORD PTR -24[rbp]
@@ -37,18 +37,14 @@ input:
 	mov	eax, DWORD PTR [rax]
 	cmp	DWORD PTR -32[rbp], eax
 	je	.L3
-	mov	rax, QWORD PTR -40[rbp]
-	mov	eax, DWORD PTR [rax]
-	lea	edx, 1[rax]
-	mov	rax, QWORD PTR -40[rbp]
-	mov	DWORD PTR [rax], edx
-.L3:
 	add	DWORD PTR -4[rbp], 1
+.L3:
+	add	DWORD PTR -8[rbp], 1
 .L2:
-	mov	eax, DWORD PTR -4[rbp]
+	mov	eax, DWORD PTR -8[rbp]
 	cmp	eax, DWORD PTR -28[rbp]
 	jl	.L4
-	nop
+	mov	eax, DWORD PTR -4[rbp]
 	leave
 	ret
 	.size	input, .-input
@@ -64,8 +60,8 @@ make_new_array:
 	mov	DWORD PTR -40[rbp], ecx
 	mov	DWORD PTR -4[rbp], -1
 	mov	DWORD PTR -8[rbp], 0
-	jmp	.L6
-.L8:
+	jmp	.L7
+.L9:
 	mov	eax, DWORD PTR -8[rbp]
 	cdqe
 	lea	rdx, 0[0+rax*4]
@@ -73,7 +69,7 @@ make_new_array:
 	add	rax, rdx
 	mov	eax, DWORD PTR [rax]
 	cmp	DWORD PTR -40[rbp], eax
-	je	.L7
+	je	.L8
 	mov	eax, DWORD PTR -8[rbp]
 	cdqe
 	lea	rdx, 0[0+rax*4]
@@ -87,12 +83,12 @@ make_new_array:
 	add	rdx, rcx
 	mov	eax, DWORD PTR [rax]
 	mov	DWORD PTR [rdx], eax
-.L7:
+.L8:
 	add	DWORD PTR -8[rbp], 1
-.L6:
+.L7:
 	mov	eax, DWORD PTR -8[rbp]
 	cmp	eax, DWORD PTR -36[rbp]
-	jl	.L8
+	jl	.L9
 	nop
 	nop
 	pop	rbp
@@ -112,8 +108,8 @@ output:
 	mov	QWORD PTR -24[rbp], rdi
 	mov	DWORD PTR -28[rbp], esi
 	mov	DWORD PTR -4[rbp], 0
-	jmp	.L10
-.L11:
+	jmp	.L11
+.L12:
 	mov	eax, DWORD PTR -4[rbp]
 	cdqe
 	lea	rdx, 0[0+rax*4]
@@ -126,12 +122,11 @@ output:
 	mov	eax, 0
 	call	printf@PLT
 	add	DWORD PTR -4[rbp], 1
-.L10:
+.L11:
 	mov	eax, DWORD PTR -4[rbp]
 	cmp	eax, DWORD PTR -28[rbp]
-	jl	.L11
-	mov	edi, 10
-	call	putchar@PLT
+	jl	.L12
+	nop
 	nop
 	leave
 	ret
@@ -150,20 +145,19 @@ main:
 	sub	rsp, 88
 	mov	rax, rsp
 	mov	rbx, rax
-	mov	DWORD PTR -92[rbp], 0
-	lea	rax, -84[rbp]
+	lea	rax, -92[rbp]
 	mov	rsi, rax
 	lea	rax, .LC0[rip]
 	mov	rdi, rax
 	mov	eax, 0
 	call	__isoc99_scanf@PLT
-	lea	rax, -88[rbp]
+	lea	rax, -96[rbp]
 	mov	rsi, rax
 	lea	rax, .LC0[rip]
 	mov	rdi, rax
 	mov	eax, 0
 	call	__isoc99_scanf@PLT
-	mov	eax, DWORD PTR -84[rbp]
+	mov	eax, DWORD PTR -92[rbp]
 	movsx	rdx, eax
 	sub	rdx, 1
 	mov	QWORD PTR -56[rbp], rdx
@@ -186,40 +180,41 @@ main:
 	and	rcx, -4096
 	mov	rdx, rsp
 	sub	rdx, rcx
-.L13:
+.L14:
 	cmp	rsp, rdx
-	je	.L14
+	je	.L15
 	sub	rsp, 4096
 	or	QWORD PTR 4088[rsp], 0
-	jmp	.L13
-.L14:
+	jmp	.L14
+.L15:
 	mov	rdx, rax
 	and	edx, 4095
 	sub	rsp, rdx
 	mov	rdx, rax
 	and	edx, 4095
 	test	rdx, rdx
-	je	.L15
+	je	.L16
 	and	eax, 4095
 	sub	rax, 8
 	add	rax, rsp
 	or	QWORD PTR [rax], 0
-.L15:
+.L16:
 	mov	rax, rsp
 	add	rax, 3
 	shr	rax, 2
 	sal	rax, 2
 	mov	QWORD PTR -64[rbp], rax
-	mov	edx, DWORD PTR -88[rbp]
-	mov	esi, DWORD PTR -84[rbp]
-	lea	rcx, -92[rbp]
+	mov	edx, DWORD PTR -96[rbp]
+	mov	ecx, DWORD PTR -92[rbp]
 	mov	rax, QWORD PTR -64[rbp]
+	mov	esi, ecx
 	mov	rdi, rax
 	call	input
-	mov	eax, DWORD PTR -92[rbp]
+	mov	DWORD PTR -68[rbp], eax
+	mov	eax, DWORD PTR -68[rbp]
 	movsx	rdx, eax
 	sub	rdx, 1
-	mov	QWORD PTR -72[rbp], rdx
+	mov	QWORD PTR -80[rbp], rdx
 	movsx	rdx, eax
 	mov	r14, rdx
 	mov	r15d, 0
@@ -231,46 +226,46 @@ main:
 	mov	eax, 16
 	sub	rax, 1
 	add	rax, rdx
-	mov	edi, 16
+	mov	esi, 16
 	mov	edx, 0
-	div	rdi
+	div	rsi
 	imul	rax, rax, 16
 	mov	rcx, rax
 	and	rcx, -4096
 	mov	rdx, rsp
 	sub	rdx, rcx
-.L16:
+.L17:
 	cmp	rsp, rdx
-	je	.L17
+	je	.L18
 	sub	rsp, 4096
 	or	QWORD PTR 4088[rsp], 0
-	jmp	.L16
-.L17:
+	jmp	.L17
+.L18:
 	mov	rdx, rax
 	and	edx, 4095
 	sub	rsp, rdx
 	mov	rdx, rax
 	and	edx, 4095
 	test	rdx, rdx
-	je	.L18
+	je	.L19
 	and	eax, 4095
 	sub	rax, 8
 	add	rax, rsp
 	or	QWORD PTR [rax], 0
-.L18:
+.L19:
 	mov	rax, rsp
 	add	rax, 3
 	shr	rax, 2
 	sal	rax, 2
-	mov	QWORD PTR -80[rbp], rax
-	mov	ecx, DWORD PTR -88[rbp]
-	mov	edx, DWORD PTR -84[rbp]
-	mov	rsi, QWORD PTR -80[rbp]
+	mov	QWORD PTR -88[rbp], rax
+	mov	ecx, DWORD PTR -96[rbp]
+	mov	edx, DWORD PTR -92[rbp]
+	mov	rsi, QWORD PTR -88[rbp]
 	mov	rax, QWORD PTR -64[rbp]
 	mov	rdi, rax
 	call	make_new_array
-	mov	edx, DWORD PTR -92[rbp]
-	mov	rax, QWORD PTR -80[rbp]
+	mov	edx, DWORD PTR -68[rbp]
+	mov	rax, QWORD PTR -88[rbp]
 	mov	esi, edx
 	mov	rdi, rax
 	call	output
