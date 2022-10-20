@@ -161,22 +161,25 @@ main:
 
 	# lea	rax, -96[rbp]
 	# mov	rsi, rax
-	lea rsi, -96[rbp]
+	lea rsi, -96[rbp]							# rsi = &x
 	# lea	rax, .LC0[rip]
 	# mov	rdi, rax
-	lea rdi, .LC0[rip]
+	lea rdi, .LC0[rip]							# rdi = "%d"
 	# mov	eax, 0
-	call	__isoc99_scanf@PLT
+	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
 	
 	mov	eax, DWORD PTR -92[rbp]
-	movsx	rdx, eax
+	# movsx	rdx, eax
+	mov	rdx, eax
 	sub	rdx, 1
 	mov	QWORD PTR -56[rbp], rdx
-	movsx	rdx, eax
+	# movsx	rdx, eax
+	mov	rdx, eax
 	mov	QWORD PTR -112[rbp], rdx
 	mov	QWORD PTR -104[rbp], 0
-	movsx	rdx, eax
+	# movsx	rdx, eax
+	mov	rdx, eax
 	mov	QWORD PTR -128[rbp], rdx
 	mov	QWORD PTR -120[rbp], 0
 	cdqe
@@ -192,12 +195,14 @@ main:
 	and	rcx, -4096
 	mov	rdx, rsp
 	sub	rdx, rcx
+
 .L14:
 	cmp	rsp, rdx
 	je	.L15
 	sub	rsp, 4096
 	or	QWORD PTR 4088[rsp], 0
 	jmp	.L14
+
 .L15:
 	mov	rdx, rax
 	and	edx, 4095
@@ -210,6 +215,7 @@ main:
 	sub	rax, 8
 	add	rax, rsp
 	or	QWORD PTR [rax], 0
+
 .L16:
 	mov	rax, rsp
 	add	rax, 3
@@ -246,12 +252,14 @@ main:
 	and	rcx, -4096
 	mov	rdx, rsp
 	sub	rdx, rcx
+
 .L17:
 	cmp	rsp, rdx
 	je	.L18
 	sub	rsp, 4096
 	or	QWORD PTR 4088[rsp], 0
 	jmp	.L17
+
 .L18:
 	mov	rdx, rax
 	and	edx, 4095
@@ -264,6 +272,7 @@ main:
 	sub	rax, 8
 	add	rax, rsp
 	or	QWORD PTR [rax], 0
+
 .L19:
 	mov	rax, rsp
 	add	rax, 3
