@@ -1,13 +1,13 @@
-	.intel_syntax noprefix				# Используем синтаксис интел
+	.intel_syntax noprefix				 # Используем синтаксис интел
 
-	.text				  		# Начало секции
+	.text				  				# Начало секции
 
-	.section	.rodata				# Переход в секцию констант
-.LC0:							# Объявление метки .LC0
-	.string	"%d"					# Объвление строки "%d" 
+	.section	.rodata					# Переход в секцию констант
+.LC0:									# Объявление метки .LC0
+	.string	"%d"						# Объвление строки "%d" 
 
 
-	.text						# Переход в секцию с кодом
+	.text								# Переход в секцию с кодом
 input:
 	endbr64
 	push	rbp
@@ -96,9 +96,9 @@ make_new_array:
 	ret
 	.size	make_new_array, .-make_new_array
 
-	.section	.rodata				# Переход в секцию констант
-.LC1:							# Объявление метки .LC1
-	.string "%d "					# Объявление строки "%d " 
+	.section	.rodata					# Переход в секцию констант
+.LC1:									# Объявление метки .LC1
+	.string "%d "						# Объявление строки "%d " 
 	.text
 
 output:
