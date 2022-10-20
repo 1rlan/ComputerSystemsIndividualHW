@@ -164,7 +164,7 @@ main:
 	lea rsi, -96[rbp]
 	# lea	rax, .LC0[rip]
 	# mov	rdi, rax
-	lea rdo, .LC0[rip]
+	lea rdi, .LC0[rip]
 	# mov	eax, 0
 	call	__isoc99_scanf@PLT
 
