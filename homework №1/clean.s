@@ -126,7 +126,8 @@ output:
 	mov	eax, DWORD PTR -4[rbp]
 	cmp	eax, DWORD PTR -28[rbp]
 	jl	.L12
-	nop
+	mov	edi, 10
+	call	putchar@PLT
 	nop
 	leave
 	ret
