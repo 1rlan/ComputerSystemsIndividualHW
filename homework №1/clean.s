@@ -1,11 +1,13 @@
-	.intel_syntax noprefix           
-	.text
-	.section	.rodata
-.LC0:
-	.string	"%d"
-	.text
+	.intel_syntax noprefix						# Использование синтакса Intel       
+	
+	.text										# Переход в секцию с кодом
+	.section	.rodata							# Переход в секцию констант
+.LC0:											# Объявление метки .LC0
+	.string	"%d"								# Объвление строки "%d" 
+
+	.text										# Переход в секцию с кодом
 	.globl	input
-	.type	input, @function
+	# .type	input, @function
 input:
 	endbr64
 	push	rbp
@@ -48,7 +50,7 @@ input:
 	ret
 	.size	input, .-input
 	.globl	make_new_array
-	.type	make_new_array, @function
+	# .type	make_new_array, @function
 make_new_array:
 	endbr64
 	push	rbp
@@ -98,7 +100,7 @@ make_new_array:
 	.string	"%d "
 	.text
 	.globl	output
-	.type	output, @function
+	# .type	output, @function
 output:
 	endbr64
 	push	rbp
@@ -132,7 +134,7 @@ output:
 	ret
 	.size	output, .-output
 	.globl	main
-	.type	main, @function
+	# .type	main, @function
 main:
 	endbr64
 	push	rbp

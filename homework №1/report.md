@@ -40,8 +40,7 @@ gcc -masm=intel \
         .file   "program.c
 ```
 Удалим экспорт символов методов:
-```assembly
-        .globl input               
+```assembly        
         .type  input, @function
 ```
 
