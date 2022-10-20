@@ -164,7 +164,7 @@ main:
 	# mov	eax, 0
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
-
+	# for commit
 	# lea	rax, -96[rbp]
 	# mov	rsi, rax
 	lea rsi, -96[rbp]							# rsi = &x
