@@ -140,7 +140,7 @@ main:
 	# endbr64
 	push	rbp									# Кладем rbp на стек
 	mov	rbp, rsp								# rbp = rsp
-	sub	rsp, 88
+	sub	rsp, 88									# rsp -= 88 (выделяем память)
 	push	r15									
 	push	r14
 	push	r13
@@ -148,12 +148,18 @@ main:
 	push	rbx
 	mov	rax, rsp
 	mov	rbx, rax
-	lea	rax, -92[rbp]
-	mov	rsi, rax
-	lea	rax, .LC0[rip]
-	mov	rdi, rax
+
+	# lea	rax, -92[rbp]
+	# mov	rsi, rax
+	mov rsi, -92[rbp]
+	# lea	rax, .LC0[rip]
+	# mov	rdi, rax
+	mov rdi, .LC0[rip]
+	
 	mov	eax, 0
 	call	__isoc99_scanf@PLT
+
+
 	lea	rax, -96[rbp]
 	mov	rsi, rax
 	lea	rax, .LC0[rip]
