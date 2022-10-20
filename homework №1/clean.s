@@ -150,22 +150,25 @@ main:
 	mov	rbx, rax
 
 	# lea	rax, -92[rbp]
-	# mov	rsi, rax
-	lea rsi, -92[rbp]
+	# mov	rsi, rax	
+	lea rsi, -92[rbp]							# rsi = &size 
 	# lea	rax, .LC0[rip]
 	# mov	rdi, rax
-	lea rdi, .LC0[rip]
+	lea rdi, .LC0[rip]							# rdi = "%d"
+	# mov	eax, 0
+	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
-	mov	eax, 0
+
+	# lea	rax, -96[rbp]
+	# mov	rsi, rax
+	lea rsi, -96[rbp]
+	# lea	rax, .LC0[rip]
+	# mov	rdi, rax
+	lea rdo, .LC0[rip]
+	# mov	eax, 0
 	call	__isoc99_scanf@PLT
 
-
-	lea	rax, -96[rbp]
-	mov	rsi, rax
-	lea	rax, .LC0[rip]
-	mov	rdi, rax
-	mov	eax, 0
-	call	__isoc99_scanf@PLT
+	
 	mov	eax, DWORD PTR -92[rbp]
 	movsx	rdx, eax
 	sub	rdx, 1
