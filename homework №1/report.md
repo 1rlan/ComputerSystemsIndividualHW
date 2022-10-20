@@ -38,10 +38,15 @@ gcc -masm=intel \
 Удалим ненужную информацию об ассемблерном файле :
 ```assembly
         .file   "program.c
-        
-		...
-		
-        .size   main, .-main
+```
+
+```assembly
+		.globl input               # в .LC0 и LC1
+		.type  input, @function
+```
+
+```assembly
+		.size   main, .-main
         .ident  "GCC: (Ubuntu 11.2.0-19ubuntu1) 11.2.0"
         .section        .note.GNU-stack,"",@**progbits**
         .section        .note.gnu.property,"a"
