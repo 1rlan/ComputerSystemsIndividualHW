@@ -185,7 +185,7 @@ main:
 	movsx	rdx, eax
 
 	mov	QWORD PTR -112[rbp], rdx
-	mov	QWORD PTR -104[rbp], 0
+	mov	QWORD PTR -104[rbp], 0 
 	movsx	rdx, eax
 
 	mov	QWORD PTR -128[rbp], rdx
