@@ -22,35 +22,32 @@ input:
 
 	mov	DWORD PTR -4[rbp], 0					# valid_size = 0
 	mov	DWORD PTR -8[rbp], 0					# i = 0	
-	jmp	.L2
+	jmp	.L2										# goto .L2
 
 .L4:
-
-	# scanf
 	mov	eax, DWORD PTR -8[rbp]					# eax = i
 	lea	rdx, 0[0+rax*4]							# rdx = rax * 4
 
 	mov	rax, QWORD PTR -24[rbp]					# rax = *old_array
 	add	rax, rdx								# rax += rdx       
 	mov	rsi, rax								# rsi = &rax
-	
+
 	lea	rdi, .LC0[rip]							# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
-	
 	
 	mov	eax, DWORD PTR -8[rbp]					# eax = i
 	lea	rdx, 0[0+rax*4]							# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]					# rax = *old_array
 	add	rax, rdx								# rax += rdx
 	mov	eax, DWORD PTR [rax]					# eax = array[rax]
-	cmp	DWORD PTR -32[rbp], eax		
-	je	.L3
-	add	DWORD PTR -4[rbp], 1
+	cmp	DWORD PTR -32[rbp], eax					# compare(x, eax)
+	je	.L3										# if (x == eax) goto .L3
+	add	DWORD PTR -4[rbp], 1					# ++valid_size
 
 
 
 .L3:
-	add	DWORD PTR -8[rbp], 1
+	add	DWORD PTR -8[rbp], 1					# ++i
 
 
 
@@ -58,8 +55,8 @@ input:
 	mov	eax, DWORD PTR -8[rbp]					# eax = i
 	cmp	eax, DWORD PTR -28[rbp]					# compare (eax, size)
 	jl	.L4										# if (i < 4) goto .L4
-	mov	eax, DWORD PTR -4[rbp]
-	leave
+	mov	eax, DWORD PTR -4[rbp]					# eax = valid_size			
+	leave										# return eax
 	ret
 	.size	input, .-input
 
