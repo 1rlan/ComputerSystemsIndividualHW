@@ -174,8 +174,7 @@ main:
 	# mov	eax, 0
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
-	
-	# mov	eax, DWORD PTR -92[rbp]					# eax = size
+	# mov	eax, DWORD PTR -92[rbp]				# eax = size
 	# movsx	rdx, eax							# rdx = (int)eax
 
 	movsx rdx, DWORD PTR -92[rbp]	
