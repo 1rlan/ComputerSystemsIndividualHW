@@ -1,13 +1,12 @@
-	.intel_syntax noprefix				 # Используем синтаксис интел
-
-	.text				  				# Начало секции
-
-	.section	.rodata					# Переход в секцию констант
-.LC0:									# Объявление метки .LC0
-	.string	"%d"						# Объвление строки "%d" 
-
-
-	.text								# Переход в секцию с кодом
+	.file	"program.c"
+	.intel_syntax noprefix
+	.text
+	.section	.rodata
+.LC0:
+	.string	"%d"
+	.text
+	.globl	input
+	.type	input, @function
 input:
 	endbr64
 	push	rbp
@@ -49,6 +48,8 @@ input:
 	leave
 	ret
 	.size	input, .-input
+	.globl	make_new_array
+	.type	make_new_array, @function
 make_new_array:
 	endbr64
 	push	rbp
@@ -93,12 +94,12 @@ make_new_array:
 	pop	rbp
 	ret
 	.size	make_new_array, .-make_new_array
-
-	.section	.rodata					# Переход в секцию констант
-.LC1:									# Объявление метки .LC1
-	.string "%d "						# Объявление строки "%d " 
+	.section	.rodata
+.LC1:
+	.string	"%d "
 	.text
-
+	.globl	output
+	.type	output, @function
 output:
 	endbr64
 	push	rbp
@@ -131,8 +132,9 @@ output:
 	leave
 	ret
 	.size	output, .-output
-
-main:							# 
+	.globl	main
+	.type	main, @function
+main:
 	endbr64
 	push	rbp
 	mov	rbp, rsp
@@ -278,3 +280,22 @@ main:							#
 	pop	r15
 	pop	rbp
 	ret
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 11.2.0-19ubuntu1) 11.2.0"
+	.section	.note.GNU-stack,"",@progbits
+	.section	.note.gnu.property,"a"
+	.align 8
+	.long	1f - 0f
+	.long	4f - 1f
+	.long	5
+0:
+	.string	"GNU"
+1:
+	.align 8
+	.long	0xc0000002
+	.long	3f - 2f
+2:
+	.long	0x3
+3:
+	.align 8
+4:
