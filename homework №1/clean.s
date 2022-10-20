@@ -32,7 +32,7 @@ input:
 
 	mov	rax, QWORD PTR -24[rbp]					# rax = *old_array
 	add	rax, rdx								# rax += rdx       
-	mov	rsi, rax								# rsi = rax
+	mov	rsi, rax								# rsi = &rax
 	
 	lea	rdi, .LC0[rip]							# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
@@ -40,13 +40,10 @@ input:
 	
 	mov	eax, DWORD PTR -8[rbp]					# eax = i
 	lea	rdx, 0[0+rax*4]							# rdx = rax * 4
-	mov	rax, QWORD PTR -24[rbp]					# rax = old_array
+	mov	rax, QWORD PTR -24[rbp]					# rax = *old_array
 	add	rax, rdx								# rax += rdx
-	mov	eax, DWORD PTR [rax]					# eax =
+	mov	eax, DWORD PTR [rax]					# eax = array[rax]
 	cmp	DWORD PTR -32[rbp], eax		
-
-		
-
 	je	.L3
 	add	DWORD PTR -4[rbp], 1
 
