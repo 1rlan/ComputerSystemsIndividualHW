@@ -60,15 +60,17 @@ input:
 	# .type	make_new_array, @function
 make_new_array:
 	# endbr64
-	push	rbp
-	mov	rbp, rsp
-	mov	QWORD PTR -24[rbp], rdi
+	push	rbp									# Кладем rbp на стек
+	mov	rbp, rsp								# rbp = rsp
+	mov	QWORD PTR -24[rbp], rdi					
 	mov	QWORD PTR -32[rbp], rsi
 	mov	DWORD PTR -36[rbp], edx
 	mov	DWORD PTR -40[rbp], ecx
-	mov	DWORD PTR -4[rbp], -1
-	mov	DWORD PTR -8[rbp], 0
+	mov	DWORD PTR -4[rbp], -1					# index = -1
+	mov	DWORD PTR -8[rbp], 0					# i = 0
 	jmp	.L7
+
+
 .L9:
 	mov	eax, DWORD PTR -8[rbp]
 	cdqe
@@ -180,8 +182,7 @@ main:
 	movsx rdx, DWORD PTR -92[rbp]	
 
 	sub	rdx, 1									# rdx += 1
-	mov	QWORD PTR -56[rbp], rdx					# rbp[-24] = rdx — сохраняем `FILE* input` на стек
-	movsx	rdx, eax
+	mov	QWORD PTR -56[rbp], rdx					# rbp[-56] = rdx
 
 	mov	QWORD PTR -112[rbp], rdx
 	mov	QWORD PTR -104[rbp], 0 
@@ -235,7 +236,7 @@ main:
 
 
 	mov	edx, DWORD PTR -96[rbp]
-	mov	ecx, DWORD PTR -92[rbp]
+	mov	ecx, DWORD PTR -92[rbp]				
 	mov	rax, QWORD PTR -64[rbp]
 	mov	esi, ecx
 	mov	rdi, rax
@@ -291,17 +292,21 @@ main:
 	shr	rax, 2
 	sal	rax, 2
 	mov	QWORD PTR -88[rbp], rax
-	mov	ecx, DWORD PTR -96[rbp]
-	mov	edx, DWORD PTR -92[rbp]
-	mov	rsi, QWORD PTR -88[rbp]
-	mov	rax, QWORD PTR -64[rbp]
-	mov	rdi, rax
-	call	make_new_array
-	mov	edx, DWORD PTR -68[rbp]
-	mov	rax, QWORD PTR -88[rbp]
+	mov	ecx, DWORD PTR -96[rbp]					# ecx = x	
+	mov	edx, DWORD PTR -92[rbp]					# edx = size
+	mov	rsi, QWORD PTR -88[rbp]					# rsi = *(new_array)
+	mov	rdi, QWORD PTR -64[rbp]					# rdi = *(old_array) 
+
+	call	make_new_array					
+
+
+	mov	edx, DWORD PTR -68[rbp]					# edx = valid_size
+	mov	rax, QWORD PTR -88[rbp]					# rax = *(new_array)
 	mov	esi, edx
 	mov	rdi, rax
 	call	output
+
+
 	mov	eax, 0
 	mov	rsp, rbx
 	lea	rsp, -40[rbp]
