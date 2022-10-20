@@ -28,7 +28,8 @@ void make_new_array(int* old_array, int *new_array, int size, int x) {
 void output(int *array, int size) {
     for (int i = 0; i < size; i++) {
         printf("%d ", array[i]);
-    }
+   }
+   printf("\n");
 }
 
 int main() {
