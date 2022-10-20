@@ -24,13 +24,17 @@ input:
 	mov	eax, DWORD PTR -8[rbp]
 	cdqe
 	lea	rdx, 0[0+rax*4]
+
 	mov	rax, QWORD PTR -24[rbp]
 	add	rax, rdx
 	mov	rsi, rax
-	lea	rax, .LC0[rip]
-	mov	rdi, rax
-	mov	eax, 0
+	
+	lea	rdi, .LC0[rip]							# rdi = "%d"
+	# mov	rdi, rax
+	# mov	eax, 0
 	call	__isoc99_scanf@PLT
+	
+	
 	mov	eax, DWORD PTR -8[rbp]
 	cdqe
 	lea	rdx, 0[0+rax*4]
@@ -50,6 +54,8 @@ input:
 	leave
 	ret
 	.size	input, .-input
+
+
 	.globl	make_new_array
 	# .type	make_new_array, @function
 make_new_array:
@@ -169,20 +175,24 @@ main:
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
 	
-	mov	eax, DWORD PTR -92[rbp]
-	# movsx	rdx, eax
-	mov	rdx, eax
-	sub	rdx, 1
-	mov	QWORD PTR -56[rbp], rdx
-	# movsx	rdx, eax
-	mov	rdx, eax
+	# mov	eax, DWORD PTR -92[rbp]					# eax = size
+	# movsx	rdx, eax							# rdx = (int)eax
+
+	movsx rdx, DWORD PTR -92[rbp]	
+
+	sub	rdx, 1									# rdx += 1
+	mov	QWORD PTR -56[rbp], rdx					# rbp[-24] = rdx — сохраняем `FILE* input` на стек
+	movsx	rdx, eax
+
 	mov	QWORD PTR -112[rbp], rdx
 	mov	QWORD PTR -104[rbp], 0
-	# movsx	rdx, eax
-	mov	rdx, eax
+	movsx	rdx, eax
+
 	mov	QWORD PTR -128[rbp], rdx
 	mov	QWORD PTR -120[rbp], 0
 	cdqe
+
+
 	lea	rdx, 0[0+rax*4]
 	mov	eax, 16
 	sub	rax, 1
@@ -222,6 +232,9 @@ main:
 	shr	rax, 2
 	sal	rax, 2
 	mov	QWORD PTR -64[rbp], rax
+
+
+
 	mov	edx, DWORD PTR -96[rbp]
 	mov	ecx, DWORD PTR -92[rbp]
 	mov	rax, QWORD PTR -64[rbp]
