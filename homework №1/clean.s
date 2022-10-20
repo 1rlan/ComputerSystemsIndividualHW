@@ -151,11 +151,11 @@ main:
 
 	# lea	rax, -92[rbp]
 	# mov	rsi, rax
-	mov rsi, -92[rbp]
+	lea rsi, -92[rbp]
 	# lea	rax, .LC0[rip]
 	# mov	rdi, rax
-	mov rdi, .LC0[rip]
-	
+	lea rdi, .LC0[rip]
+
 	mov	eax, 0
 	call	__isoc99_scanf@PLT
 
