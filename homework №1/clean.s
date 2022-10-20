@@ -49,8 +49,6 @@ input:
 	leave
 	ret
 	.size	input, .-input
-	.globl	make_new_array
-	.type	make_new_array, @function
 make_new_array:
 	endbr64
 	push	rbp
@@ -133,8 +131,6 @@ output:
 	leave
 	ret
 	.size	output, .-output
-	.globl	main
-	.type	main, @function
 
 main:							# 
 	endbr64
