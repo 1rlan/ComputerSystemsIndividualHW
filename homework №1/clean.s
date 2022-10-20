@@ -1,12 +1,13 @@
-	.file	"program.c"
-	.intel_syntax noprefix
-	.text
-	.section	.rodata
-.LC0:
-	.string	"%d"
-	.text
-	.globl	input
-	.type	input, @function
+	.intel_syntax noprefix				# Используем синтаксис интел
+
+	.text				  		# Начало секции
+
+	.section	.rodata				# Переход в секцию констант
+.LC0:							# Объявление метки .LC0
+	.string	"%d"					# Объвление строки "%d" 
+
+
+	.text						# Переход в секцию с кодом
 input:
 	endbr64
 	push	rbp
@@ -94,12 +95,12 @@ make_new_array:
 	pop	rbp
 	ret
 	.size	make_new_array, .-make_new_array
-	.section	.rodata
-.LC1:
-	.string	"%d "
+
+	.section	.rodata				# Переход в секцию констант
+.LC1:							# Объявление метки .LC1
+	.string "%d "					# Объявление строки "%d " 
 	.text
-	.globl	output
-	.type	output, @function
+
 output:
 	endbr64
 	push	rbp
@@ -134,7 +135,8 @@ output:
 	.size	output, .-output
 	.globl	main
 	.type	main, @function
-main:
+
+main:							# 
 	endbr64
 	push	rbp
 	mov	rbp, rsp
