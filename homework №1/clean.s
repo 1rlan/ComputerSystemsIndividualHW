@@ -9,7 +9,7 @@
 	.globl	input
 	# .type	input, @function
 input:
-	endbr64
+	# endbr64
 	push	rbp
 	mov	rbp, rsp
 	sub	rsp, 32
@@ -52,7 +52,7 @@ input:
 	.globl	make_new_array
 	# .type	make_new_array, @function
 make_new_array:
-	endbr64
+	# endbr64
 	push	rbp
 	mov	rbp, rsp
 	mov	QWORD PTR -24[rbp], rdi
@@ -102,7 +102,7 @@ make_new_array:
 	.globl	output
 	# .type	output, @function
 output:
-	endbr64
+	# endbr64
 	push	rbp
 	mov	rbp, rsp
 	sub	rsp, 32
@@ -136,7 +136,7 @@ output:
 	.globl	main
 	# .type	main, @function
 main:
-	endbr64
+	# endbr64
 	push	rbp
 	mov	rbp, rsp
 	push	r15
