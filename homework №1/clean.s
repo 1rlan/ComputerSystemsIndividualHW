@@ -291,25 +291,23 @@ main:
 	add	rax, 3
 	shr	rax, 2
 	sal	rax, 2
+
 	mov	QWORD PTR -88[rbp], rax
 	mov	ecx, DWORD PTR -96[rbp]					# ecx = x	
 	mov	edx, DWORD PTR -92[rbp]					# edx = size
 	mov	rsi, QWORD PTR -88[rbp]					# rsi = *(new_array)
 	mov	rdi, QWORD PTR -64[rbp]					# rdi = *(old_array) 
-
 	call	make_new_array					
 
 
-	mov	edx, DWORD PTR -68[rbp]					# edx = valid_size
-	mov	rax, QWORD PTR -88[rbp]					# rax = *(new_array)
-	mov	esi, edx
-	mov	rdi, rax
+	mov	esi, DWORD PTR -68[rbp]					# edx = valid_size
+	mov	rdi, QWORD PTR -88[rbp]					# rax = *(new_array)
 	call	output
 
 
-	mov	eax, 0
 	mov	rsp, rbx
 	lea	rsp, -40[rbp]
+	
 	pop	rbx
 	pop	r12
 	pop	r13
