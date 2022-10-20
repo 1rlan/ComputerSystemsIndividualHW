@@ -53,15 +53,6 @@ gcc -masm=intel \
         endbr64
 ```
 
-Удалим экспорт символов методов:
-```assembly        
-        .type input, @function
-        .type  input, @function
-        .type make_new_array, @function
-        .type output, @function
-        .type main, @function
-```
-
 ```assembly
         .size   main, .-main
         .ident  "GCC: (Ubuntu 11.2.0-19ubuntu1) 11.2.0"

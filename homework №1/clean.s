@@ -10,15 +10,16 @@
 	# .type	input, @function
 input:
 	# endbr64
-	push	rbp
-	mov	rbp, rsp
-	sub	rsp, 32
-	mov	QWORD PTR -24[rbp], rdi
+	push	rbp									# 
+	mov	rbp, rsp								# 
+	sub	rsp, 32									# 
+	mov	QWORD PTR -24[rbp], rdi					
 	mov	DWORD PTR -28[rbp], esi
 	mov	DWORD PTR -32[rbp], edx
 	mov	DWORD PTR -4[rbp], 0
 	mov	DWORD PTR -8[rbp], 0
 	jmp	.L2
+
 .L4:
 	mov	eax, DWORD PTR -8[rbp]
 	cdqe
@@ -137,14 +138,14 @@ output:
 	# .type	main, @function
 main:
 	# endbr64
-	push	rbp
-	mov	rbp, rsp
-	push	r15
+	push	rbp									# Кладем rbp на стек
+	mov	rbp, rsp								# rbp = rsp
+	sub	rsp, 88
+	push	r15									
 	push	r14
 	push	r13
 	push	r12
 	push	rbx
-	sub	rsp, 88
 	mov	rax, rsp
 	mov	rbx, rax
 	lea	rax, -92[rbp]
