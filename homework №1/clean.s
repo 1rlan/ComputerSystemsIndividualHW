@@ -9,32 +9,31 @@
 	.globl	input
 	# .type	input, @function
 
-input:
-	# endbr64
-	push	rbp									# 
-	mov	rbp, rsp								# 
-	sub	rsp, 32									# 
-	mov	QWORD PTR -24[rbp], rdi					
-	mov	DWORD PTR -28[rbp], esi					# !!!
-	mov	DWORD PTR -32[rbp], edx
 
-	mov	DWORD PTR -4[rbp], 0					# valid size = 0
+input:
+
+	push	rbp									# Кладем rbp на стек
+	mov	rbp, rsp								# rbp = rsp
+	sub	rsp, 32									# rsp -= 32 (выделяем память) 
+
+	mov	QWORD PTR -24[rbp], rdi					# [-24] = *old_array
+	mov	DWORD PTR -28[rbp], esi					# [-28] = 
+	mov	DWORD PTR -32[rbp], edx					# [-32] = size
+
+	mov	DWORD PTR -4[rbp], 0					# valid_size = 0
 	mov	DWORD PTR -8[rbp], 0					# i = 0	
 	jmp	.L2
 
 .L4:
 	mov	eax, DWORD PTR -8[rbp]					# eax = i
-	# cdqe
-	lea	rdx, 0[0+rax*4]
-
-	mov	rax, QWORD PTR -24[rbp]
+	lea	rdx, 0[0+rax*4]							# rdx = rax * 4
+	mov	rax, QWORD PTR -24[rbp]					# rax = 		
 	add	rax, rdx
 	mov	rsi, rax
 	
 	lea	rdi, .LC0[rip]							# rdi = "%d"
-	# mov	rdi, rax
-	# mov	eax, 0
-	call	__isoc99_scanf@PLT
+
+	call	__isoc99_scanf@PLT					
 	
 	
 	mov	eax, DWORD PTR -8[rbp]
@@ -233,12 +232,13 @@ main:
 
 
 
-	mov	edx, DWORD PTR -96[rbp]
-	mov	ecx, DWORD PTR -92[rbp]				
-	mov	rax, QWORD PTR -64[rbp]
-	mov	esi, ecx
-	mov	rdi, rax
+	mov	edx, DWORD PTR -96[rbp]					# edx = x
+	mov	esi, DWORD PTR -92[rbp]					# ecx = size 								
+	mov	rdi, QWORD PTR -64[rbp]					# rdi = *(old_array)  
 	call	input
+
+
+
 	mov	DWORD PTR -68[rbp], eax
 	mov	eax, DWORD PTR -68[rbp]
 	movsx	rdx, eax
