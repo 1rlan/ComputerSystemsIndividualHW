@@ -8,21 +8,23 @@
 	.text										# Переход в секцию с кодом
 	.globl	input
 	# .type	input, @function
+
 input:
 	# endbr64
 	push	rbp									# 
 	mov	rbp, rsp								# 
 	sub	rsp, 32									# 
 	mov	QWORD PTR -24[rbp], rdi					
-	mov	DWORD PTR -28[rbp], esi
+	mov	DWORD PTR -28[rbp], esi					# !!!
 	mov	DWORD PTR -32[rbp], edx
-	mov	DWORD PTR -4[rbp], 0
-	mov	DWORD PTR -8[rbp], 0
+
+	mov	DWORD PTR -4[rbp], 0					# valid size = 0
+	mov	DWORD PTR -8[rbp], 0					# i = 0	
 	jmp	.L2
 
 .L4:
-	mov	eax, DWORD PTR -8[rbp]
-	cdqe
+	mov	eax, DWORD PTR -8[rbp]					# eax = i
+	# cdqe
 	lea	rdx, 0[0+rax*4]
 
 	mov	rax, QWORD PTR -24[rbp]
@@ -44,12 +46,18 @@ input:
 	cmp	DWORD PTR -32[rbp], eax
 	je	.L3
 	add	DWORD PTR -4[rbp], 1
+
+
+
 .L3:
 	add	DWORD PTR -8[rbp], 1
+
+
+
 .L2:
-	mov	eax, DWORD PTR -8[rbp]
-	cmp	eax, DWORD PTR -28[rbp]
-	jl	.L4
+	mov	eax, DWORD PTR -8[rbp]					# eax = i
+	cmp	eax, DWORD PTR -28[rbp]					# compare (eax, size)
+	jl	.L4										# if (i < 4) goto .L4
 	mov	eax, DWORD PTR -4[rbp]
 	leave
 	ret
@@ -62,10 +70,10 @@ make_new_array:
 	# endbr64
 	push	rbp									# Кладем rbp на стек
 	mov	rbp, rsp								# rbp = rsp
-	mov	QWORD PTR -24[rbp], rdi					
+	mov	QWORD PTR -24[rbp], rdi						
 	mov	QWORD PTR -32[rbp], rsi
 	mov	DWORD PTR -36[rbp], edx
-	mov	DWORD PTR -40[rbp], ecx
+	mov	DWORD PTR -40[rbp], ecx					
 	mov	DWORD PTR -4[rbp], -1					# index = -1
 	mov	DWORD PTR -8[rbp], 0					# i = 0
 	jmp	.L7
@@ -157,29 +165,19 @@ main:
 	mov	rax, rsp
 	mov	rbx, rax
 
-	# lea	rax, -92[rbp]
-	# mov	rsi, rax	
+	
 	lea rsi, -92[rbp]							# rsi = &size 
-	# lea	rax, .LC0[rip]
-	# mov	rdi, rax
 	lea rdi, .LC0[rip]							# rdi = "%d"
-	# mov	eax, 0
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
-	# for commit
-	# lea	rax, -96[rbp]
-	# mov	rsi, rax
+
 	lea rsi, -96[rbp]							# rsi = &x
-	# lea	rax, .LC0[rip]
-	# mov	rdi, rax
 	lea rdi, .LC0[rip]							# rdi = "%d"
-	# mov	eax, 0
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
-	# mov	eax, DWORD PTR -92[rbp]				 eax = size
-	# movsx	rdx, eax							 rdx = (int)eax
 
 	movsx rdx, DWORD PTR -92[rbp]	
+
 
 	sub	rdx, 1									# rdx += 1
 	mov	QWORD PTR -56[rbp], rdx					# rbp[-56] = rdx
@@ -292,7 +290,8 @@ main:
 	shr	rax, 2
 	sal	rax, 2
 
-	mov	QWORD PTR -88[rbp], rax
+	mov	QWORD PTR -88[rbp], rax					
+
 	mov	ecx, DWORD PTR -96[rbp]					# ecx = x	
 	mov	edx, DWORD PTR -92[rbp]					# edx = size
 	mov	rsi, QWORD PTR -88[rbp]					# rsi = *(new_array)
@@ -307,7 +306,7 @@ main:
 
 	mov	rsp, rbx
 	lea	rsp, -40[rbp]
-	
+
 	pop	rbx
 	pop	r12
 	pop	r13

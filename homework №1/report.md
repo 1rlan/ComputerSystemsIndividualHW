@@ -51,6 +51,7 @@ gcc -masm=intel \
 Уберем строки
 ```
         endbr64
+        cdqe
 ```
 
 ```assembly
