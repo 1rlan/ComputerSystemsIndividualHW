@@ -1,4 +1,4 @@
-	.intel_syntax noprefix						# Использование синтакса Intel       
+	.intel_syntax noprefix						 # Использование синтакса Intel       
 	
 	.text										
 	.section	.rodata							# Переход в секцию констант
@@ -105,9 +105,9 @@ make_new_array:
 	.size	make_new_array, .-make_new_array
 
 
-	.section	.rodata
+	.section	.rodata							# Переход в секцию констант
 .LC1:
-	.string	"%d "
+	.string	"%d "								# Объвление строки "%d " 
 
 
 	.text
