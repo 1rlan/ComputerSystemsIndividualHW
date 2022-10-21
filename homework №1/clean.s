@@ -148,6 +148,7 @@ main:
 	push	rbp							# Кладем rbp на стек
 	mov	rbp, rsp						# rbp = rsp
 	sub	rsp, 88							# rsp -= 88 (выделяем память)
+
 	
 	lea rsi, -92[rbp]						# rsi = &size фч
 	lea rdi, .LC0[rip]						# rdi = "%d"
@@ -192,7 +193,4 @@ main:
 	mov rdi, QWORD PTR -88[rbp]					# rdi = new_array
 	call free@PLT							# освобождаем память под new_array
 
- 	mov	rsp, rbx
- 	lea	rsp, -40[rbp]
-	 
 	ret								
