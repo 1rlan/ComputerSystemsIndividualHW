@@ -149,11 +149,17 @@ main:
 	mov	rbp, rsp						# rbp = rsp
 	sub	rsp, 88							# rsp -= 88 (выделяем память)
 
+	push	r15									
+	push	r14
+	push	r13
+	push	r12
+	push	rbx
+
 	mov	rax, rsp
 	mov	rbx, rax
 
 	
-	lea rsi, -92[rbp]						# rsi = &size фч
+	lea rsi, -92[rbp]						# rsi = &size 
 	lea rdi, .LC0[rip]						# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
@@ -173,8 +179,8 @@ main:
 	mov	esi, DWORD PTR -92[rbp]					# esi = size 								
 	mov	rdi, QWORD PTR -64[rbp]					# rdi = old_array  
 	call	input							# вызов input c аргументами	
-	mov DWORD PTR -68[rbp], eax					# [-68] = valid_size
-
+	
+	mov DWORD PTR -68[rbp], eax					# [-68] = ...
 	shl rax, 3							# rax *= 8
 	mov rdi, rax							# rdi = rax
 	call malloc@PLT							# Выделение памяти для на rax бит
@@ -205,4 +211,4 @@ main:
 	pop	r14
 	pop	r15
 	pop	rbp
-	ret								
+	ret
