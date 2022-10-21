@@ -154,11 +154,13 @@ main:
 	push	rbp									# Кладем rbp на стек
 	mov	rbp, rsp								# rbp = rsp
 	sub	rsp, 88									# rsp -= 88 (выделяем память)
+
 	push	r15									
 	push	r14
 	push	r13
 	push	r12
 	push	rbx
+	
 	mov	rax, rsp
 	mov	rbx, rax
 
