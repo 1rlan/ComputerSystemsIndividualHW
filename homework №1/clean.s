@@ -2,16 +2,13 @@
 	
 	.text										# Переход в секцию с кодом
 	.section	.rodata							# Переход в секцию констант
-.LC0:											# Объявление метки .LC0
+.LC0:											
 	.string	"%d"								# Объвление строки "%d" 
+
 
 	.text										# Переход в секцию с кодом
 	.globl	input
-	# .type	input, @function
-
-
 input:
-
 	push	rbp									# Кладем rbp на стек
 	mov	rbp, rsp								# rbp = rsp
 	sub	rsp, 32									# rsp -= 32 (выделяем память) 
@@ -39,7 +36,7 @@ input:
 	mov	rax, QWORD PTR -24[rbp]					# rax = old_array
 	add	rax, rdx								# rax += rdx
 
-	mov	eax, DWORD PTR [rax]					# eax = array[rax	
+	mov	eax, DWORD PTR [rax]					# eax = array[rax]	
 	cmp	DWORD PTR -32[rbp], eax					# compare(x, eax)
 	je	.L3										# if (x == eax) goto .L3
 	add	DWORD PTR -4[rbp], 1					# ++valid_size
@@ -62,61 +59,62 @@ input:
 
 
 	.globl	make_new_array
-	# .type	make_new_array, @function
 make_new_array:
-	# endbr64
 	push	rbp									# Кладем rbp на стек
 	mov	rbp, rsp								# rbp = rsp
-	mov	QWORD PTR -24[rbp], rdi						
-	mov	QWORD PTR -32[rbp], rsi
-	mov	DWORD PTR -36[rbp], edx
-	mov	DWORD PTR -40[rbp], ecx					
+
+	mov	QWORD PTR -24[rbp], rdi					# [-24] = old_array
+	mov	QWORD PTR -32[rbp], rsi					# [-32] = new_array
+	mov	DWORD PTR -36[rbp], edx					# [-36] = size
+	mov	DWORD PTR -40[rbp], ecx					# [-40] = x
 	mov	DWORD PTR -4[rbp], -1					# index = -1
 	mov	DWORD PTR -8[rbp], 0					# i = 0
-	jmp	.L7
-
+	jmp	.L7										# goto .L7
 
 .L9:
-	mov	eax, DWORD PTR -8[rbp]
-	cdqe
-	lea	rdx, 0[0+rax*4]
-	mov	rax, QWORD PTR -24[rbp]
-	add	rax, rdx
-	mov	eax, DWORD PTR [rax]
-	cmp	DWORD PTR -40[rbp], eax
-	je	.L8
-	mov	eax, DWORD PTR -8[rbp]
-	cdqe
-	lea	rdx, 0[0+rax*4]
-	mov	rax, QWORD PTR -24[rbp]
-	add	rax, rdx
-	add	DWORD PTR -4[rbp], 1
-	mov	edx, DWORD PTR -4[rbp]
-	movsx	rdx, edx
-	lea	rcx, 0[0+rdx*4]
-	mov	rdx, QWORD PTR -32[rbp]
-	add	rdx, rcx
-	mov	eax, DWORD PTR [rax]
-	mov	DWORD PTR [rdx], eax
+	mov	eax, DWORD PTR -8[rbp]					# eax = i	
+	lea	rdx, 0[0+rax*4]							# rdx = rax * 4
+	mov	rax, QWORD PTR -24[rbp]					# rax = old_array
+	add	rax, rdx								# rax += rdx
+	mov	eax, DWORD PTR [rax]					# eax = old_array[rax]
+	cmp	DWORD PTR -40[rbp], eax					# compare(old_array[rax], x)
+	je	.L8										# if (old_array[rax] == x) goto .L8 
+
+	mov	eax, DWORD PTR -8[rbp]					# eax = i
+	lea	rdx, 0[0+rax*4]							# rdx = rax * 4
+	mov	rax, QWORD PTR -24[rbp]					# rax = old_array
+	add	rax, rdx								# rax += rdx
+	add	DWORD PTR -4[rbp], 1					# ++index
+	mov	edx, DWORD PTR -4[rbp]					# edx = index
+	movsx	rdx, edx							# rdx = edx
+	lea	rcx, 0[0+rdx*4]							# rcx = rdx * 4
+	mov	rdx, QWORD PTR -32[rbp]					# rdx = new_array 
+	add	rdx, rcx								# rdx += rcx
+	mov	eax, DWORD PTR [rax]					# eax = old_array[i]
+	mov	DWORD PTR [rdx], eax					# new_array[index] = eax
+
 .L8:
-	add	DWORD PTR -8[rbp], 1
+	add	DWORD PTR -8[rbp], 1					# ++i
+
 .L7:
-	mov	eax, DWORD PTR -8[rbp]
-	cmp	eax, DWORD PTR -36[rbp]
-	jl	.L9
+	mov	eax, DWORD PTR -8[rbp]					# eax = i
+	cmp	eax, DWORD PTR -36[rbp]					# compare(i, size)
+	jl	.L9										# if (i < size) goto .L9
 	nop
 	nop
 	pop	rbp
 	ret
 	.size	make_new_array, .-make_new_array
+
+
 	.section	.rodata
 .LC1:
 	.string	"%d "
+
+
 	.text
 	.globl	output
-	# .type	output, @function
 output:
-	# endbr64
 	push	rbp
 	mov	rbp, rsp
 	sub	rsp, 32
@@ -147,10 +145,10 @@ output:
 	leave
 	ret
 	.size	output, .-output
+
+
 	.globl	main
-	# .type	main, @function
 main:
-	# endbr64
 	push	rbp									# Кладем rbp на стек
 	mov	rbp, rsp								# rbp = rsp
 	sub	rsp, 88									# rsp -= 88 (выделяем память)
