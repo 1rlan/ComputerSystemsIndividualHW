@@ -141,7 +141,7 @@ call	printf@PLT							# вызов printf с параметрами
 	call	putchar@PLT						# вызываем printf c параметром
 	leave
 	ret
-	.size	output, .-output
+
 
 
 	.globl	main
