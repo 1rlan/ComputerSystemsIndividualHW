@@ -85,9 +85,6 @@ gcc -masm=intel \
 ```
 
 
-
-
-
 ## Замены
 Будем класть значения в регистр rsi напрямую. Рассмотрим, например, вызов scanf, в нем можно заменить строки
 ```
@@ -100,7 +97,7 @@ gcc -masm=intel \
 ```
 
 
-Перепишем огромный и непонятный блок создания массивов new_array и old_array (161-206 и 214-260 строки ) череp malloc:
+Перепишем огромный и непонятный блок создания массивов new_array и old_array (161-206 и 214-260 строки [program.s](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%961/program.c)) череp malloc:
 Выделяем память:
 ```
 		mov rax, -92[rbp]
@@ -118,7 +115,13 @@ gcc -masm=intel \
 ```
 Чистим память:
 ```
-		mov rdi, QWORD PTR -64[rbp] # rdi = old_array
+		mov rdi, QWORD PTR -64[rbp] 
 		call free@PLT
+
+		mov rdi, QWORD PTR -88[rbp] 
+		call free@PLT 
 ```
+*Комментарии к происходящему выше находятся в файле clean.s*
+
+## Оптимизация
 
