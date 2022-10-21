@@ -155,22 +155,22 @@ main:
 	push	r12							# i
 	push	rbx
 
-	mov r12d, 0
-	mov r13d, -92[rbp]
+	mov r12, 0
+	mov r13, -92[rbp]
 
 	mov	rbx, rsp
 
 	
-	lea rsi, r13						    # rsi = &size 
+	lea rsi, DWORD PRT [r13d]						    # rsi = &size 
 	lea rdi, .LC0[rip]						# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
 
-	lea rsi, -96[rbp]						# rsi = &x
+	lea rsi, -96[rbp]					# rsi = &x
 	lea rdi, .LC0[rip]						# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
-	mov	rax, r13						# rax = size
+	mov	rax, r13d						# rax = size
 	shl	rax, 3							# rax *= 8
 	mov rdi, rax							# rdi = rax
 	call malloc@PLT							# Выделение памяти для на rax бит
