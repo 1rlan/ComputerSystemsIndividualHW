@@ -197,7 +197,7 @@ main:
 
  	mov	esi, DWORD PTR -68[rbp]					#  edx = valid_size
  	mov	rdi, QWORD PTR -88[rbp]					#  rax = new_array
- 	call	output								#  вызов output c аргументами
+ 	call	output							#  вызов output c аргументами
 
 	mov rdi, QWORD PTR -64[rbp]
 	call free@PLT
