@@ -1,17 +1,17 @@
 	.intel_syntax noprefix						# Использование синтакса Intel       
 	
 	.text										
-	.section	.rodata							# Переход в секцию констант
+	.section	.rodata						# Переход в секцию констант
 .LC0:											
-	.string	"%d"								# Объвление строки "%d" 
+	.string	"%d"							# Объвление строки "%d" 
 
 
 	.text										
 	.globl	input
 input:
-	push	rbp									# Кладем rbp на стек
-	mov	rbp, rsp								# rbp = rsp
-	sub	rsp, 32									# rsp -= 32 (выделяем память) 
+	push	rbp							# Кладем rbp на стек
+	mov	rbp, rsp						# rbp = rsp
+	sub	rsp, 32							# rsp -= 32 (выделяем память) 
 
 	mov	QWORD PTR -24[rbp], rdi					# [-24] = old_array
 	mov	DWORD PTR -28[rbp], esi					# [-28] = size
@@ -19,26 +19,26 @@ input:
 
 	mov	DWORD PTR -4[rbp], 0					# valid_size = 0
 	mov	DWORD PTR -8[rbp], 0					# i = 0	
-	jmp	.L2										# goto .L2
+	jmp	.L2							# goto .L2
 
 .L4:
 	mov	eax, DWORD PTR -8[rbp]					# eax = i
-	lea	rdx, 0[0+rax*4]							# rdx = rax * 4
+	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]					# rax = old_array
-	add	rax, rdx								# rax += rdx       
+	add	rax, rdx						# rax += rdx       
 
-	mov	rsi, rax								# rsi = rax
-	lea	rdi, .LC0[rip]							# rdi = "%d"
+	mov	rsi, rax						# rsi = rax
+	lea	rdi, .LC0[rip]						# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 	
 	mov	eax, DWORD PTR -8[rbp]					# eax = i
-	lea	rdx, 0[0+rax*4]							# rdx = rax * 4
+	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]					# rax = old_array
-	add	rax, rdx								# rax += rdx
+	add	rax, rdx						# rax += rdx
 
 	mov	eax, DWORD PTR [rax]					# eax = array[rax]	
 	cmp	DWORD PTR -32[rbp], eax					# compare(x, eax)
-	je	.L3										# if (x == eax) goto .L3
+	je	.L3							# if (x == eax) goto .L3
 	add	DWORD PTR -4[rbp], 1					# ++valid_size
 
 
@@ -49,17 +49,17 @@ input:
 .L2:
 	mov	eax, DWORD PTR -8[rbp]					# eax = i
 	cmp	eax, DWORD PTR -28[rbp]					# compare (eax, size)
-	jl	.L4										# if (i < 4) goto .L4
+	jl	.L4							# if (i < 4) goto .L4
 	mov	eax, DWORD PTR -4[rbp]					# eax = valid_size			
-	leave										# return eax
+	leave								# return eax
 	ret
 	.size	input, .-input
 
 
 	.globl	make_new_array
 make_new_array:
-	push	rbp									# Кладем rbp на стек
-	mov	rbp, rsp								# rbp = rsp
+	push	rbp							# Кладем rbp на стек
+	mov	rbp, rsp						# rbp = rsp
 
 	mov	QWORD PTR -24[rbp], rdi					# [-24] = old_array
 	mov	QWORD PTR -32[rbp], rsi					# [-32] = new_array
@@ -67,27 +67,27 @@ make_new_array:
 	mov	DWORD PTR -40[rbp], ecx					# [-40] = x
 	mov	DWORD PTR -4[rbp], -1					# index = -1
 	mov	DWORD PTR -8[rbp], 0					# i = 0
-	jmp	.L7										# goto .L7
+	jmp	.L7							# goto .L7
 
 .L9:
 	mov	eax, DWORD PTR -8[rbp]					# eax = i	
-	lea	rdx, 0[0+rax*4]							# rdx = rax * 4
+	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]					# rax = old_array
-	add	rax, rdx								# rax += rdx
+	add	rax, rdx						# rax += rdx
 	mov	eax, DWORD PTR [rax]					# eax = old_array[rax]
 	cmp	DWORD PTR -40[rbp], eax					# compare(old_array[rax], x)
-	je	.L8										# if (old_array[rax] == x) goto .L8 
+	je	.L8							# if (old_array[rax] == x) goto .L8 
 
 	mov	eax, DWORD PTR -8[rbp]					# eax = i
-	lea	rdx, 0[0+rax*4]							# rdx = rax * 4
+	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]					# rax = old_array
-	add	rax, rdx								# rax += rdx
+	add	rax, rdx						# rax += rdx
 	add	DWORD PTR -4[rbp], 1					# ++index
 	mov	edx, DWORD PTR -4[rbp]					# edx = index
-	movsx	rdx, edx							# rdx = edx
-	lea	rcx, 0[0+rdx*4]							# rcx = rdx * 4
+	movsx	rdx, edx						# rdx = edx
+	lea	rcx, 0[0+rdx*4]						# rcx = rdx * 4
 	mov	rdx, QWORD PTR -32[rbp]					# rdx = new_array 
-	add	rdx, rcx								# rdx += rcx
+	add	rdx, rcx						# rdx += rcx
 	mov	eax, DWORD PTR [rax]					# eax = old_array[i]
 	mov	DWORD PTR [rdx], eax					# new_array[index] = eax
 
@@ -97,7 +97,7 @@ make_new_array:
 .L7:
 	mov	eax, DWORD PTR -8[rbp]					# eax = i
 	cmp	eax, DWORD PTR -36[rbp]					# compare(i, size)
-	jl	.L9										# if (i < size) goto .L9
+	jl	.L9							# if (i < size) goto .L9
 	nop
 	nop
 	pop	rbp
@@ -105,42 +105,42 @@ make_new_array:
 	.size	make_new_array, .-make_new_array
 
 
-	.section	.rodata
+	.section	.rodata						# Переход в секцию констант
 .LC1:
-	.string	"%d "
+	.string	"%d "							# Объвление строки "%d " 
 
 
 	.text
 	.globl	output
 output:
-	push	rbp									# Кладем rbp на стек
-	mov	rbp, rsp								# rbp = rsp
-	sub	rsp, 32									# rsp -= 32 (выделяем память) 
+	push	rbp							# Кладем rbp на стек
+	mov	rbp, rsp						# rbp = rsp
+	sub	rsp, 32							# rsp -= 32 (выделяем память) 
 	mov	QWORD PTR -24[rbp], rdi					# [-24] = new_array
 	mov	DWORD PTR -28[rbp], esi					# [-28] = valid_size
 	mov	DWORD PTR -4[rbp], 0					# i = 0
-	jmp	.L11									# goto .L11
+	jmp	.L11							# goto .L11
 
 .L12:
 	mov	eax, DWORD PTR -4[rbp]					# eax = i
-	lea	rdx, 0[0+rax*4]							# rdx = rax * 4
+	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]					# rax = new_array
-	add	rax, rdx								# new_array += rdx
+	add	rax, rdx						# new_array += rdx
 	mov	eax, DWORD PTR [rax]					# eax = array[i]
 
-	mov	esi, eax								# esi = array[i]
-	lea	rdi, .LC1[rip]							# rdi = "%d "
-call	printf@PLT								# вызов printf с параметрами
+	mov	esi, eax						# esi = array[i]
+	lea	rdi, .LC1[rip]						# rdi = "%d "
+call	printf@PLT							# вызов printf с параметрами
 
 	add	DWORD PTR -4[rbp], 1					# ++i
 
 .L11:
 	mov	eax, DWORD PTR -4[rbp]					# eax = i
 	cmp	eax, DWORD PTR -28[rbp]					# compare (eax, valid_size)
-	jl	.L12									# if (eax < valid_size) goto .L12
+	jl	.L12							# if (eax < valid_size) goto .L12
 
-	mov	edi, 10									# edi = '\n' (new line)
-	call	putchar@PLT							# вызываем printf c параметром
+	mov	edi, 10							# edi = '\n' (new line)
+	call	putchar@PLT						# вызываем printf c параметром
 	nop
 	leave
 	ret
@@ -149,9 +149,9 @@ call	printf@PLT								# вызов printf с параметрами
 
 	.globl	main
 main:
-	push	rbp									# Кладем rbp на стек
-	mov	rbp, rsp								# rbp = rsp
-	sub	rsp, 88									# rsp -= 88 (выделяем память)
+	push	rbp							# Кладем rbp на стек
+	mov	rbp, rsp						# rbp = rsp
+	sub	rsp, 88							# rsp -= 88 (выделяем память)
 
 	push	r15									
 	push	r14
@@ -163,13 +163,13 @@ main:
 	mov	rbx, rax
 
 	
-	lea rsi, -92[rbp]							# rsi = &size 
-	lea rdi, .LC0[rip]							# rdi = "%d"
+	lea rsi, -92[rbp]						# rsi = &size 
+	lea rdi, .LC0[rip]						# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
 
-	lea rsi, -96[rbp]							# rsi = &x
-	lea rdi, .LC0[rip]							# rdi = "%d"
+	lea rsi, -96[rbp]						# rsi = &x
+	lea rdi, .LC0[rip]						# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
 	mov	rax, -92[rbp]
@@ -181,7 +181,7 @@ main:
 	mov	edx, DWORD PTR -96[rbp]					# edx = x
 	mov	esi, DWORD PTR -92[rbp]					# esi = size 								
 	mov	rdi, QWORD PTR -64[rbp]					# rdi = old_array  
-	call	input								# вызов input c аргументами			
+	call	input							# вызов input c аргументами			
 	
 	mov DWORD PTR -68[rbp], eax					
 	shl rax, 3
@@ -197,7 +197,7 @@ main:
 
  	mov	esi, DWORD PTR -68[rbp]					#  edx = valid_size
  	mov	rdi, QWORD PTR -88[rbp]					#  rax = new_array
- 	call	output								#  вызов output c аргументами
+ 	call	output							#  вызов output c аргументами
 
 	mov rdi, QWORD PTR -64[rbp]
 	call free@PLT
