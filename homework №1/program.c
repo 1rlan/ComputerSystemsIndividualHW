@@ -13,7 +13,7 @@ int input(int *array, int size, int x) {
     return valid_size;
 }
 
-// Создание нового массива на основе страого.
+// Создание нового массива на основе старого.
 void make_new_array(int* old_array, int *new_array, int size, int x) {
     int index = -1;
     for (int i = 0; i < size; ++i) {
