@@ -185,7 +185,7 @@ main:
 	mov	rdi, QWORD PTR -64[rbp]					# rdi = old_array  
 	call	input								# вызов input c аргументами			
 	
-	mov DWORD PTR -68[rbp], rax					# [-72] = valid_size
+	mov DWORD PTR -68[rbp], eax					# [-72] = valid_size
 	shl rax, 3
 	mov rdi, rax
 	call malloc@PLT
