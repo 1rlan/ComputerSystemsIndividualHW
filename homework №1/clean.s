@@ -100,7 +100,6 @@ make_new_array:
 	jl	.L9							# if (i < size) goto .L9
 	pop	rbp
 	ret
-	.size	make_new_array, .-make_new_array
 
 
 	.section	.rodata						# Переход в секцию констант
@@ -213,4 +212,3 @@ main:
 	pop	r15
 	pop	rbp
 	ret
-.size	main, .-main

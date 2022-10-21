@@ -42,7 +42,7 @@ gcc -masm=intel \
 
 Уберем, как сказал мой товарищ, "копеечные оптимизации", удалив все:
 ```assembly
-        .size output, .-output
+        .size main, .-main    # и для других методов тоже
         mov eax, 0
         nop
 ```
@@ -93,9 +93,32 @@ gcc -masm=intel \
 ```
         lea rax, -92[rbp]
         mov rsi, rax
+
+		# Заменяем на:
+
+		mov rsi, -92[rbp]
 ```
-на
+
+
+Перепишем огромный и непонятный блок создания массивов new_array и old_array (161-206 и 214-260 строки ) череp malloc:
+Выделяем память:
 ```
-        mov rsi, -92[rbp]
+		mov rax, -92[rbp]
+		shl rax, 3 
+		mov rdi, rax 
+		call malloc@PLT 
+		mov QWORD PTR -64[rbp], rax 
+
+
+		mov DWORD PTR -68[rbp], eax
+		shl rax, 3 
+		mov rdi, rax 
+		call malloc@PLT #
+		mov QWORD PTR -88[rbp], rax
+```
+Чистим память:
+```
+		mov rdi, QWORD PTR -64[rbp] # rdi = old_array
+		call free@PLT
 ```
 
