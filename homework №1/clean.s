@@ -14,7 +14,7 @@ input:
 	sub	rsp, 32							# rsp -= 32 (выделяем память) 
 
 	mov	QWORD PTR -24[rbp], rdi					# [-24] = old_array
-	mov	DWORD PTR r13d, esi					# [-28] = size
+	mov	r13d, esi					# [-28] = size
 	mov	DWORD PTR -32[rbp], edx					# [-32] = x
 
 	mov	DWORD PTR -4[rbp], 0					# valid_size = 0
@@ -63,7 +63,7 @@ make_new_array:
 
 	mov	QWORD PTR -24[rbp], rdi					# [-24] = old_array
 	mov	QWORD PTR -32[rbp], rsi					# [-32] = new_array
-	mov	DWORD PTR r13d, edx					# [-36] = size
+	mov	r13d, edx					# [-36] = size
 	mov	DWORD PTR -40[rbp], ecx					# [-40] = x
 	mov	DWORD PTR -4[rbp], -1					# index = -1
 	mov	r12d, 0					# i = 0
@@ -161,7 +161,7 @@ main:
 	mov	rbx, rsp
 
 	
-	lea rsi, r13d						# rsi = &size 
+	lea rsi, r13d						    # rsi = &size 
 	lea rdi, .LC0[rip]						# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
@@ -178,7 +178,7 @@ main:
 
 
 	mov	edx, DWORD PTR -96[rbp]					# edx = x
-	mov	esi, DWORD PTR r13d					# esi = size 								
+	mov	esi, r13d					# esi = size 								
 	mov	rdi, QWORD PTR -64[rbp]					# rdi = old_array  
 	call	input							# вызов input c аргументами	
 	
@@ -189,7 +189,7 @@ main:
 	mov QWORD PTR -88[rbp], rax					# [-88] = new_array
 
  	mov	ecx, DWORD PTR -96[rbp]					# ecx = x	
- 	mov	edx, DWORD PTR r13d					# edx = size
+ 	mov	edx, r13d					# edx = size
  	mov	rsi, QWORD PTR -88[rbp]					# rsi = *(new_array)
  	mov	rdi, QWORD PTR -64[rbp]					# rdi = *(old_array) 
  	call	make_new_array						# вызов make_new_array c аргументами
