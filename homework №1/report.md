@@ -42,7 +42,7 @@ gcc -masm=intel \
 
 Уберем, как сказал мой товарищ, "копеечные оптимизации", удалив все:
 ```assembly
-        .size output, .-output
+        .size main, .-main    # и для других методов тоже
         mov eax, 0
         nop
 ```
