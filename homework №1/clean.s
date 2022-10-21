@@ -155,8 +155,7 @@ main:
 	push	r12
 	push	rbx
 
-	mov	rax, rsp
-	mov	rbx, rax
+	mov	rbx, rsp
 
 	
 	lea rsi, -92[rbp]						# rsi = &size 
@@ -212,4 +211,3 @@ main:
 	pop	r15
 	pop	rbp
 	ret
-	
