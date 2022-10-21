@@ -98,8 +98,6 @@ make_new_array:
 	mov	eax, DWORD PTR -8[rbp]					# eax = i
 	cmp	eax, DWORD PTR -36[rbp]					# compare(i, size)
 	jl	.L9							# if (i < size) goto .L9
-	nop
-	nop
 	pop	rbp
 	ret
 	.size	make_new_array, .-make_new_array
@@ -141,7 +139,6 @@ call	printf@PLT							# вызов printf с параметрами
 
 	mov	edi, 10							# edi = '\n' (new line)
 	call	putchar@PLT						# вызываем printf c параметром
-	nop
 	leave
 	ret
 	.size	output, .-output
@@ -172,22 +169,23 @@ main:
 	lea rdi, .LC0[rip]						# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
-	mov	rax, -92[rbp]
-	shl	rax, 3
-	mov rdi, rax
-	call malloc@PLT
-	mov QWORD PTR -64[rbp], rax
+	mov	rax, -92[rbp]						# rax = size
+	shl	rax, 3							# rax *= 8
+	mov rdi, rax							# rdi = rax
+	call malloc@PLT							# Выделение памяти для на rax бит
+	mov QWORD PTR -64[rbp], rax					# [-64] = old_array
 
 	mov	edx, DWORD PTR -96[rbp]					# edx = x
 	mov	esi, DWORD PTR -92[rbp]					# esi = size 								
 	mov	rdi, QWORD PTR -64[rbp]					# rdi = old_array  
-	call	input							# вызов input c аргументами			
+	call	input							# вызов input c аргументами	
+									# rax = valid_size
 	
-	mov DWORD PTR -68[rbp], eax					
-	shl rax, 3
-	mov rdi, rax
-	call malloc@PLT
-	mov QWORD PTR -88[rbp], rax
+	mov DWORD PTR -68[rbp], eax					# [-68] = eax
+	shl rax, 3							# rax *= 8
+	mov rdi, rax							# rdi = rax
+	call malloc@PLT							# Выделение памяти для на rax бит
+	mov QWORD PTR -88[rbp], rax					# [-88] = new_array
 
  	mov	ecx, DWORD PTR -96[rbp]					# ecx = x	
  	mov	edx, DWORD PTR -92[rbp]					# edx = size
@@ -199,11 +197,11 @@ main:
  	mov	rdi, QWORD PTR -88[rbp]					#  rax = new_array
  	call	output							#  вызов output c аргументами
 
-	mov rdi, QWORD PTR -64[rbp]
-	call free@PLT
-
-	mov rdi, QWORD PTR -88[rbp]
-	call free@PLT
+	mov rdi, QWORD PTR -64[rbp]					# rdi = old_array
+	call free@PLT							# освобождаем память под old_array
+	
+	mov rdi, QWORD PTR -88[rbp]					# rdi = new_array
+	call free@PLT							# освобождаем память под new_array
 
  	mov	rsp, rbx
  	lea	rsp, -40[rbp]
