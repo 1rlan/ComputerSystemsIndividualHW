@@ -149,17 +149,11 @@ main:
 	mov	rbp, rsp						# rbp = rsp
 	sub	rsp, 88							# rsp -= 88 (выделяем память)
 
-	push	r15									
-	push	r14
-	push	r13
-	push	r12
-	push	rbx
-
 	mov	rax, rsp
 	mov	rbx, rax
 
 	
-	lea rsi, -92[rbp]						# rsi = &size 
+	lea rsi, -92[rbp]						# rsi = &size фч
 	lea rdi, .LC0[rip]						# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
@@ -174,13 +168,13 @@ main:
 	call malloc@PLT							# Выделение памяти для на rax бит
 	mov QWORD PTR -64[rbp], rax					# [-64] = old_array
 
+
 	mov	edx, DWORD PTR -96[rbp]					# edx = x
 	mov	esi, DWORD PTR -92[rbp]					# esi = size 								
 	mov	rdi, QWORD PTR -64[rbp]					# rdi = old_array  
 	call	input							# вызов input c аргументами	
-									# rax = valid_size
-	
-	mov DWORD PTR -68[rbp], eax					# [-68] = eax
+	mov DWORD PTR -68[rbp], eax					# [-68] = valid_size
+
 	shl rax, 3							# rax *= 8
 	mov rdi, rax							# rdi = rax
 	call malloc@PLT							# Выделение памяти для на rax бит
@@ -192,8 +186,8 @@ main:
  	mov	rdi, QWORD PTR -64[rbp]					# rdi = *(old_array) 
  	call	make_new_array						# вызов make_new_array c аргументами
 
- 	mov	esi, DWORD PTR -68[rbp]					#  edx = valid_size
- 	mov	rdi, QWORD PTR -88[rbp]					#  rax = new_array
+ 	mov	esi, DWORD PTR -68[rbp]					#  esi = valid_size
+ 	mov	rdi, QWORD PTR -88[rbp]					#  rdi = new_array
  	call	output							#  вызов output c аргументами
 
 	mov rdi, QWORD PTR -64[rbp]					# rdi = old_array
@@ -205,11 +199,5 @@ main:
  	mov	rsp, rbx
  	lea	rsp, -40[rbp]
 
-	pop	rbx
-	pop	r12
-	pop	r13
-	pop	r14
-	pop	r15
 	pop	rbp
-	ret
-	
+	ret								
