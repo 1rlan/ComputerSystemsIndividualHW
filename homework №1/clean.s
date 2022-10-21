@@ -1,12 +1,12 @@
 	.intel_syntax noprefix						# Использование синтакса Intel       
 	
-	.text										# Переход в секцию с кодом
+	.text										
 	.section	.rodata							# Переход в секцию констант
 .LC0:											
 	.string	"%d"								# Объвление строки "%d" 
 
 
-	.text										# Переход в секцию с кодом
+	.text										
 	.globl	input
 input:
 	push	rbp									# Кладем rbp на стек
@@ -26,8 +26,8 @@ input:
 	lea	rdx, 0[0+rax*4]							# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]					# rax = old_array
 	add	rax, rdx								# rax += rdx       
-	mov	rsi, rax								# rsi = rax
 
+	mov	rsi, rax								# rsi = rax
 	lea	rdi, .LC0[rip]							# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 	
@@ -42,10 +42,8 @@ input:
 	add	DWORD PTR -4[rbp], 1					# ++valid_size
 
 
-
 .L3:
 	add	DWORD PTR -8[rbp], 1					# ++i
-
 
 
 .L2:
@@ -115,32 +113,34 @@ make_new_array:
 	.text
 	.globl	output
 output:
-	push	rbp
-	mov	rbp, rsp
-	sub	rsp, 32
-	mov	QWORD PTR -24[rbp], rdi
-	mov	DWORD PTR -28[rbp], esi
-	mov	DWORD PTR -4[rbp], 0
-	jmp	.L11
+	push	rbp									# Кладем rbp на стек
+	mov	rbp, rsp								# rbp = rsp
+	sub	rsp, 32									# rsp -= 32 (выделяем память) 
+	mov	QWORD PTR -24[rbp], rdi					# [-24] = new_array
+	mov	DWORD PTR -28[rbp], esi					# [-28] = valid_size
+	mov	DWORD PTR -4[rbp], 0					# i = 0
+	jmp	.L11									# goto .L11
+
 .L12:
-	mov	eax, DWORD PTR -4[rbp]
-	cdqe
-	lea	rdx, 0[0+rax*4]
-	mov	rax, QWORD PTR -24[rbp]
-	add	rax, rdx
-	mov	eax, DWORD PTR [rax]
-	mov	esi, eax
-	lea	rax, .LC1[rip]
-	mov	rdi, rax
-	mov	eax, 0
-	call	printf@PLT
-	add	DWORD PTR -4[rbp], 1
+	mov	eax, DWORD PTR -4[rbp]					# eax = i
+	lea	rdx, 0[0+rax*4]							# rdx = rax * 4
+	mov	rax, QWORD PTR -24[rbp]					# rax = new_array
+	add	rax, rdx								# new_array += rdx
+	mov	eax, DWORD PTR [rax]					# eax = array[i]
+
+	mov	esi, eax								# esi = array[i]
+	lea	rdi, .LC1[rip]							# rdi = "%d "
+call	printf@PLT								# вызов printf с параметрами
+
+	add	DWORD PTR -4[rbp], 1					# ++i
+
 .L11:
-	mov	eax, DWORD PTR -4[rbp]
-	cmp	eax, DWORD PTR -28[rbp]
-	jl	.L12
-	mov	edi, 10
-	call	putchar@PLT
+	mov	eax, DWORD PTR -4[rbp]					# eax = i
+	cmp	eax, DWORD PTR -28[rbp]					# compare (eax, valid_size)
+	jl	.L12									# if (eax < valid_size) goto .L12
+
+	mov	edi, 10									# edi = '\n' (new line)
+	call	putchar@PLT							# вызываем printf c параметром
 	nop
 	leave
 	ret
@@ -183,7 +183,7 @@ main:
 	mov	rdi, QWORD PTR -64[rbp]					# rdi = old_array  
 	call	input								# вызов input c аргументами			
 	
-	mov DWORD PTR -68[rbp], eax					# [-72] = valid_size
+	mov DWORD PTR -68[rbp], eax					
 	shl rax, 3
 	mov rdi, rax
 	call malloc@PLT
@@ -195,9 +195,9 @@ main:
  	mov	rdi, QWORD PTR -64[rbp]					# rdi = *(old_array) 
  	call	make_new_array						# вызов make_new_array c аргументами
 
- 	mov	esi, DWORD PTR -68[rbp]					# edx = valid_size
- 	mov	rdi, QWORD PTR -88[rbp]					# rax = *(new_array)
- 	call	output								# вызов output c аргументами
+ 	mov	esi, DWORD PTR -68[rbp]					#  edx = valid_size
+ 	mov	rdi, QWORD PTR -88[rbp]					#  rax = new_array
+ 	call	output								#  вызов output c аргументами
 
 	mov rdi, QWORD PTR -64[rbp]
 	call free@PLT
