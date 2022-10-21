@@ -190,71 +190,71 @@ main:
 
 
 
-@ 	mov	DWORD PTR -68[rbp], eax
-@ 	mov	eax, DWORD PTR -68[rbp]
-@ 	movsx	rdx, eax
-@ 	sub	rdx, 1
-@ 	mov	QWORD PTR -80[rbp], rdx
-@ 	movsx	rdx, eax
-@ 	mov	r14, rdx
-@ 	mov	r15d, 0
-@ 	movsx	rdx, eax
-@ 	mov	r12, rdx
-@ 	mov	r13d, 0
-@ 	cdqe
-@ 	lea	rdx, 0[0+rax*4]
-@ 	mov	eax, 16
-@ 	sub	rax, 1
-@ 	add	rax, rdx
-@ 	mov	esi, 16
-@ 	mov	edx, 0
-@ 	div	rsi
-@ 	imul	rax, rax, 16
-@ 	mov	rcx, rax
-@ 	and	rcx, -4096
-@ 	mov	rdx, rsp
-@ 	sub	rdx, rcx
+# 	mov	DWORD PTR -68[rbp], eax
+# 	mov	eax, DWORD PTR -68[rbp]
+# 	movsx	rdx, eax
+# 	sub	rdx, 1
+# 	mov	QWORD PTR -80[rbp], rdx
+# 	movsx	rdx, eax
+# 	mov	r14, rdx
+# 	mov	r15d, 0
+# 	movsx	rdx, eax
+# 	mov	r12, rdx
+# 	mov	r13d, 0
+# 	cdqe
+# 	lea	rdx, 0[0+rax*4]
+# 	mov	eax, 16
+# 	sub	rax, 1
+# 	add	rax, rdx
+# 	mov	esi, 16
+# 	mov	edx, 0
+# 	div	rsi
+# 	imul	rax, rax, 16
+# 	mov	rcx, rax
+# 	and	rcx, -4096
+# 	mov	rdx, rsp
+# 	sub	rdx, rcx
 
-@ .L17:
-@ 	cmp	rsp, rdx
-@ 	je	.L18
-@ 	sub	rsp, 4096
-@ 	or	QWORD PTR 4088[rsp], 0
-@ 	jmp	.L17
+# .L17:
+# 	cmp	rsp, rdx
+# 	je	.L18
+# 	sub	rsp, 4096
+# 	or	QWORD PTR 4088[rsp], 0
+# 	jmp	.L17
 
-@ .L18:
-@ 	mov	rdx, rax
-@ 	and	edx, 4095
-@ 	sub	rsp, rdx
-@ 	mov	rdx, rax
-@ 	and	edx, 4095
-@ 	test	rdx, rdx
-@ 	je	.L19
-@ 	and	eax, 4095
-@ 	sub	rax, 8
-@ 	add	rax, rsp
-@ 	or	QWORD PTR [rax], 0
+# .L18:
+# 	mov	rdx, rax
+# 	and	edx, 4095
+# 	sub	rsp, rdx
+# 	mov	rdx, rax
+# 	and	edx, 4095
+# 	test	rdx, rdx
+# 	je	.L19
+# 	and	eax, 4095
+# 	sub	rax, 8
+# 	add	rax, rsp
+# 	or	QWORD PTR [rax], 0
 
-@ .L19:
-@ 	mov	rax, rsp
-@ 	add	rax, 3
-@ 	shr	rax, 2
-@ 	sal	rax, 2
+# .L19:
+# 	mov	rax, rsp
+# 	add	rax, 3
+# 	shr	rax, 2
+# 	sal	rax, 2
 
-@ 	mov	QWORD PTR -88[rbp], rax					
+# 	mov	QWORD PTR -88[rbp], rax					
 
-@ 	mov	ecx, DWORD PTR -96[rbp]					# ecx = x	
-@ 	mov	edx, DWORD PTR -92[rbp]					# edx = size
-@ 	mov	rsi, QWORD PTR -88[rbp]					# rsi = *(new_array)
-@ 	mov	rdi, QWORD PTR -64[rbp]					# rdi = *(old_array) 
-@ 	call	make_new_array						# вызов make_new_array c аргументами
+# 	mov	ecx, DWORD PTR -96[rbp]					# ecx = x	
+# 	mov	edx, DWORD PTR -92[rbp]					# edx = size
+# 	mov	rsi, QWORD PTR -88[rbp]					# rsi = *(new_array)
+# 	mov	rdi, QWORD PTR -64[rbp]					# rdi = *(old_array) 
+# 	call	make_new_array						# вызов make_new_array c аргументами
 
-@ 	mov	esi, DWORD PTR -68[rbp]					# edx = valid_size
-@ 	mov	rdi, QWORD PTR -88[rbp]					# rax = *(new_array)
-@ 	call	output								# вызов output c аргументами
+# 	mov	esi, DWORD PTR -68[rbp]					# edx = valid_size
+# 	mov	rdi, QWORD PTR -88[rbp]					# rax = *(new_array)
+# 	call	output								# вызов output c аргументами
 
-@ 	mov	rsp, rbx
-@ 	lea	rsp, -40[rbp]
+# 	mov	rsp, rbx
+# 	lea	rsp, -40[rbp]
 
 	pop	rbx
 	pop	r12
