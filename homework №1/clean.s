@@ -148,16 +148,6 @@ main:
 	push	rbp							# Кладем rbp на стек
 	mov	rbp, rsp						# rbp = rsp
 	sub	rsp, 88							# rsp -= 88 (выделяем память)
-
-	push	r15									
-	push	r14
-	push	r13
-	push	r12
-	push	rbx
-
-	mov	rax, rsp
-	mov	rbx, rax
-
 	
 	lea rsi, -92[rbp]						# rsi = &size фч
 	lea rdi, .LC0[rip]						# rdi = "%d"
@@ -204,11 +194,5 @@ main:
 
  	mov	rsp, rbx
  	lea	rsp, -40[rbp]
-
-	pop	rbx
-	pop	r12
-	pop	r13
-	pop	r14
-	pop	r15
-	pop	rbp
+	 
 	ret								
