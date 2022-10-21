@@ -215,3 +215,4 @@ main:
 	pop	r15
 	pop	rbp
 	ret
+.size	main, .-main
