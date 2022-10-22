@@ -156,6 +156,7 @@ main:
 	push	rbx
 
 	mov r12, 0
+	mov r13d, -92[rbp]
 
 	mov	rbx, rsp
 
@@ -177,7 +178,7 @@ main:
 
 
 	mov	edx, DWORD PTR -96[rbp]					# edx = x
-	mov	esi, DWORD PTR -92[rbp]					# esi = size 								
+	mov	esi, r13d					# esi = size 								
 	mov	rdi, QWORD PTR -64[rbp]					# rdi = old_array  
 	call	input							# вызов input c аргументами	
 	
