@@ -173,13 +173,13 @@ main:
 	lea rdi, .LC0[rip]						# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
-	mov	eax, r13d						# rax = size
-	shl	eax, 3							# rax *= 8
-	mov rdi, eax							# rdi = rax
+	mov	rax, r13						# rax = size
+	shl	rax, 3							# rax *= 8
+	mov rdi, rax							# rdi = rax
 	call malloc@PLT							# Выделение памяти для на rax бит
+
+
 	mov QWORD PTR -64[rbp], rax					# [-64] = old_array
-
-
 	mov	edx, DWORD PTR -96[rbp]					# edx = x
 	mov	esi, DWORD PTR -92[rbp]					# esi = size 								
 	mov	rdi, QWORD PTR -64[rbp]					# rdi = old_array  
