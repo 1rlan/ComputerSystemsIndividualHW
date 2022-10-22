@@ -61,16 +61,15 @@ input:
 make_new_array:
 	push	rbp							# Кладем rbp на стек
 	mov	rbp, rsp						# rbp = rsp
-	sub	rsp, 64
-
+	
 
 	mov	QWORD PTR -24[rbp], rdi					# [-24] = old_array
 	mov	QWORD PTR -32[rbp], rsi					# [-32] = new_array
 	mov	QWORD PTR -40[rbp], rdx					# [-36] = size
 	mov	QWORD PTR -48[rbp], rcx					# [-40] = x
 	mov	QWORD PTR -8[rbp], -1					# index = -1
-	mov	r12, 0					# i = 0
-	jmp	.L7							# goto .L7
+	mov	r12, 0									# i = 0
+	jmp	.L7										# goto .L7
 
 .L9:
 	mov	rax, r12							# eax = i	
@@ -80,6 +79,10 @@ make_new_array:
 	mov	rax, QWORD PTR [rax]				# eax = old_array[rax]
 	cmp	QWORD PTR -48[rbp], rax				# compare(old_array[rax], x)
 	je	.L8									# if (old_array[rax] == x) goto .L8 
+
+	mov	rdi, 33							# edi = '\n' (new line)
+	call	putchar@PLT						# вызываем printf c параметром
+
 
 	mov	rax, r12							# eax = i
 	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
@@ -214,3 +217,4 @@ main:
 	pop	r15
 	pop	rbp
 	ret
+	
