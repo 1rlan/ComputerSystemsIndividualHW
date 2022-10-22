@@ -26,7 +26,7 @@ input:
 
 .L4:
 	mov	rax, r12						# eax = i
-	lea	rdx, 0[0+rax*4]					# rdx = rax * 4
+	lea	rdx, 0[0+rax*8]					# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]			# rax = old_array
 	add	rax, rdx						# rax += rdx       
 
@@ -35,7 +35,7 @@ input:
 	call	__isoc99_scanf@PLT			# Вызов функции scanf c параметрами rsi и rdi
 	
 	mov	rax, r12						# eax = i
-	lea	rdx, 0[0+rax*4]					# rdx = rax * 4
+	lea	rdx, 0[0+rax*8]					# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]			# rax = old_array
 	add	rax, rdx						# rax += rdx
 
@@ -72,7 +72,7 @@ make_new_array:
 
 .L9:
 	mov	rax, r12							# eax = i	
-	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
+	lea	rdx, 0[0+rax*8]						# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]				# rax = old_array
 	add	rax, rdx							# rax += rdx
 	mov	rax, QWORD PTR [rax]				# eax = old_array[rax]
@@ -80,24 +80,26 @@ make_new_array:
 	je	.L8									# if (old_array[rax] == x) goto .L8 
 
 	mov	rax, r12							# eax = i
-	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
+	lea	rdx, 0[0+rax*8]						# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]				# rax = old_array
 	add	rax, rdx							# rax += rdx
+
 	add	QWORD PTR -8[rbp], 1				# ++index
 	mov	rdx, QWORD PTR -8[rbp]				# edx = index
-	lea	rcx, 0[0+rdx*4]						# rcx = rdx * 4
+	lea	rcx, 0[0+rdx*8]						# rcx = rdx * 4
 	mov	rdx, QWORD PTR -32[rbp]				# rdx = new_array 
 	add	rdx, rcx							# rdx += rcx
+	
 	mov	rax, QWORD PTR [rax]				# eax = old_array[i]
 	mov	QWORD PTR [rdx], rax				# new_array[index] = eax
 
 .L8:
-	add	r12, 1					# ++i
+	add	r12, 1								# ++i
 
 .L7:
-	mov	rax, r12					# eax = i
-	cmp	rax, QWORD PTR -40[rbp]					# compare(i, size)
-	jl	.L9							# if (i < size) goto .L9
+	mov	rax, r12							# eax = i
+	cmp	rax, QWORD PTR -40[rbp]				# compare(i, size)
+	jl	.L9									# if (i < size) goto .L9
 	pop	rbp
 	ret
 
