@@ -21,8 +21,6 @@ input:
 	mov	r12, 0								# i = 0	
 	jmp	.L2									# goto .L2
 
-// 5 2
-// 1 2 2 4 5
 
 .L4:
 	mov	rax, r12							# eax = i
@@ -78,6 +76,11 @@ make_new_array:
 	mov	rax, QWORD PTR [rax]				# eax = old_array[rax]
 	cmp	QWORD PTR -48[rbp], rax				# compare(old_array[rax], x)
 	je	.L8									# if (old_array[rax] == x) goto .L8 
+
+	mov	rsi, r12							# esi = array[i]
+	lea	rdi, .LC1[rip]						# rdi = "%d "
+	call	printf@PLT						# вызов printf с параметрами
+
 
 	mov	rax, r12							# eax = i
 	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
