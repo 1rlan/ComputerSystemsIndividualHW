@@ -181,7 +181,7 @@ main:
 
 	mov QWORD PTR -64[rbp], rax					# [-64] = old_array
 	mov	edx, DWORD PTR -96[rbp]					# edx = x
-	mov	esi, r13				# esi = size 								
+	mov	esi, r13d				# esi = size 								
 	mov	rdi, QWORD PTR -64[rbp]					# rdi = old_array  
 	call	input							# вызов input c аргументами	
 	
@@ -192,7 +192,7 @@ main:
 	mov QWORD PTR -88[rbp], rax					# [-88] = new_array
 
  	mov	ecx, DWORD PTR -96[rbp]					# ecx = x	
- 	mov	edx, r13				# edx = size
+ 	mov	edx, r13d				# edx = size
  	mov	rsi, QWORD PTR -88[rbp]					# rsi = *(new_array)
  	mov	rdi, QWORD PTR -64[rbp]					# rdi = *(old_array) 
  	call	make_new_array						# вызов make_new_array c аргументами
