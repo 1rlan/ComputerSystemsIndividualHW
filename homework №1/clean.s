@@ -156,7 +156,9 @@ main:
 	push	rbx
 
 	mov r12, 0
-	mov r13d, DWORD PTR -92[rbp]	
+	mov r13d, DWORD PTR -92[rbp]
+	mov r14d, DWORD PTR -96[rbp]	
+	
 
 	mov	rbx, rsp
 
@@ -175,10 +177,10 @@ main:
 	mov rdi, rax							# rdi = rax
 	call malloc@PLT							# Выделение памяти для на rax бит
 	mov QWORD PTR -64[rbp], rax					# [-64] = old_array
-
+	mov r15, QWORD PTR -64[rbp]
 
 	mov	edx, DWORD PTR -96[rbp]					# edx = x
-	mov	esi, r13d					# esi = size 								
+	mov	esi, DWORD PTR -92[rbp]					# esi = size 								
 	mov	rdi, QWORD PTR -64[rbp]					# rdi = old_array  
 	call	input							# вызов input c аргументами	
 	
