@@ -157,7 +157,7 @@ main:
 
 	mov r12, 0
 	mov r13d, DWORD PTR -92[rbp]
-	mov r14d, 	
+	mov r14d, DWORD PTR -96[rbp]	
 	
 
 	mov	rbx, rsp
