@@ -54,7 +54,9 @@ input:
 	ret
 	.size	input, .-input
 
-
+	.section	.rodata						# Переход в секцию констант
+.LC2:
+	.string	"%d "							# Объвление строки "%d " 
 	.globl	make_new_array
 make_new_array:
 	push	rbp								# Кладем rbp на стек
@@ -77,8 +79,9 @@ make_new_array:
 	cmp	QWORD PTR -48[rbp], rax				# compare(old_array[rax], x)
 	je	.L8									# if (old_array[rax] == x) goto .L8 
 
+
 	mov	rsi, r12							# esi = array[i]
-	lea	rdi, .LC1[rip]						# rdi = "%d "
+	lea	rdi, .LC2[rip]						# rdi = "%d "
 	call	printf@PLT						# вызов printf с параметрами
 
 
