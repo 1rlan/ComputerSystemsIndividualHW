@@ -163,7 +163,7 @@ main:
 	mov	rbx, rsp
 
 	
-	lea rsi, r13						# rsi = &size 
+	lea rsi, -92[rbp]						# rsi = &size 
 	lea rdi, .LC0[rip]						# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
