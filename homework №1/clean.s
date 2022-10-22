@@ -1,4 +1,4 @@
-	.intel_syntax noprefix					# Использование синтакса Intel       
+	.intel_syntax noprefix						# Использование синтакса Intel       
 	
 	.text										
 	.section	.rodata						# Переход в секцию констант
@@ -13,62 +13,64 @@ input:
 	mov	rbp, rsp							# rbp = rsp
 	sub	rsp, 64								# rsp -= 32 (выделяем память) 
 
-	mov	QWORD PTR -24[rbp], rdi				# [-24] = old_array
-	mov	QWORD PTR -32[rbp], rsi				# [-28] = size
-	mov	QWORD PTR -40[rbp], rdx				# [-32] = x
+	mov	QWORD PTR -24[rbp], rdi					# [-24] = old_array
+	mov	QWORD PTR -32[rbp], rsi					# [-28] = size
+	mov	QWORD PTR -40[rbp], rdx					# [-32] = x
 
-	mov	QWORD PTR -8[rbp], 0				# valid_size = 0
-	mov	r12, 0								# i = 0	
-	jmp	.L2									# goto .L2
+	mov	QWORD PTR -8[rbp], 0		# valid_size = 0
+	mov	r12, 0						# i = 0	
+	jmp	.L2							# goto .L2
 
+// 5 2
+// 1 2 2 4 5
 
 .L4:
-	mov	rax, r12							# eax = i
-	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
-	mov	rax, QWORD PTR -24[rbp]				# rax = old_array
-	add	rax, rdx							# rax += rdx       
+	mov	rax, r12						# eax = i
+	lea	rdx, 0[0+rax*4]					# rdx = rax * 4
+	mov	rax, QWORD PTR -24[rbp]			# rax = old_array
+	add	rax, rdx						# rax += rdx       
 
-	mov	rsi, rax							# rsi = rax
-	lea	rdi, .LC0[rip]						# rdi = "%d"
-	call	__isoc99_scanf@PLT				# Вызов функции scanf c параметрами rsi и rdi
+	mov	rsi, rax						# rsi = rax
+	lea	rdi, .LC0[rip]					# rdi = "%d"
+	call	__isoc99_scanf@PLT			# Вызов функции scanf c параметрами rsi и rdi
 	
-	mov	rax, r12							# eax = i
-	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
-	mov	rax, QWORD PTR -24[rbp]				# rax = old_array
-	add	rax, rdx							# rax += rdx
+	mov	rax, r12						# eax = i
+	lea	rdx, 0[0+rax*4]					# rdx = rax * 4
+	mov	rax, QWORD PTR -24[rbp]			# rax = old_array
+	add	rax, rdx						# rax += rdx
 
-	mov	rax, QWORD PTR [rax]				# eax = array[rax]	
-	cmp	QWORD PTR -40[rbp], rax				# compare(x, eax)
-	je	.L3									# if (x == eax) goto .L3
-	add	QWORD PTR -8[rbp], 1				# ++valid_size
+	mov	rax, QWORD PTR [rax]			# eax = array[rax]	
+	cmp	QWORD PTR -40[rbp], rax			# compare(x, eax)
+	je	.L3								# if (x == eax) goto .L3
+	add	QWORD PTR -8[rbp], 1			# ++valid_size
 
 .L3:
-	add	r12, 1								# ++i
+	add	r12, 1					# ++i
 
 .L2:
-	mov	rax, r12							# eax = i
-	cmp	rax, QWORD PTR -32[rbp]				# compare (eax, size)
-	jl	.L4									# if (i < 4) goto .L4
-	mov	rax, QWORD PTR -8[rbp]				# eax = valid_size			
-	leave									# return eax
+	mov	rax, r12					# eax = i
+	cmp	rax, QWORD PTR -32[rbp]					# compare (eax, size)
+	jl	.L4							# if (i < 4) goto .L4
+	mov	rax, QWORD PTR -8[rbp]					# eax = valid_size			
+	leave								# return eax
 	ret
 	.size	input, .-input
 
-	.section	.rodata						# Переход в секцию констант
-.LC2:
-	.string	"%d "							# Объвление строки "%d " 
+
 	.globl	make_new_array
 make_new_array:
-	push	rbp								# Кладем rbp на стек
-	mov	rbp, rsp							# rbp = rsp
+	push	rbp							# Кладем rbp на стек
+	mov	rbp, rsp						# rbp = rsp
+	sub	rsp, 64
 
-	mov	QWORD PTR -24[rbp], rdi				# [-24] = old_array
-	mov	QWORD PTR -32[rbp], rsi				# [-32] = new_array
-	mov	QWORD PTR -40[rbp], rdx				# [-36] = size
-	mov	QWORD PTR -48[rbp], rcx				# [-40] = x
-	mov	QWORD PTR -8[rbp], -1				# index = -1
-	mov	r12, 0								# i = 0
-	jmp	.L7									# goto .L7
+
+	mov	QWORD PTR -24[rbp], rdi					# [-24] = old_array
+	mov	QWORD PTR -32[rbp], rsi					# [-32] = new_array
+	mov	QWORD PTR -40[rbp], rdx					# [-36] = size
+	mov	QWORD PTR -48[rbp], rcx					# [-40] = x
+	mov	QWORD PTR -8[rbp], -1					# index = -1
+	mov	r12, 0					# i = 0
+	jmp	.L7							# goto .L7
 
 .L9:
 	mov	rax, r12							# eax = i	
@@ -78,12 +80,6 @@ make_new_array:
 	mov	rax, QWORD PTR [rax]				# eax = old_array[rax]
 	cmp	QWORD PTR -48[rbp], rax				# compare(old_array[rax], x)
 	je	.L8									# if (old_array[rax] == x) goto .L8 
-
-
-	mov	rsi, r12							# esi = array[i]
-	lea	rdi, .LC2[rip]						# rdi = "%d "
-	call	printf@PLT						# вызов printf с параметрами
-
 
 	mov	rax, r12							# eax = i
 	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
@@ -98,12 +94,12 @@ make_new_array:
 	mov	QWORD PTR [rdx], rax				# new_array[index] = eax
 
 .L8:
-	add	r12, 1								# ++i
+	add	r12, 1					# ++i
 
 .L7:
-	mov	rax, r12							# eax = i
-	cmp	rax, QWORD PTR -40[rbp]				# compare(i, size)
-	jl	.L9									# if (i < size) goto .L9
+	mov	rax, r12					# eax = i
+	cmp	rax, QWORD PTR -40[rbp]					# compare(i, size)
+	jl	.L9							# if (i < size) goto .L9
 	pop	rbp
 	ret
 
@@ -116,33 +112,33 @@ make_new_array:
 	.text
 	.globl	output
 output:
-	push	rbp								# Кладем rbp на стек
-	mov	rbp, rsp							# rbp = rsp
-	sub	rsp, 64								# rsp -= 32 (выделяем память) 
-	mov	QWORD PTR -24[rbp], rdi				# [-24] = new_array
-	mov	QWORD PTR -32[rbp], rsi				# [-28] = valid_size
-	mov	r12, 0								# i = 0
-	jmp	.L11								# goto .L11
+	push	rbp							# Кладем rbp на стек
+	mov	rbp, rsp						# rbp = rsp
+	sub	rsp, 64							# rsp -= 32 (выделяем память) 
+	mov	QWORD PTR -24[rbp], rdi					# [-24] = new_array
+	mov	QWORD PTR -32[rbp], rsi					# [-28] = valid_size
+	mov	r12, 0					# i = 0
+	jmp	.L11							# goto .L11
 
 .L12:
-	mov	rax, r12							# eax = i
+	mov	rax, r12					# eax = i
 	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
-	mov	rax, QWORD PTR -24[rbp]				# rax = new_array
-	add	rax, rdx							# new_array += rdx
-	mov	rax, QWORD PTR [rax]				# eax = array[i]
+	mov	rax, QWORD PTR -24[rbp]					# rax = new_array
+	add	rax, rdx						# new_array += rdx
+	mov	rax, QWORD PTR [rax]					# eax = array[i]
 
-	mov	rsi, rax							# esi = array[i]
+	mov	rsi, rax						# esi = array[i]
 	lea	rdi, .LC1[rip]						# rdi = "%d "
-	call	printf@PLT						# вызов printf с параметрами
+	call	printf@PLT							# вызов printf с параметрами
 
-	add	r12, 1								# ++i
+	add	r12, 1					# ++i
 
 .L11:
-	mov	rax, r12							# eax = i
-	cmp	rax, QWORD PTR -32[rbp]				# compare (eax, valid_size)
-	jl	.L12								# if (eax < valid_size) goto .L12
+	mov	rax, r12					# eax = i
+	cmp	rax, QWORD PTR -32[rbp]					# compare (eax, valid_size)
+	jl	.L12							# if (eax < valid_size) goto .L12
 
-	mov	rdi, 10								# edi = '\n' (new line)
+	mov	rdi, 10							# edi = '\n' (new line)
 	call	putchar@PLT						# вызываем printf c параметром
 	leave
 	ret
@@ -151,8 +147,8 @@ output:
 
 	.globl	main
 main:
-	push	rbp								# Кладем rbp на стек
-	mov	rbp, rsp							# rbp = rsp
+	push	rbp							# Кладем rbp на стек
+	mov	rbp, rsp						# rbp = rsp
 	sub	rsp, 120							# rsp -= 88 (выделяем память)
 
 	push	r15									
