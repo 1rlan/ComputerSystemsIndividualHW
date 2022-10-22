@@ -14,7 +14,7 @@ input:
 	sub	rsp, 32							# rsp -= 32 (выделяем память) 
 
 	mov	QWORD PTR -24[rbp], rdi					# [-24] = old_array
-	mov	DWORD PTR -28[rbp], esi					# [-28] = size
+	mov	r13d, esi					    #[-28] = size
 	mov	DWORD PTR -32[rbp], edx					# [-32] = x
 
 	mov	DWORD PTR -4[rbp], 0					# valid_size = 0
@@ -48,7 +48,7 @@ input:
 
 .L2:
 	mov	eax, r12d					# eax = i
-	cmp	eax, DWORD PTR -28[rbp]					# compare (eax, size)
+	cmp	eax, r13d					# compare (eax, size)
 	jl	.L4							# if (i < 4) goto .L4
 	mov	eax, DWORD PTR -4[rbp]					# eax = valid_size			
 	leave								# return eax
@@ -63,7 +63,7 @@ make_new_array:
 
 	mov	QWORD PTR -24[rbp], rdi					# [-24] = old_array
 	mov	QWORD PTR -32[rbp], rsi					# [-32] = new_array
-	mov	DWORD PTR -36[rbp], edx					# [-36] = size
+	mov	r13d, edx					# [-36] = size
 	mov	DWORD PTR -40[rbp], ecx					# [-40] = x
 	mov	DWORD PTR -4[rbp], -1					# index = -1
 	mov	r12d, 0					# i = 0
@@ -96,7 +96,7 @@ make_new_array:
 
 .L7:
 	mov	eax, r12d					# eax = i
-	cmp	eax, DWORD PTR -36[rbp]					# compare(i, size)
+	cmp	eax, r13d					# compare(i, size)
 	jl	.L9							# if (i < size) goto .L9
 	pop	rbp
 	ret
@@ -156,6 +156,7 @@ main:
 	push	rbx
 
 	mov r12, 0
+	mov r13, -92[rbp]
 
 	mov	rbx, rsp
 
@@ -169,7 +170,7 @@ main:
 	lea rdi, .LC0[rip]						# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
-	mov	rax, -92[rbp]						# rax = size
+	mov	rax, r13d						# rax = size
 	shl	rax, 3							# rax *= 8
 	mov rdi, rax							# rdi = rax
 	call malloc@PLT							# Выделение памяти для на rax бит
@@ -177,7 +178,7 @@ main:
 
 
 	mov	edx, DWORD PTR -96[rbp]					# edx = x
-	mov	esi, DWORD PTR -92[rbp]					# esi = size 								
+	mov	esi, r13d				# esi = size 								
 	mov	rdi, QWORD PTR -64[rbp]					# rdi = old_array  
 	call	input							# вызов input c аргументами	
 	
@@ -188,7 +189,7 @@ main:
 	mov QWORD PTR -88[rbp], rax					# [-88] = new_array
 
  	mov	ecx, DWORD PTR -96[rbp]					# ecx = x	
- 	mov	edx, DWORD PTR -92[rbp]					# edx = size
+ 	mov	edx, r13d				# edx = size
  	mov	rsi, QWORD PTR -88[rbp]					# rsi = *(new_array)
  	mov	rdi, QWORD PTR -64[rbp]					# rdi = *(old_array) 
  	call	make_new_array						# вызов make_new_array c аргументами
