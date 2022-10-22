@@ -155,8 +155,9 @@ main:
 	push	r12
 	push	rbx
 
-	mov r13, 0
-	mov r12, 0
+	mov r12, 0							# i 
+	mov r13d, -92[rbp]							# size
+	
 	mov r14, 0
 	mov r15, 0
 
@@ -172,7 +173,7 @@ main:
 	lea rdi, .LC0[rip]						# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 
-	mov	rax, -92[rbp]						# rax = size
+	mov	rax, r13d						# rax = size
 	shl	rax, 3							# rax *= 8
 	mov rdi, rax							# rdi = rax
 	call malloc@PLT							# Выделение памяти для на rax бит
