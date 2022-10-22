@@ -191,8 +191,8 @@ main:
 
  	mov	ecx, DWORD PTR -96[rbp]					# ecx = x	
  	mov	edx, DWORD PTR -92[rbp]					# edx = size
- 	mov	rsi, QWORD PTR -88[rbp]					# rsi = *(new_array)
- 	mov	rdi, QWORD PTR -64[rbp]					# rdi = *(old_array) 
+ 	mov	rsi, QWORD PTR -88[rbp]					# rsi = new_array
+ 	mov	rdi, QWORD PTR -64[rbp]					# rdi = old_array 
  	call	make_new_array						# вызов make_new_array c аргументами
 
  	mov	esi, DWORD PTR -68[rbp]					#  esi = valid_size
