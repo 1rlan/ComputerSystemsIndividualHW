@@ -70,25 +70,25 @@ make_new_array:
 	jmp	.L7							# goto .L7
 
 .L9:
-	mov	rax, r12				# eax = i	
+	mov	rax, r12							# eax = i	
 	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
-	mov	rax, QWORD PTR -24[rbp]					# rax = old_array
-	add	rax, rdx						# rax += rdx
-	mov	rax, QWORD PTR [rax]					# eax = old_array[rax]
-	cmp	QWORD PTR -48[rbp], rax					# compare(old_array[rax], x)
-	je	.L8							# if (old_array[rax] == x) goto .L8 
+	mov	rax, QWORD PTR -24[rbp]				# rax = old_array
+	add	rax, rdx							# rax += rdx
+	mov	rax, QWORD PTR [rax]				# eax = old_array[rax]
+	cmp	QWORD PTR -48[rbp], rax				# compare(old_array[rax], x)
+	je	.L8									# if (old_array[rax] == x) goto .L8 
 
-	mov	rax, r12					# eax = i
+	mov	rax, r12							# eax = i
 	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
-	mov	rax, QWORD PTR -24[rbp]					# rax = old_array
-	add	rax, rdx						# rax += rdx
-	add	QWORD PTR -8[rbp], 1					# ++index
-	mov	rdx, QWORD PTR -8[rbp]					# edx = index
+	mov	rax, QWORD PTR -24[rbp]				# rax = old_array
+	add	rax, rdx							# rax += rdx
+	add	QWORD PTR -8[rbp], 1				# ++index
+	mov	rdx, QWORD PTR -8[rbp]				# edx = index
 	lea	rcx, 0[0+rdx*4]						# rcx = rdx * 4
-	mov	rdx, QWORD PTR -32[rbp]					# rdx = new_array 
-	add	rdx, rcx						# rdx += rcx
-	mov	rax, QWORD PTR [rax]					# eax = old_array[i]
-	mov	QWORD PTR [rdx], rax					# new_array[index] = eax
+	mov	rdx, QWORD PTR -32[rbp]				# rdx = new_array 
+	add	rdx, rcx							# rdx += rcx
+	mov	rax, QWORD PTR [rax]				# eax = old_array[i]
+	mov	QWORD PTR [rdx], rax				# new_array[index] = eax
 
 .L8:
 	add	r12, 1					# ++i
@@ -126,7 +126,7 @@ output:
 
 	mov	rsi, rax						# esi = array[i]
 	lea	rdi, .LC1[rip]						# rdi = "%d "
-call	printf@PLT							# вызов printf с параметрами
+	call	printf@PLT							# вызов printf с параметрами
 
 	add	r12, 1					# ++i
 
