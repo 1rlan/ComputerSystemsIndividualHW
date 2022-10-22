@@ -126,9 +126,13 @@ gcc -masm=intel \
 ## Оптимизация
 Заменим значения на стеке регистрами:
 ```
-		QWORD PTR -96[rbp] = i    -> r12    # Счетчик для всех циклов
-		DWORD PTR -92[rbp] = size -> r13d
-		DWORD PTR -96[rbp] = x    -> r14d
-		
+i          -> r12               # Счетчик для всех циклов
+size       -> r13d
+x          -> r14d
+valid_size -> r15					
 ```
 
+
+## Финальные тесты 
+Проведем тесты и убедимся, что все работает.
+![image info](images/test_final.png)
