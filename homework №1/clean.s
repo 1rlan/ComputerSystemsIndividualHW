@@ -79,9 +79,6 @@ make_new_array:
 	cmp	QWORD PTR -48[rbp], rax				# compare(old_array[rax], x)
 	je	.L8									# if (old_array[rax] == x) goto .L8 
 
-	mov	rdi, 33							# edi = '\n' (new line)
-	call	putchar@PLT						# вызываем printf c параметром
-
 	mov	rax, r12							# eax = i
 	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]				# rax = old_array
@@ -101,6 +98,7 @@ make_new_array:
 	mov	rax, r12					# eax = i
 	cmp	rax, QWORD PTR -40[rbp]					# compare(i, size)
 	jl	.L9							# if (i < size) goto .L9
+	mov rax, QWORD PTR -8[rbp]
 	pop	rbp
 	ret
 
