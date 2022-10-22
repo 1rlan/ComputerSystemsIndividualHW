@@ -156,7 +156,7 @@ main:
 	push	rbx
 
 	mov r12, 0
-	mov r13d, -92[rbp]
+	mov r13d, DWORD PTR -92[rbp]	
 
 	mov	rbx, rsp
 
@@ -214,3 +214,4 @@ main:
 	pop	r15
 	pop	rbp
 	ret
+	
