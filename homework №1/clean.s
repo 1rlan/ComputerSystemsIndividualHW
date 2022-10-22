@@ -14,7 +14,7 @@ input:
 	sub	rsp, 32							# rsp -= 32 (выделяем память) 
 
 	mov	QWORD PTR -24[rbp], rdi					# [-24] = old_array
-	mov	DWORD PTR -28[rbp], esi					# [-28] = size
+	mov	r13, rsi					# [-28] = size
 	mov	DWORD PTR -32[rbp], edx					# [-32] = x
 
 	mov	DWORD PTR -4[rbp], 0					# valid_size = 0
@@ -48,7 +48,7 @@ input:
 
 .L2:
 	mov	eax, r12d					# eax = i
-	cmp	eax, DWORD PTR -28[rbp]					# compare (eax, size)
+	cmp	eax, r13d					# compare (eax, size)
 	jl	.L4							# if (i < 4) goto .L4
 	mov	eax, DWORD PTR -4[rbp]					# eax = valid_size			
 	leave								# return eax
@@ -63,7 +63,7 @@ make_new_array:
 
 	mov	QWORD PTR -24[rbp], rdi					# [-24] = old_array
 	mov	QWORD PTR -32[rbp], rsi					# [-32] = new_array
-	mov	DWORD PTR -36[rbp], edx					# [-36] = size
+	mov	r13, rdx					# [-36] = size
 	mov	DWORD PTR -40[rbp], ecx					# [-40] = x
 	mov	DWORD PTR -4[rbp], -1					# index = -1
 	mov	r12d, 0					# i = 0
@@ -96,7 +96,7 @@ make_new_array:
 
 .L7:
 	mov	eax, r12d					# eax = i
-	cmp	eax, DWORD PTR -36[rbp]					# compare(i, size)
+	cmp	eax, r13d				# compare(i, size)
 	jl	.L9							# if (i < size) goto .L9
 	pop	rbp
 	ret
@@ -192,7 +192,7 @@ main:
 	mov QWORD PTR -88[rbp], rax					# [-88] = new_array
 
  	mov	ecx, DWORD PTR -96[rbp]					# ecx = x	
- 	mov	rdx, r13				# edx = size
+ 	mov	rdx, r13					# edx = size
  	mov	rsi, QWORD PTR -88[rbp]					# rsi = *(new_array)
  	mov	rdi, QWORD PTR -64[rbp]					# rdi = *(old_array) 
  	call	make_new_array						# вызов make_new_array c аргументами
