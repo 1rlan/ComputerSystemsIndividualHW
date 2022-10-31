@@ -1,24 +1,30 @@
-	.intel_syntax noprefix
+	.intel_syntax noprefix   			# Использования синтаксиса intel
 
 
-	.text
+	.text								
 	.globl	isDigit
-isDigit:
-	push	rbp
-	mov	rbp, rsp
-	mov	eax, edi
-	mov	BYTE PTR -4[rbp], al
-	cmp	BYTE PTR -4[rbp], 57
-	jg	.L2
-	cmp	BYTE PTR -4[rbp], 47
-	jle	.L2
-	mov	eax, 1
-	jmp	.L4
+isDigit:								# Функция isDigit
+
+	push	rbp							# Кладем rbp на стек	 | 		
+	mov	rbp, rsp						# rbp - rsp				 | Не выделяем память
+
+	mov	eax, edi						# eax = edi				 | Принимаем ch		
+	mov	BYTE PTR -4[rbp], al			# [-4] = al 			 | [-4] <=> ch
+	cmp	BYTE PTR -4[rbp], 57			# compare(char, 57)		 | Сравниваем коды
+	jg	.L2								# goto L2				 | Если ch > 57 -> false и выход
+
+	cmp	BYTE PTR -4[rbp], 47			# compare(char, 47)	     | Сравниваем коды
+	jle	.L2								# goto L2				 | Если ch <= 47 -> false и выход
+
+	mov	eax, 1							# return = 1			 | Иначе -> true
+	jmp	.L4								# goto L4				 | Переход к метке выхода
+
 .L2:
-	mov	eax, 0
+	mov	eax, 0							# return = 0			 | Возвращаем false
+
 .L4:
-	pop	rbp
-	ret
+	pop	rbp								# Удаляем rbp со стека
+	ret									# return eax			 | return 0 или 1
 
 
 	.globl	isNotDigit
@@ -136,7 +142,7 @@ count:
 
 	.text
 	.globl	main
-main:
+main:									# Функция main
 	push	rbp							# Кладем rbp на стек 	 |
 	mov	rbp, rsp						# rbp = rsp			 	 | Выделение памяти
 	sub	rsp, 16							# rsp -= 16			 	 |
@@ -162,5 +168,6 @@ main:
 	mov	rdi, QWORD PTR -8[rbp]			# rdi = [-8]			 | Освобождаем память 
 	call	free@PLT					# free(*string)			 | из массива char'ов
 
+	mov eax, 0
 	leave								# return 0;				 | Выход из функции
 	ret									
