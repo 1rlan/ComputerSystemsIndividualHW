@@ -86,12 +86,21 @@ gcc -masm=intel \
 
 
 ## Замены
-Будем класть значения в регистр rsi напрямую. Рассмотрим, например, вызов scanf, в нем можно заменить строки
+Будем класть значения в регистр rdi напрямую. Рассмотрим, например, вызов printf, в нем можно заменить строки
 ```
-        lea rax, -92[rbp]
-        mov rsi, rax
+		lea rax, .LC0[rip]
+		mov rdi, rax
 
 		# Заменяем на:
 
-		mov rsi, -92[rbp]
+		mov rdi, .LC0[rip]
+```
+Поступим так же со связкой rax - rdi:
+```
+		mov rax, QWORD PTR -8[rbp]
+		mov rdi, rax
+		
+		# Заменяем на:
+		
+		mov rdi, QWORD PTR -8[rbp]
 ```
