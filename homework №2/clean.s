@@ -4,47 +4,41 @@
 	.text								
 	.globl	isDigit
 isDigit:								# Функция isDigit
-
 	push	rbp							# Кладем rbp на стек	 | 		
 	mov	rbp, rsp						# rbp - rsp				 | Не выделяем память
-
 	mov	eax, edi						# eax = edi				 | Принимаем ch		
 	mov	BYTE PTR -4[rbp], al			# [-4] = al 			 | [-4] <=> ch
 	cmp	BYTE PTR -4[rbp], 57			# compare(char, 57)		 | Сравниваем коды
 	jg	.L2								# goto L2				 | Если ch > 57 -> false и выход
-
 	cmp	BYTE PTR -4[rbp], 47			# compare(char, 47)	     | Сравниваем коды
 	jle	.L2								# goto L2				 | Если ch <= 47 -> false и выход
-
 	mov	eax, 1							# return = 1			 | Иначе -> true
 	jmp	.L4								# goto L4				 | Переход к метке выхода
-
 .L2:
 	mov	eax, 0							# return = 0			 | Возвращаем false
-
 .L4:
 	pop	rbp								# Удаляем rbp со стека
 	ret									# return eax			 | return 0 или 1
 
 
-	.globl	isNotDigit
-isNotDigit:
-	push	rbp
-	mov	rbp, rsp
-	mov	eax, edi
-	mov	BYTE PTR -4[rbp], al
-	cmp	BYTE PTR -4[rbp], 57
-	jg	.L6
-	cmp	BYTE PTR -4[rbp], 47
-	jg	.L7
-.L6:
-	mov	eax, 1
-	jmp	.L9
+	.globl	isNotDigit					
+isNotDigit:								# Функция isNotDigit
+	push	rbp							# Кладем rbp на стек	 |
+	mov	rbp, rsp						# rbp - rsp				 | Не выделяем память
+	mov	eax, edi						# eax = edi				 | Принимаем ch		
+	mov	BYTE PTR -4[rbp], al			# [-4] = al 			 | [-4] <=> ch
+	cmp	BYTE PTR -4[rbp], 57			# compare(char, 57)		 | Сравниваем коды
+	jg	.L6								# goto L2				 | Если ch > 57 -> true и выход
+	cmp	BYTE PTR -4[rbp], 47			# compare(char, 47)	     | Сравниваем коды
+	jg	.L7								# goto L2				 | Если ch > 47 -> false и выход
+.L6:	
+	mov	eax, 1							# return = 1			 | Возвращаем trur
+	jmp	.L9								# goto L9				 | Переход к выходу
 .L7:
-	mov	eax, 0
+	mov	eax, 0							# return = 0			 | Возвращаем false
 .L9:
-	pop	rbp
-	ret
+	pop	rbp								# Удаляем rbp со стека
+	ret									# return eax			 | return 0 или 1
 
 
 	.globl	input
