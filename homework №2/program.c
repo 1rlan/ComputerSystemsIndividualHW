@@ -6,8 +6,8 @@ int isDigit(char ch) {
     return (ch < 58 && ch > 47);
 }
 
-// Проверка, является ли char буквой
-int isLetter(char ch) {
+// Проверка, является ли char НЕ цифрой
+int isNotDigit(char ch) {
     return !(ch < 58 && ch > 47);
 }
 
@@ -26,7 +26,7 @@ int input(char* str) {
 int count(char* string, int length) {
     int counter = 0;
     for (int i = 1; i < length; ++i) {
-        if (isDigit(string[i]) && isLetter(string[i - 1])) {
+        if (isNotDigit(string[i]) && isLetter(string[i - 1])) {
             ++counter;
         }
     }

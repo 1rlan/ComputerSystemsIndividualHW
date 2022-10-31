@@ -11,10 +11,6 @@
 [Битая ссылка](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%962/program.c) - код без комментариев и ручного редактирования.\
 [Битая ссылка](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%961/clean.s) - код  ```program.c```  c комментариями и оптимизацией.
 
-## Код на языке Асемблера:
-[program.s](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%961/program.s) - код без комментариев и ручного редактирования.\
-[clean.s](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%961/clean.s) - код  ```program.c```  c комментариями и оптимизацией.
-
 ## Флаги 
 Дизасемблирование осуществлялось с использованием флагов:
 ```terminal
