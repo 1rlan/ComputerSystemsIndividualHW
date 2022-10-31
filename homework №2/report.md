@@ -49,6 +49,7 @@ gcc -masm=intel \
 
 Уберем все строки:
 ```assembly
+        mov eax, 0
         endbr64
         cdqe
 ```

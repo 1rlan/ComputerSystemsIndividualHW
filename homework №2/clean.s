@@ -158,12 +158,10 @@ main:
 	mov	esi, eax
 	lea	rax, .LC0[rip]
 	mov	rdi, rax
-	mov	eax, 0
 	call	printf@PLT
 
 	mov	rdi, QWORD PTR -8[rbp]			# rdi = [-8]			|
 	call	free@PLT					# free(*string)			|
-	mov	eax, 0
 
 	leave
 	ret
