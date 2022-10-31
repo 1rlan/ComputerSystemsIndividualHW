@@ -13,19 +13,31 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "homework №1/report.md",
+                "file": "homework №2/report.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "e11d734719d4cf67",
+            "id": "92b9f3d6cc321d3d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "homework №1/report.md",
+                "file": "homework №2/README.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "da9dd1e4b3e74a43",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "homework №2/README.md",
                 "mode": "source",
                 "source": false
               }
@@ -81,8 +93,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "59ea1c34a76c6444",
@@ -98,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "homework №1/report.md",
+                "file": "homework №2/report.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "homework №1/report.md",
+                "file": "homework №2/report.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "homework №1/report.md"
+                "file": "homework №2/report.md"
               }
             }
           }
@@ -154,14 +165,15 @@
   },
   "active": "f62763bef22884f2",
   "lastOpenFiles": [
-    "images/final_tests.png.md",
+    "homework №2/README.md",
     "homework №1/report.md",
     "homework №1/README.md",
-    "images/test_first.md",
-    "images/test_firsr.md",
+    "homework №2/report.md",
+    "().md",
+    "homework №1/images/test_final.png",
     "homework №1/images/test_first.png",
-    "homework №1/images/firsttest.png",
-    "images/firsttest.md",
-    "README.md"
+    "images/final_tests.png.md",
+    "images/test_first.md",
+    "images/test_firsr.md"
   ]
 }
