@@ -11,6 +11,7 @@ int isNotDigit(char ch) {
     return !(ch < 58 && ch > 47);
 }
 
+
 // Посимвольный ввод с клвавиатуры
 int input(char* str) {
     int size = -1;
@@ -22,11 +23,11 @@ int input(char* str) {
     return size;
 }
 
-// Подсчет кол-ва цифр
+// Подсчет чисел в строке
 int count(char* string, int length) {
     int counter = 0;
     for (int i = 1; i < length; ++i) {
-        if (isNotDigit(string[i]) && isLetter(string[i - 1])) {
+        if (isDigit(string[i]) && isNotDigit(string[i - 1])) {
             ++counter;
         }
     }
