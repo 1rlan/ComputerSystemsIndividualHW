@@ -161,9 +161,9 @@ main:
 	mov	eax, 0
 	call	printf@PLT
 
-	mov	rax, QWORD PTR -8[rbp]
-	mov	rdi, rax
-	call	free@PLT
+	mov	rdi, QWORD PTR -8[rbp]			# rdi = [-8]			|
+	call	free@PLT					# free(*string)			|
 	mov	eax, 0
+
 	leave
 	ret
