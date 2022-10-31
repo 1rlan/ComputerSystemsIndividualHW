@@ -8,18 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "f62763bef22884f2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "homework №1/README.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "92b9f3d6cc321d3d",
             "type": "leaf",
             "state": {
@@ -37,13 +25,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "homework №2/README.md",
+                "file": "homework №1/report.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "945c48f0dfcd82fb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "homework №2/report.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -110,7 +111,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "homework №1/README.md",
+                "file": "homework №2/report.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +128,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "homework №1/README.md",
+                "file": "homework №2/report.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +151,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "homework №1/README.md"
+                "file": "homework №2/report.md"
               }
             }
           }
@@ -164,7 +165,7 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "0101af1292cf8da5",
+  "active": "945c48f0dfcd82fb",
   "lastOpenFiles": [
     "homework №1/report.md",
     "homework №2/report.md",

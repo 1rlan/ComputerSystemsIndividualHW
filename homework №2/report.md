@@ -5,6 +5,30 @@
 
 ## Код на языке С:
 [program.c](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%962/program.c) - код программ\
-Вводится строка. Признак окончания строки - ее перевод (enter).\
+Вводится строка. Признак окончания строки - ее перевод (enter).
 
+## Код на языке Асемблера:
+[Битая ссылка](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%962/program.c) - код без комментариев и ручного редактирования.\
+[Битая ссылка](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%961/clean.s) - код  ```program.c```  c комментариями и оптимизацией.
 
+## Код на языке Асемблера:
+[program.s](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%961/program.s) - код без комментариев и ручного редактирования.\
+[clean.s](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%961/clean.s) - код  ```program.c```  c комментариями и оптимизацией.
+
+## Флаги 
+Дизасемблирование осуществлялось с использованием флагов:
+```terminal
+gcc -masm=intel \
+    -fno-asynchronous-unwind-tables \
+    -fno-jump-tables \
+    -fno-stack-protector \
+    -fno-exceptions \
+    ./program.c \
+    -S -o ./program.s
+```
+
+## Тесты 
+[tests](https://github.com/1rlan/csaihw/tree/master/homework%20%E2%84%962/tests) - папка с тестами\
+Для проверки корректности программы использовались тесты, проверяющие крайние значения (строки нулевой и единичной длины), строки с различными расположением цифр в начале и конце строки, строки без букв или без цифр и далее по списку...
+
+Проведем первые тесты на "чистом" ассемблерном файле и убедимся, что все работает:
