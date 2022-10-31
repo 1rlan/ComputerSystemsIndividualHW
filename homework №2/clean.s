@@ -149,18 +149,24 @@ main:
 	call	input						# input(*string)	 | заполнения строки
 	mov	DWORD PTR -12[rbp], eax			# [-12] = eax		 | [-12] <=> length
 
-	mov	esi, DWORD PTR -12[rbp]
-	mov	rdi, QWORD PTR -8[rbp]
+
+	mov	edx, DWORD PTR -12[rbp]
+	mov	rax, QWORD PTR -8[rbp]
+	mov	esi, edx
+	mov	rdi, rax
 	call	count
 	mov	DWORD PTR -16[rbp], eax
 
-	mov	esi, DWORD PTR -16[rbp]						
-	mov	rdi, .LC0[rip]					 
-	call	printf@PLT					
+	mov	eax, DWORD PTR -16[rbp]
+	mov	esi, eax
+	
+	mov	rdi, .LC0[rip]					
+	mov	eax, 0
+	call	printf@PLT
 
-	mov	rdi, QWORD PTR -8[rbp]
+	mov	rax, QWORD PTR -8[rbp]
+	mov	rdi, rax
 	call	free@PLT
-
 	mov	eax, 0
 	leave
 	ret
