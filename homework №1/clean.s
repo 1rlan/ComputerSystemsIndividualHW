@@ -18,11 +18,11 @@ input:
 	mov	DWORD PTR -32[rbp], edx					# [-32] = x
 
 	mov	DWORD PTR -4[rbp], 0					# valid_size = 0
-	mov	r12d, 0					# i = 0	
+	mov	r12d, 0							# i = 0	
 	jmp	.L2							# goto .L2
 
 .L4:
-	mov	eax, r12d				# eax = i
+	mov	eax, r12d						# eax = i
 	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]					# rax = old_array
 	add	rax, rdx						# rax += rdx       
@@ -31,7 +31,7 @@ input:
 	lea	rdi, .LC0[rip]						# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
 	
-	mov	eax, r12d					# eax = i
+	mov	eax, r12d						# eax = i
 	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]					# rax = old_array
 	add	rax, rdx						# rax += rdx
@@ -43,11 +43,11 @@ input:
 
 
 .L3:
-	add	r12d, 1					# ++i
+	add	r12d, 1							# ++i
 
 
 .L2:
-	mov	eax, r12d					# eax = i
+	mov	eax, r12d						# eax = i
 	cmp	eax, DWORD PTR -28[rbp]					# compare (eax, size)
 	jl	.L4							# if (i < 4) goto .L4
 	mov	eax, DWORD PTR -4[rbp]					# eax = valid_size			
@@ -66,11 +66,11 @@ make_new_array:
 	mov	DWORD PTR -36[rbp], edx					# [-36] = size
 	mov	DWORD PTR -40[rbp], ecx					# [-40] = x
 	mov	DWORD PTR -4[rbp], -1					# index = -1
-	mov	r12d, 0					# i = 0
+	mov	r12d, 0							# i = 0
 	jmp	.L7							# goto .L7
 
 .L9:
-	mov	eax, r12d				# eax = i	
+	mov	eax, r12d						# eax = i	
 	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]					# rax = old_array
 	add	rax, rdx						# rax += rdx
@@ -78,7 +78,7 @@ make_new_array:
 	cmp	DWORD PTR -40[rbp], eax					# compare(old_array[rax], x)
 	je	.L8							# if (old_array[rax] == x) goto .L8 
 
-	mov	eax, r12d					# eax = i
+	mov	eax, r12d						# eax = i
 	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]					# rax = old_array
 	add	rax, rdx						# rax += rdx
@@ -92,10 +92,10 @@ make_new_array:
 	mov	DWORD PTR [rdx], eax					# new_array[index] = eax
 
 .L8:
-	add	r12d, 1					# ++i
+	add	r12d, 1							# ++i
 
 .L7:
-	mov	eax, r12d					# eax = i
+	mov	eax, r12d						# eax = i
 	cmp	eax, DWORD PTR -36[rbp]					# compare(i, size)
 	jl	.L9							# if (i < size) goto .L9
 	pop	rbp
@@ -115,11 +115,11 @@ output:
 	sub	rsp, 32							# rsp -= 32 (выделяем память) 
 	mov	QWORD PTR -24[rbp], rdi					# [-24] = new_array
 	mov	DWORD PTR -28[rbp], esi					# [-28] = valid_size
-	mov	r12d, 0					# i = 0
+	mov	r12d, 0							# i = 0
 	jmp	.L11							# goto .L11
 
 .L12:
-	mov	eax, r12d					# eax = i
+	mov	eax, r12d						# eax = i
 	lea	rdx, 0[0+rax*4]						# rdx = rax * 4
 	mov	rax, QWORD PTR -24[rbp]					# rax = new_array
 	add	rax, rdx						# new_array += rdx
@@ -129,10 +129,10 @@ output:
 	lea	rdi, .LC1[rip]						# rdi = "%d "
 call	printf@PLT							# вызов printf с параметрами
 
-	add	r12d, 1					# ++i
+	add	r12d, 1							# ++i
 
 .L11:
-	mov	eax, r12d					# eax = i
+	mov	eax, r12d						# eax = i
 	cmp	eax, DWORD PTR -28[rbp]					# compare (eax, valid_size)
 	jl	.L12							# if (eax < valid_size) goto .L12
 
@@ -154,12 +154,6 @@ main:
 	push	r13
 	push	r12
 	push	rbx
-
-	mov r12, 0
-	mov r13d, DWORD PTR -92[rbp]
-	mov r14d, DWORD PTR -96[rbp]	
-	
-
 	mov	rbx, rsp
 
 	
@@ -171,6 +165,10 @@ main:
 	lea rsi, -96[rbp]						# rsi = &x
 	lea rdi, .LC0[rip]						# rdi = "%d"
 	call	__isoc99_scanf@PLT					# Вызов функции scanf c параметрами rsi и rdi
+	
+	mov r12, 0							# r12 = 0
+	mov r13d, DWORD PTR -92[rbp]					# r13d = size
+	mov r14d, DWORD PTR -96[rbp]					# r14d = x
 
 	mov	rax, -92[rbp]						# rax = size
 	shl	rax, 3							# rax *= 8
@@ -184,9 +182,8 @@ main:
 	mov	rdi, QWORD PTR -64[rbp]					# rdi = old_array  
 	call	input							# вызов input c аргументами	
 	mov r15, rax
-
-
-	mov DWORD PTR -68[rbp], eax					# [-68] = ...
+	mov DWORD PTR -68[rbp], eax					# [-68] = valid_size
+	
 	shl rax, 3							# rax *= 8
 	mov rdi, rax							# rdi = rax
 	call malloc@PLT							# Выделение памяти для на rax бит
@@ -194,8 +191,8 @@ main:
 
  	mov	ecx, DWORD PTR -96[rbp]					# ecx = x	
  	mov	edx, DWORD PTR -92[rbp]					# edx = size
- 	mov	rsi, QWORD PTR -88[rbp]					# rsi = *(new_array)
- 	mov	rdi, QWORD PTR -64[rbp]					# rdi = *(old_array) 
+ 	mov	rsi, QWORD PTR -88[rbp]					# rsi = new_array
+ 	mov	rdi, QWORD PTR -64[rbp]					# rdi = old_array 
  	call	make_new_array						# вызов make_new_array c аргументами
 
  	mov	esi, DWORD PTR -68[rbp]					#  esi = valid_size
