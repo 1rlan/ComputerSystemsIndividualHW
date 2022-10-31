@@ -154,12 +154,13 @@ main:
 	call	count						# count(*string, length) | 
 	mov	DWORD PTR -16[rbp], eax			# [-16] = eax			 | [-16] <=> counter
 
-	mov	esi, DWORD PTR -16[rbp]
-	mov	rdi, .LC0[rip]
-	call	printf@PLT
+	mov	esi, DWORD PTR -16[rbp]			# esi = [-16]			 | 
+	lea	rax, .LC0[rip]					# rax = *("%d\n")		 | Вызываем printf
+	mov	rdi, rax						# rdi = rax				 | со значением counter
+	call	printf@PLT					# print("%d\n", counter) | 
 
-	mov	rdi, QWORD PTR -8[rbp]			# rdi = [-8]			|
-	call	free@PLT					# free(*string)			|
+	mov	rdi, QWORD PTR -8[rbp]			# rdi = [-8]			 | Освобождаем память 
+	call	free@PLT					# free(*string)			 | из массива char'ов
 
-	leave
-	ret
+	leave								# return 0;				 | Выход из функции
+	ret									
