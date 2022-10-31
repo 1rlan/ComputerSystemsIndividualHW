@@ -1,14 +1,14 @@
 # Отчет
 
 ## Задание:
-*Вариант 26. Разработать программу, которая определяет количество целых чисел в ASCII-строке. числа состоят из цифр от 0 до 9. Разделителями являются все другие символы.* \
+*Вариант 26. Разработать программу, которая определяет количество целых чисел в ASCII-строке. числа состоят из цифр от 0 до 9. Разделителями являются все другие символы.* 
 
 ## Код на языке С:
-[program.c](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%962/program.c) - код программ\
+[program.c](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%962/program.c) - код изначальной программы\
 Вводится строка. Признак окончания строки - ее перевод (нажатый enter).
 
 ## Код на языке Асемблера:
-[program.s](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%962/program.c) - код без комментариев и ручного редактирования. *192 строки*\
+[program.s](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%962/program.s) - код без комментариев и ручного редактирования. *192 строки*\
 [clean.s](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%962/clean.s) - код  ```program.c```  c комментариями и оптимизацией.
 
 ## Флаги 
@@ -34,37 +34,37 @@ gcc -masm=intel \
 ## Чистка 
 Удалим инфорацию о Си файла:
 ```assembly
-        .file   "program.c
+	 .file   "program.c
 ```
 
 Уберем "копеечные оптимизации", удалив строки:
 ```assembly
-        .size main, .-main 
-        .size isDigit, .-isDigit
-        .size isNotDigit, .-isNotDigit
-        .size input, .-input
-        .size count, .-count
-        .size main, .-main
+	.size main, .-main 
+	.size isDigit, .-isDigit
+	.size isNotDigit, .-isNotDigit
+	.size input, .-input
+	.size count, .-count
+	.size main, .-main
 ```
 
 Уберем все строки:
 ```assembly
-        mov eax, 0
-        endbr64
-        cdqe
+	mov eax, 0
+	endbr64
+	cdqe
 ```
 
 Удалим экспорт символов методов:
 ```assembly        
-		.type isDigit, @function
-        .type isNotDigit, @function
-        .type input, @function
-        .type count, @function
-        .type main, @function
+	.type isDigit, @function
+	.type isNotDigit, @function
+	.type input, @function
+	.type count, @function
+	.type main, @function
 ```
 
 Удалим информацию о дизасемблировании:
-``` assembly
+```assembly
 	.ident "GCC: (Ubuntu 11.2.0-19ubuntu1) 11.2.0"
 	.section .note.GNU-stack,"",@progbits
 	.section .note.gnu.property,"a"
@@ -88,20 +88,22 @@ gcc -masm=intel \
 
 ## Замены
 Будем класть значения в регистр rdi напрямую. Рассмотрим, например, вызов printf, в нем можно заменить строки
-```
-		lea rax, .LC0[rip]
-		mov rdi, rax
+```assembly
+	lea rax, .LC0[rip]
+	mov rdi, rax
 
-		# Заменяем на:
+	# Заменяем на:
 
-		mov rdi, .LC0[rip]
+	mov rdi, .LC0[rip]	
 ```
 Поступим так же со связкой rax - rdi:
-```
-		mov rax, QWORD PTR -8[rbp]
-		mov rdi, rax
+```assembly
+	mov rax, QWORD PTR -8[rbp]
+	mov rdi, rax
 		
-		# Заменяем на:
+	# Заменяем на:
 		
-		mov rdi, QWORD PTR -8[rbp]
+	mov rdi, QWORD PTR -8[rbp]
 ```
+
+## Оптимизация
