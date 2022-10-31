@@ -137,28 +137,25 @@ count:
 	.text
 	.globl	main
 main:
-	push	rbp							# Кладем rbp на стек |
-	mov	rbp, rsp						# rbp = rsp			 | Выделение памяти
-	sub	rsp, 16							# rsp -= 16			 |
+	push	rbp							# Кладем rbp на стек 	 |
+	mov	rbp, rsp						# rbp = rsp			 	 | Выделение памяти
+	sub	rsp, 16							# rsp -= 16			 	 |
 
-	mov	edi, 100000						# edi = 100_000		 | Выделение памяти 			
-	call	malloc@PLT					# malloc(edi)		 | под массив char'ов
-	mov	QWORD PTR -8[rbp], rax			# [-8] = rax		 | [-8] <=> *string
+	mov	edi, 100000						# edi = 100_000			 | Выделение памяти 			
+	call	malloc@PLT					# malloc(edi)			 | под массив char'ов
+	mov	QWORD PTR -8[rbp], rax			# [-8] = rax			 | [-8] <=> *string
 		
-	mov	rdi, QWORD PTR -8[rbp]			# rdi = [-8]		 | Вызов функции
-	call	input						# input(*string)	 | заполнения строки
-	mov	DWORD PTR -12[rbp], eax			# [-12] = eax		 | [-12] <=> length
+	mov	rdi, QWORD PTR -8[rbp]			# rdi = [-8]			 | Вызов функции
+	call	input						# input(*string)	 	 | заполнения строки
+	mov	DWORD PTR -12[rbp], eax			# [-12] = eax		 	 | [-12] <=> length
 
-	mov	esi, DWORD PTR -12[rbp]
-	mov	rdi, QWORD PTR -8[rbp]
-	call	count
-	mov	DWORD PTR -16[rbp], eax
+	mov	esi, DWORD PTR -12[rbp]			# esi = [-12]			 | Вызов функции 
+	mov	rdi, QWORD PTR -8[rbp]			# rdi = [-8]			 | подсчета чисел
+	call	count						# count(*string, length) | 
+	mov	DWORD PTR -16[rbp], eax			# [-16] = eax			 | [-16] <=> counter
 
-	mov	eax, DWORD PTR -16[rbp]
-	mov	esi, eax
-
-	lea	rax, .LC0[rip]
-	mov	rdi, rax
+	mov	esi, DWORD PTR -16[rbp]
+	mov	rdi, .LC0[rip]
 	mov	eax, 0
 	call	printf@PLT
 
