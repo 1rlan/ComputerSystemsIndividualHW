@@ -12,13 +12,13 @@ int isNotDigit(char ch) {
 }
 
 // Посимвольный ввод с клвавиатуры
-int input(char* str) {
+int input(char* string) {
     int size = -1;
     do {
         ++size;
-        str[size] = getchar();
-    } while (str[size] != '\n');
-    str[size] = '\0';
+        string[size] = getchar();
+    } while (string[size] != '\n');
+    string[size] = '\0';
     return size;
 }
 

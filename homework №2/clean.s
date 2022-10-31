@@ -4,8 +4,8 @@
 	.text								
 	.globl	isDigit
 isDigit:								# Функция isDigit
-	push	rbp							# Кладем rbp на стек	 | 		
-	mov	rbp, rsp						# rbp - rsp				 | Не выделяем память
+	push	rbp							# Кладем rbp на стек	  		
+	mov	rbp, rsp						# rbp = rsp				 | Не выделяем память
 	mov	eax, edi						# eax = edi				 | Принимаем ch		
 	mov	BYTE PTR -4[rbp], al			# [-4] = al 			 | [-4] <=> ch
 	cmp	BYTE PTR -4[rbp], 57			# compare(char, 57)		 | Сравниваем коды
@@ -42,28 +42,33 @@ isNotDigit:								# Функция isNotDigit
 
 
 	.globl	input
-input:
-	push	rbp
-	mov	rbp, rsp
-	sub	rsp, 32
-	mov	QWORD PTR -24[rbp], rdi
-	mov	DWORD PTR -4[rbp], -1
+input:									# Функция isDigit
+	push	rbp							# Кладем rbp на стек     |
+	mov	rbp, rsp						# rbp = rsp				 | Выделяем память
+	sub	rsp, 32							# rsp -= 32  			 | 
+
+	mov	QWORD PTR -24[rbp], rdi			# [-24] = rdi			 | [-24] <=> string*
+	mov	DWORD PTR -4[rbp], -1			# [-4] = -1				 | [-4] <=> size
 .L11:
-	add	DWORD PTR -4[rbp], 1
-	call	getchar@PLT
-	mov	edx, eax
-	mov	eax, DWORD PTR -4[rbp]
-	movsx	rcx, eax
-	mov	rax, QWORD PTR -24[rbp]
-	add	rax, rcx
-	mov	BYTE PTR [rax], dl
-	mov	eax, DWORD PTR -4[rbp]
+
+	add	DWORD PTR -4[rbp], 1			# [-4] += 1				 | size += 1
+
+	call	getchar@PLT					# getchar()
+	mov	edx, eax						# edx = eax 			 | edx = введенный_символ
+
+	mov	eax, DWORD PTR -4[rbp]			
+	movsx	rcx, eax					
+	mov	rax, QWORD PTR -24[rbp]			
+	add	rax, rcx						
+	mov	BYTE PTR [rax], dl				 
+	mov	eax, DWORD PTR -4[rbp]			
 	movsx	rdx, eax
 	mov	rax, QWORD PTR -24[rbp]
 	add	rax, rdx
 	movzx	eax, BYTE PTR [rax]
 	cmp	al, 10
 	jne	.L11
+
 	mov	eax, DWORD PTR -4[rbp]
 	movsx	rdx, eax
 	mov	rax, QWORD PTR -24[rbp]
@@ -75,15 +80,16 @@ input:
 
 
 	.globl	count
-count:
-	push	rbp
-	mov	rbp, rsp
-	sub	rsp, 32
-	mov	QWORD PTR -24[rbp], rdi
-	mov	DWORD PTR -28[rbp], esi
-	mov	DWORD PTR -4[rbp], 0
-	mov	DWORD PTR -8[rbp], 1
-	jmp	.L14
+count:									# Функция isDigit
+	push	rbp							# Кладем rbp на стек	 |
+	mov	rbp, rsp						# rbp = rsp				 | Выделяем память
+	sub	rsp, 32							# rsp -= 32 			 | 
+
+	mov	QWORD PTR -24[rbp], rdi			# [-24] = rdi			 | [-24] <=> *string
+	mov	DWORD PTR -28[rbp], esi			# [-28] = esi			 | [-28] <=> length
+	mov	DWORD PTR -4[rbp], 0			# [-4] = 0				 | [-4]  <=> counter
+	mov	DWORD PTR -8[rbp], 1			# [-8] = 1				 | [-8]  <=> i
+	jmp	.L14							# goto L14
 .L16:
 	mov	eax, DWORD PTR -8[rbp]
 	movsx	rdx, eax
@@ -108,11 +114,11 @@ count:
 	add	DWORD PTR -4[rbp], 1
 .L15:
 	add	DWORD PTR -8[rbp], 1
+
 .L14:
-	mov	eax, DWORD PTR -8[rbp]
-	cmp	eax, DWORD PTR -28[rbp]
-	jl	.L16
-	mov	eax, DWORD PTR -28[rbp]
+	mov	eax, DWORD PTR -8[rbp]			# eax = i
+	cmp	eax, DWORD PTR -28[rbp]			# compare(i, length)
+	jl	.L16							# if (i < lenght) goto L16
 	lea	rdx, -1[rax]
 	mov	rax, QWORD PTR -24[rbp]
 	add	rax, rdx
