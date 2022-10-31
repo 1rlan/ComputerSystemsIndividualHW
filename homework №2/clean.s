@@ -149,7 +149,6 @@ main:
 	call	input						# input(*string)	 | заполнения строки
 	mov	DWORD PTR -12[rbp], eax			# [-12] = eax		 | [-12] <=> length
 
-
 	mov	edx, DWORD PTR -12[rbp]
 	mov	rax, QWORD PTR -8[rbp]
 	mov	esi, edx
@@ -159,8 +158,9 @@ main:
 
 	mov	eax, DWORD PTR -16[rbp]
 	mov	esi, eax
-	
-	mov	rdi, .LC0[rip]					
+
+	lea	rax, .LC0[rip]
+	mov	rdi, rax
 	mov	eax, 0
 	call	printf@PLT
 
