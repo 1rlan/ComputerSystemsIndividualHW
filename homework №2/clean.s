@@ -155,8 +155,7 @@ main:
 	mov	DWORD PTR -16[rbp], eax			# [-16] = eax			 | [-16] <=> counter
 
 	mov	esi, DWORD PTR -16[rbp]
-	lea	rax, .LC0[rip]
-	mov	rdi, rax
+	mov	rdi, .LC0[rip]
 	call	printf@PLT
 
 	mov	rdi, QWORD PTR -8[rbp]			# rdi = [-8]			|
