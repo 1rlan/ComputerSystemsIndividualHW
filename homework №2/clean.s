@@ -1,4 +1,6 @@
 	.intel_syntax noprefix
+
+
 	.text
 	.globl	isDigit
 isDigit:
@@ -17,6 +19,8 @@ isDigit:
 .L4:
 	pop	rbp
 	ret
+
+
 	.globl	isNotDigit
 isNotDigit:
 	push	rbp
@@ -35,6 +39,8 @@ isNotDigit:
 .L9:
 	pop	rbp
 	ret
+
+
 	.globl	input
 input:
 	push	rbp
@@ -66,6 +72,8 @@ input:
 	mov	eax, DWORD PTR -4[rbp]
 	leave
 	ret
+
+
 	.globl	count
 count:
 	push	rbp
@@ -119,34 +127,43 @@ count:
 	mov	eax, DWORD PTR -4[rbp]
 	leave
 	ret
+
+
 	.section	.rodata
 .LC0:
 	.string	"%d\n"
+
+
 	.text
 	.globl	main
 main:
-	push	rbp
-	mov	rbp, rsp
-	sub	rsp, 16
-	mov	edi, 100000
-	call	malloc@PLT
-	mov	QWORD PTR -8[rbp], rax
-	mov	rax, QWORD PTR -8[rbp]
-	mov	rdi, rax
-	call	input
-	mov	DWORD PTR -12[rbp], eax
+	push	rbp							# Кладем rbp на стек |
+	mov	rbp, rsp						# rbp = rsp			 | Выделение памяти
+	sub	rsp, 16							# rsp -= 16			 |
+
+	mov	edi, 100000						# edi = 100_000		 | Выделение памяти 			
+	call	malloc@PLT					# malloc(edi)		 | под массив char'ов
+	mov	QWORD PTR -8[rbp], rax			# [-8] = rax		 | [-8] <=> *string
+		
+	mov	rdi, QWORD PTR -8[rbp]			# rdi = [-8]		 | Вызов функции
+	call	input						# input(*string)	 | заполнения строки
+	mov	DWORD PTR -12[rbp], eax			# [-12] = eax		 | [-12] <=> length
+
 	mov	edx, DWORD PTR -12[rbp]
 	mov	rax, QWORD PTR -8[rbp]
 	mov	esi, edx
 	mov	rdi, rax
 	call	count
 	mov	DWORD PTR -16[rbp], eax
+
 	mov	eax, DWORD PTR -16[rbp]
 	mov	esi, eax
+
 	lea	rax, .LC0[rip]
 	mov	rdi, rax
 	mov	eax, 0
 	call	printf@PLT
+
 	mov	rax, QWORD PTR -8[rbp]
 	mov	rdi, rax
 	call	free@PLT
