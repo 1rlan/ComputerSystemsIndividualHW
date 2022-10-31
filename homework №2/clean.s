@@ -1,10 +1,7 @@
-	.file	"program.c"
 	.intel_syntax noprefix
 	.text
 	.globl	isDigit
-	.type	isDigit, @function
 isDigit:
-	endbr64
 	push	rbp
 	mov	rbp, rsp
 	mov	eax, edi
@@ -20,11 +17,8 @@ isDigit:
 .L4:
 	pop	rbp
 	ret
-	.size	isDigit, .-isDigit
 	.globl	isNotDigit
-	.type	isNotDigit, @function
 isNotDigit:
-	endbr64
 	push	rbp
 	mov	rbp, rsp
 	mov	eax, edi
@@ -41,11 +35,8 @@ isNotDigit:
 .L9:
 	pop	rbp
 	ret
-	.size	isNotDigit, .-isNotDigit
 	.globl	input
-	.type	input, @function
 input:
-	endbr64
 	push	rbp
 	mov	rbp, rsp
 	sub	rsp, 32
@@ -75,11 +66,8 @@ input:
 	mov	eax, DWORD PTR -4[rbp]
 	leave
 	ret
-	.size	input, .-input
 	.globl	count
-	.type	count, @function
 count:
-	endbr64
 	push	rbp
 	mov	rbp, rsp
 	sub	rsp, 32
@@ -100,7 +88,6 @@ count:
 	test	eax, eax
 	je	.L15
 	mov	eax, DWORD PTR -8[rbp]
-	cdqe
 	lea	rdx, -1[rax]
 	mov	rax, QWORD PTR -24[rbp]
 	add	rax, rdx
@@ -118,7 +105,6 @@ count:
 	cmp	eax, DWORD PTR -28[rbp]
 	jl	.L16
 	mov	eax, DWORD PTR -28[rbp]
-	cdqe
 	lea	rdx, -1[rax]
 	mov	rax, QWORD PTR -24[rbp]
 	add	rax, rdx
@@ -133,15 +119,12 @@ count:
 	mov	eax, DWORD PTR -4[rbp]
 	leave
 	ret
-	.size	count, .-count
 	.section	.rodata
 .LC0:
 	.string	"%d\n"
 	.text
 	.globl	main
-	.type	main, @function
 main:
-	endbr64
 	push	rbp
 	mov	rbp, rsp
 	sub	rsp, 16
@@ -170,24 +153,3 @@ main:
 	mov	eax, 0
 	leave
 	ret
-	.size	main, .-main
-	.ident	"GCC: (Ubuntu 11.2.0-19ubuntu1) 11.2.0"
-	.section	.note.GNU-stack,"",@progbits
-	.section	.note.gnu.property,"a"
-	.align 8
-	.long	1f - 0f
-	.long	4f - 1f
-	.long	5
-0:
-	.string	"GNU"
-1:
-	.align 8
-	.long	0xc0000002
-	.long	3f - 2f
-2:
-	.long	0x3
-3:
-	.align 8
-4:
-
-

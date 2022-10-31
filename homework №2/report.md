@@ -5,11 +5,11 @@
 
 ## Код на языке С:
 [program.c](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%962/program.c) - код программ\
-Вводится строка. Признак окончания строки - ее перевод (enter).
+Вводится строка. Признак окончания строки - ее перевод (нажатый enter).
 
 ## Код на языке Асемблера:
-[Битая ссылка](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%962/program.c) - код без комментариев и ручного редактирования.\
-[Битая ссылка](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%961/clean.s) - код  ```program.c```  c комментариями и оптимизацией.
+[program.s](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%962/program.c) - код без комментариев и ручного редактирования. *192 строки*\
+[clean.s](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%962/clean.s) - код  ```program.c```  c комментариями и оптимизацией.
 
 ## Флаги 
 Дизасемблирование осуществлялось с использованием флагов:
@@ -29,3 +29,57 @@ gcc -masm=intel \
 
 Проведем первые тесты на "чистом" ассемблерном файле и убедимся, что все работает:
 ![image info](images/first_test.png)
+# Чистка и оптимизация файла
+
+## Чистка 
+Удалим инфорацию о Си файла:
+```assembly
+        .file   "program.c
+```
+
+Уберем "копеечные оптимизации", удалив строки:
+```assembly
+        .size main, .-main 
+        .size isDigit, .-isDigit
+        .size isNotDigit, .-isNotDigit
+        .size input, .-input
+        .size count, .-count
+        .size main, .-main
+```
+
+Уберем все строки:
+```assembly
+        endbr64
+        cdqe
+```
+
+Удалим экспорт символов методов:
+```assembly        
+		.type isDigit, @function
+        .type isNotDigit, @function
+        .type input, @function
+        .type count, @function
+        .type main, @function
+```
+
+Удалим информацию о дизасемблировании:
+``` assembly
+	.ident "GCC: (Ubuntu 11.2.0-19ubuntu1) 11.2.0"
+	.section .note.GNU-stack,"",@progbits
+	.section .note.gnu.property,"a"
+	.align 8
+	.long 1f - 0f
+	.long 4f - 1f
+	.long 5
+0:
+	.string "GNU"
+1:
+	.align 8
+	.long 0xc0000002
+	.long 3f - 2f
+2:
+	.long 0x3
+3:
+	.align 8
+4:
+```
