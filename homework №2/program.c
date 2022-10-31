@@ -40,7 +40,7 @@ int main() {
     char *string = malloc(100000);
     int length = input(string);
     int counter = count(string, length);
-    printf("%d", counter);
+    printf("%d\n", counter);
     free(string);
     return 0;
 }

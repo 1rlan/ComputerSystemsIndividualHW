@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "homework №2/report.md",
+                "file": "homework №1/README.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "59ea1c34a76c6444",
@@ -109,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "homework №2/report.md",
+                "file": "homework №1/README.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -126,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "homework №2/report.md",
+                "file": "homework №1/README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "homework №2/report.md"
+                "file": "homework №1/README.md"
               }
             }
           }
@@ -163,12 +164,12 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "f62763bef22884f2",
+  "active": "0101af1292cf8da5",
   "lastOpenFiles": [
-    "homework №2/README.md",
     "homework №1/report.md",
-    "homework №1/README.md",
     "homework №2/report.md",
+    "homework №2/README.md",
+    "homework №1/README.md",
     "().md",
     "homework №1/images/test_final.png",
     "homework №1/images/test_first.png",
