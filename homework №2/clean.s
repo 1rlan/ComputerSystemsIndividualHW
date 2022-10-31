@@ -154,8 +154,10 @@ main:
 	call	count						# count(*string, length) | 
 	mov	DWORD PTR -16[rbp], eax			# [-16] = eax			 | [-16] <=> counter
 
-	mov	esi, DWORD PTR -16[rbp]
-	mov	rdi, .LC0[rip]
+	mov	eax, DWORD PTR -16[rbp]
+	mov	esi, eax
+	lea	rax, .LC0[rip]
+	mov	rdi, rax
 	mov	eax, 0
 	call	printf@PLT
 
