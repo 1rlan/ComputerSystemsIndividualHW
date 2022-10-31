@@ -1,6 +1,5 @@
 	.intel_syntax noprefix   			# Использования синтаксиса intel
 
-
 	.text								
 	.globl	isDigit
 isDigit:								# Функция isDigit
@@ -19,7 +18,6 @@ isDigit:								# Функция isDigit
 .L4:
 	pop	rbp								# Удаляем rbp со стека
 	ret									# return eax			 | return 0 или 1
-
 
 	.globl	isNotDigit					
 isNotDigit:								# Функция isNotDigit
@@ -40,7 +38,6 @@ isNotDigit:								# Функция isNotDigit
 	pop	rbp								# Удаляем rbp со стека
 	ret									# return eax			 | return 0 или 1
 
-
 	.globl	input
 input:									# Функция isDigit
 	push	rbp							# Кладем rbp на стек     |
@@ -56,26 +53,26 @@ input:									# Функция isDigit
 	call	getchar@PLT					# getchar()
 	mov	edx, eax						# edx = eax 			 | edx = введенный_символ
 
-	mov	eax, DWORD PTR -4[rbp]			
-	movsx	rcx, eax					
-	mov	rax, QWORD PTR -24[rbp]			
-	add	rax, rcx						
-	mov	BYTE PTR [rax], dl				 
-	mov	eax, DWORD PTR -4[rbp]			
-	movsx	rdx, eax
-	mov	rax, QWORD PTR -24[rbp]
-	add	rax, rdx
-	movzx	eax, BYTE PTR [rax]
-	cmp	al, 10
-	jne	.L11
+	mov	eax, DWORD PTR -4[rbp]			# eax = [-4]			 | eax = size			 
+	movsx	rcx, eax					# rcx = eax				 | rcx = size c расширением
+	mov	rax, QWORD PTR -24[rbp]			# rax = [-24]			 | rax = *string			 
+	add	rax, rcx						# rax += rcx			 | *string += size
+	mov	BYTE PTR [rax], dl				# string[rax] = char	 | *string = (char from getchar)	
+	mov	eax, DWORD PTR -4[rbp]			# eax = [-4] 			 | eax = size
+	movsx	rdx, eax					# rdx = eax				 | rdx = size c расширением
+	mov	rax, QWORD PTR -24[rbp]			# rax = [-24]	     	 | rax = *string
+	add	rax, rdx						# rax += rdx			 | rax += size
+	movzx	eax, BYTE PTR [rax]			# eax = string[rax]		 | eax = string[rax]
+	cmp	al, 10							# compare(eax, 10)		 | Если char == "\n" - выходим 
+	jne	.L11							# goto L11				 | Выход из while
 
-	mov	eax, DWORD PTR -4[rbp]
-	movsx	rdx, eax
-	mov	rax, QWORD PTR -24[rbp]
-	add	rax, rdx
-	mov	BYTE PTR [rax], 0
-	mov	eax, DWORD PTR -4[rbp]
-	leave
+	mov	eax, DWORD PTR -4[rbp]			# eax = size
+	movsx	rdx, eax					# rdx = eax
+	mov	rax, QWORD PTR -24[rbp]			# rax = string*
+	add	rax, rdx						# rax += rdx
+	mov	BYTE PTR [rax], 0				# string[rax] = 0
+	mov	eax, DWORD PTR -4[rbp]			# eax = size
+	leave								# return eax
 	ret
 
 
@@ -91,53 +88,58 @@ count:									# Функция isDigit
 	mov	DWORD PTR -8[rbp], 1			# [-8] = 1				 | [-8]  <=> i
 	jmp	.L14							# goto L14
 .L16:
-	mov	eax, DWORD PTR -8[rbp]
-	movsx	rdx, eax
-	mov	rax, QWORD PTR -24[rbp]
-	add	rax, rdx
-	movzx	eax, BYTE PTR [rax]
-	movsx	eax, al
-	mov	edi, eax
-	call	isDigit
-	test	eax, eax
-	je	.L15
-	mov	eax, DWORD PTR -8[rbp]
-	lea	rdx, -1[rax]
-	mov	rax, QWORD PTR -24[rbp]
-	add	rax, rdx
-	movzx	eax, BYTE PTR [rax]
-	movsx	eax, al
-	mov	edi, eax
-	call	isNotDigit
-	test	eax, eax
-	je	.L15
-	add	DWORD PTR -4[rbp], 1
+	mov	eax, DWORD PTR -8[rbp]			# eax = i
+	movsx	rdx, eax					# rdx = eax
+	mov	rax, QWORD PTR -24[rbp]			# rax = *string
+	add	rax, rdx						# rax += rdx
+	movzx	eax, BYTE PTR [rax]			# eax = array[rax]
+	movsx	eax, al						# eax 
+
+	mov	edi, eax						# edi = eax
+	call	isDigit						# isDigit(edi)
+	test	eax, eax					# if (eax == 0)
+	je	.L15							# goto L15
+
+	mov	eax, DWORD PTR -8[rbp]			# eax = i 
+	lea	rdx, -1[rax]					# rdx = *array[rax]
+	mov	rax, QWORD PTR -24[rbp]			# rax = sting
+	add	rax, rdx						# rax += rdx
+	movzx	eax, BYTE PTR [rax]			# eax = string[rax]
+	movsx	eax, al						# eax = al([char])
+
+	mov	edi, eax						# edi = eax
+	call	isNotDigit					# isNotDigit(edi)
+	test	eax, eax					# if (eax == 0)
+	je	.L15							# goto L15
+	add	DWORD PTR -4[rbp], 1			# [-4] += 1
 .L15:
-	add	DWORD PTR -8[rbp], 1
+	add	DWORD PTR -8[rbp], 1			# [-8] += 1
 
 .L14:
 	mov	eax, DWORD PTR -8[rbp]			# eax = i
 	cmp	eax, DWORD PTR -28[rbp]			# compare(i, length)
 	jl	.L16							# if (i < lenght) goto L16
-	lea	rdx, -1[rax]
-	mov	rax, QWORD PTR -24[rbp]
-	add	rax, rdx
-	movzx	eax, BYTE PTR [rax]
-	movsx	eax, al
-	mov	edi, eax
-	call	isDigit
-	test	eax, eax
-	je	.L17
-	add	DWORD PTR -4[rbp], 1
+
+	lea	rdx, -1[rax]					# rdx = *array[rax]
+	mov	rax, QWORD PTR -24[rbp]			# rax = string
+	add	rax, rdx						# rax += rdx
+	movzx	eax, BYTE PTR [rax]			# eax = string[rax]
+	movsx	eax, al						# eax = al([char])
+
+	mov	edi, eax						
+	call	isDigit						# isDigit(edi)
+	test	eax, eax					# if (value == 0)
+	je	.L17							# goto L17
+	add	DWORD PTR -4[rbp], 1			# [-4] += 1				 | counter++
 .L17:
-	mov	eax, DWORD PTR -4[rbp]
-	leave
+	mov	eax, DWORD PTR -4[rbp]			# eax = counter			 | return = counter
+	leave								# return counter
 	ret
 
 
 	.section	.rodata
 .LC0:
-	.string	"%d\n"
+	.string	"%d\n"						# Константа строки
 
 
 	.text
