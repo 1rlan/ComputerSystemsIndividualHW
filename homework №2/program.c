@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Проверка, является ли char цифрой
+int isDigit(char ch) {
+    return (ch < 58 && ch > 47);
+}
+
+// Проверка, является ли char буквой
+int isLetter(char ch) {
+    return !(ch < 58 && ch > 47);
+}
+
+// Посимвольный ввод с клвавиатуры
+int input(char* str) {
+    int size = -1;
+    do {
+        ++size;
+        str[size] = getchar();
+    } while (str[size] != '\n');
+    str[size] = '\0';
+    return size;
+}
+
+// Подсчет кол-ва цифр
+int count(char* string, int length) {
+    int counter = 0;
+    for (int i = 1; i < length; ++i) {
+        if (isDigit(string[i]) && isLetter(string[i - 1])) {
+            ++counter;
+        }
+    }
+    if (isDigit(string[length - 1])) {
+        ++counter;
+    }
+    return counter;
+}
+
+int main() {
+    char *string = malloc(100000);
+    int length = input(string);
+    int counter = count(string, length);
+    printf("%d", counter);
+    free(string);
+    return 0;
+}
