@@ -11,7 +11,6 @@ int isNotDigit(char ch) {
     return !(ch < 58 && ch > 47);
 }
 
-
 // Посимвольный ввод с клвавиатуры
 int input(char* str) {
     int size = -1;
