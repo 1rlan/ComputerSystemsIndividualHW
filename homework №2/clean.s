@@ -136,7 +136,7 @@ main:									# Функция main
 	sub	rsp, 16							# rsp -= 16			 	 |
 	mov	edi, 100000						# edi = 100_000			 | Выделение памяти 			
 	call	malloc@PLT					# malloc(edi)			 | под массив char'ов
-	mov	rbx, rax			# [-8] = rax			 | [-8] <=> *string
+	mov	QWORD PTR -8[rbp], rax			# [-8] = rax			 | [-8] <=> *string
 	mov	rdi, QWORD PTR -8[rbp]			# rdi = [-8]			 | Вызов функции
 	call	input						# input(*string)	 	 | заполнения строки
 	mov	DWORD PTR -12[rbp], eax			# [-12] = eax		 	 | [-12] <=> length
