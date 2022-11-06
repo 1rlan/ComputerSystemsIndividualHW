@@ -139,8 +139,8 @@ main:									# Функция main
 	mov	rbx, rax			# [-8] = rax			 | [-8] <=> *string
 	mov	rdi, rbx			# rdi = [-8]			 | Вызов функции
 	call	input						# input(*string)	 	 | заполнения строки
-	mov	DWORD PTR -12[rbp], eax			# [-12] = eax		 	 | [-12] <=> length
-	mov	esi, DWORD PTR -12[rbp]			# esi = [-12]			 | Вызов функции 
+	mov	r14d, eax			# [-12] = eax		 	 | [-12] <=> length
+	mov	esi, r14d			# esi = [-12]			 | Вызов функции 
 	mov	rdi, rbx			# rdi = [-8]			 | подсчета чисел
 	call	count						# count(*string, length) | 
 	mov	DWORD PTR -16[rbp], eax			# [-16] = eax			 | [-16] <=> counter
