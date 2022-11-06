@@ -44,29 +44,29 @@ input:									# Функция isDigit
 	mov	rbp, rsp						# rbp = rsp				 | Выделяем память
 	sub	rsp, 32							# rsp -= 32  			 | 
 	mov	QWORD PTR -24[rbp], rdi			# [-24] = rdi			 | [-24] <=> string*
-	mov	DWORD PTR -4[rbp], -1			# [-4] = -1				 | [-4] <=> size
+	mov	r13d, -1			# [-4] = -1				 | [-4] <=> size
 .L11:
-	add	DWORD PTR -4[rbp], 1			# [-4] += 1				 | size += 1
+	add	r13d, 1			# [-4] += 1				 | size += 1
 	call	getchar@PLT					# getchar()
 	mov	edx, eax						# edx = eax 			 | edx = введенный_символ
-	mov	eax, DWORD PTR -4[rbp]			# eax = [-4]			 | eax = size			 
+	mov	eax, r13d			# eax = [-4]			 | eax = size			 
 	movsx	rcx, eax					# rcx = eax				 | rcx = size c расширением
 	mov	rax, QWORD PTR -24[rbp]			# rax = [-24]			 | rax = *string			 
 	add	rax, rcx						# rax += rcx			 | *string += size
 	mov	BYTE PTR [rax], dl				# string[rax] = char	 | *string = (char from getchar)	
-	mov	eax, DWORD PTR -4[rbp]			# eax = [-4] 			 | eax = size
+	mov	eax, r13d			# eax = [-4] 			 | eax = size
 	movsx	rdx, eax					# rdx = eax				 | rdx = size c расширением
 	mov	rax, QWORD PTR -24[rbp]			# rax = [-24]	     	 | rax = *string
 	add	rax, rdx						# rax += rdx			 | rax += size
 	movzx	eax, BYTE PTR [rax]			# eax = string[rax]		 | eax = string[rax]
 	cmp	al, 10							# compare(eax, 10)		 | Если char == "\n" - выходим 
 	jne	.L11							# goto L11				 | Выход из while
-	mov	eax, DWORD PTR -4[rbp]			# eax = [-4]			 | eax = size
+	mov	eax, r13d			# eax = [-4]			 | eax = size
 	movsx	rdx, eax					# rdx = eax				 | rdx = size
 	mov	rax, QWORD PTR -24[rbp]			# rax = [-24]			 | rax = *string
 	add	rax, rdx						# rax += rdx			 | rax += size
 	mov	BYTE PTR [rax], 0				# string[rax] = 0		 | string[rax] = '\0'
-	mov	eax, DWORD PTR -4[rbp]			# eax = [-4]			 | eax = size
+	mov	eax, r13d			# eax = [-4]			 | eax = size
 	leave								# return eax
 	ret
 
@@ -77,7 +77,7 @@ count:									# Функция isDigit
 	sub	rsp, 32							# rsp -= 32 			 | 
 	mov	QWORD PTR -24[rbp], rdi			# [-24] = rdi			 | [-24] <=> *string
 	mov	DWORD PTR -28[rbp], esi			# [-28] = esi			 | [-28] <=> length
-	mov	DWORD PTR -4[rbp], 0			# [-4] = 0				 | [-4]  <=> counter
+	mov	r13d, 0			# [-4] = 0				 | [-4]  <=> counter
 	mov	r12d, 1			# [-8] = 1				 | [-8]  <=> i
 	jmp	.L14							# goto L14
 .L16:
@@ -101,7 +101,7 @@ count:									# Функция isDigit
 	call	isNotDigit					# isNotDigit(edi)		 | Проверка на НЕ цифру 
 	test	eax, eax					# if (eax == 0)			 | Если не цифра, то увеличиваем counter 
 	je	.L15							# goto L15				 | Иначе - следующая итерация
-	add	DWORD PTR -4[rbp], 1			# [-4] += 1				 | ++counter
+	add	r13d, 1			# [-4] += 1				 | ++counter
 .L15:
 	add	r12d, 1			# [-8] += 1				 | ++i
 
@@ -118,9 +118,9 @@ count:									# Функция isDigit
 	call	isDigit						# isDigit(edi)			 | Проверка на цифру 
 	test	eax, eax					# compare (value, 0)	 | if (equal) -> return section
 	je	.L17							# goto L17				 | иначе прибавляем счетчик
-	add	DWORD PTR -4[rbp], 1			# [-4] += 1				 | counter++
+	add	r13d, 1			# [-4] += 1				 | counter++
 .L17:
-	mov	eax, DWORD PTR -4[rbp]			# eax = counter			 | return = counter
+	mov	eax, r13d			# eax = counter			 | return = counter
 	leave								# return counter		
 	ret
 
