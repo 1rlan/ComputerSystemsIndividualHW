@@ -76,7 +76,7 @@ count:									# Функция isDigit
 	mov	rbp, rsp						# rbp = rsp				 | Выделяем память
 	sub	rsp, 32							# rsp -= 32 			 | 
 	mov	rbx, rdi			# [-24] = rdi			 | [-24] <=> *string
-	mov	DWORD PTR -28[rbp], esi			# [-28] = esi			 | [-28] <=> length
+	mov	r14d, esi			# [-28] = esi			 | [-28] <=> length
 	mov	r13d, 0			# [-4] = 0				 | [-4]  <=> counter
 	mov	r12d, 1			# [-8] = 1				 | [-8]  <=> i
 	jmp	.L14							# goto L14
@@ -107,7 +107,7 @@ count:									# Функция isDigit
 
 .L14:
 	mov	eax, r12d			# eax = [-8]			 |eax = i
-	cmp	eax, DWORD PTR -28[rbp]			# compare(i, length)	 | если i < length 
+	cmp	eax, r14d			# compare(i, length)	 | если i < length 
 	jl	.L16							#						 | итерируемся дальше
 	lea	rdx, -1[rax]					# rdx = *array[rax]		 | rdx = [rax]
 	mov	rax, rbx			# rax = [-24]			 | rax = string

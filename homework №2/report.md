@@ -110,10 +110,8 @@ gcc -masm=intel \
 Выполним замены для оптимизации работы программы, будем использовать регистры:
 ```assembly
 
-	DWORD PTR -8[rbp] -> r12d  # cчетчик цикла (i)
-	DWORD PTR -4[rbp] -> r13d  # переменные counter и size	
+	QWORD PTR -24[rbp] -> rbx      # Основная строка
+	DWORD PTR -8[rbp] -> r12d      # Счетчик цикла (i)
+	DWORD PTR -4[rbp] -> r13d      # Переменные counter и size	
 	
-	# Заменяем на:
-		
-	mov rdi, QWORD PTR -8[rbp]
 ```
