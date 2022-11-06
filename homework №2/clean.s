@@ -43,7 +43,7 @@ input:									# Функция isDigit
 	push	rbp							# Кладем rbp на стек     |
 	mov	rbp, rsp						# rbp = rsp				 | Выделяем память
 	sub	rsp, 32							# rsp -= 32  			 | 
-	mov	QWORD PTR -24[rbp], rdi			# [-24] = rdi			 | [-24] <=> string*
+	mov	rbx, rdi			# [-24] = rdi			 | [-24] <=> string*
 	mov	r13d, -1			# [-4] = -1				 | [-4] <=> size
 .L11:
 	add	r13d, 1			# [-4] += 1				 | size += 1
@@ -51,19 +51,19 @@ input:									# Функция isDigit
 	mov	edx, eax						# edx = eax 			 | edx = введенный_символ
 	mov	eax, r13d			# eax = [-4]			 | eax = size			 
 	movsx	rcx, eax					# rcx = eax				 | rcx = size c расширением
-	mov	rax, QWORD PTR -24[rbp]			# rax = [-24]			 | rax = *string			 
+	mov	rax, rbx			# rax = [-24]			 | rax = *string			 
 	add	rax, rcx						# rax += rcx			 | *string += size
 	mov	BYTE PTR [rax], dl				# string[rax] = char	 | *string = (char from getchar)	
 	mov	eax, r13d			# eax = [-4] 			 | eax = size
 	movsx	rdx, eax					# rdx = eax				 | rdx = size c расширением
-	mov	rax, QWORD PTR -24[rbp]			# rax = [-24]	     	 | rax = *string
+	mov	rax, rbx			# rax = [-24]	     	 | rax = *string
 	add	rax, rdx						# rax += rdx			 | rax += size
 	movzx	eax, BYTE PTR [rax]			# eax = string[rax]		 | eax = string[rax]
 	cmp	al, 10							# compare(eax, 10)		 | Если char == "\n" - выходим 
 	jne	.L11							# goto L11				 | Выход из while
 	mov	eax, r13d			# eax = [-4]			 | eax = size
 	movsx	rdx, eax					# rdx = eax				 | rdx = size
-	mov	rax, QWORD PTR -24[rbp]			# rax = [-24]			 | rax = *string
+	mov	rax, rbx			# rax = [-24]			 | rax = *string
 	add	rax, rdx						# rax += rdx			 | rax += size
 	mov	BYTE PTR [rax], 0				# string[rax] = 0		 | string[rax] = '\0'
 	mov	eax, r13d			# eax = [-4]			 | eax = size
@@ -75,7 +75,7 @@ count:									# Функция isDigit
 	push	rbp							# Кладем rbp на стек	 |
 	mov	rbp, rsp						# rbp = rsp				 | Выделяем память
 	sub	rsp, 32							# rsp -= 32 			 | 
-	mov	QWORD PTR -24[rbp], rdi			# [-24] = rdi			 | [-24] <=> *string
+	mov	rbx, rdi			# [-24] = rdi			 | [-24] <=> *string
 	mov	DWORD PTR -28[rbp], esi			# [-28] = esi			 | [-28] <=> length
 	mov	r13d, 0			# [-4] = 0				 | [-4]  <=> counter
 	mov	r12d, 1			# [-8] = 1				 | [-8]  <=> i
@@ -83,7 +83,7 @@ count:									# Функция isDigit
 .L16:
 	mov	eax, r12d			# eax = [-8]			 | eax = i				
 	movsx	rdx, eax					# rdx = eax				 | rdx = i
-	mov	rax, QWORD PTR -24[rbp]			# rax = *[-24]           | rax = *string
+	mov	rax, rbx			# rax = *[-24]           | rax = *string
 	add	rax, rdx						# rax += rdx             | string += i
 	movzx	eax, BYTE PTR [rax]			# eax = array[rax]       | eax = string[rax]
 	movsx	eax, al						# eax 				     | eax = al([char])
@@ -93,7 +93,7 @@ count:									# Функция isDigit
 	je	.L15							# goto L15				 | Иначе - следующая итеарация
 	mov	eax, r12d			# eax = i 				 | eax = i 
 	lea	rdx, -1[rax]					# rdx = *array[rax]		 | rdx = [rax]
-	mov	rax, QWORD PTR -24[rbp]			# rax = [-24]			 | rax = *string
+	mov	rax, rbx			# rax = [-24]			 | rax = *string
 	add	rax, rdx						# rax += rdx			 | rax += rdx
 	movzx	eax, BYTE PTR [rax]			# eax = string[rax] 	 | eax = string[rax]
 	movsx	eax, al						# eax = al([char])		 | eax = al([char])
@@ -110,7 +110,7 @@ count:									# Функция isDigit
 	cmp	eax, DWORD PTR -28[rbp]			# compare(i, length)	 | если i < length 
 	jl	.L16							#						 | итерируемся дальше
 	lea	rdx, -1[rax]					# rdx = *array[rax]		 | rdx = [rax]
-	mov	rax, QWORD PTR -24[rbp]			# rax = [-24]			 | rax = string
+	mov	rax, rbx			# rax = [-24]			 | rax = string
 	add	rax, rdx						# rax += rdx			 | rax += [rax]
 	movzx	eax, BYTE PTR [rax]			# eax = string[rax]		 | eax = char
 	movsx	eax, al						# eax = al([char])		 | eax = al([char])
