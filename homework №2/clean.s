@@ -143,8 +143,8 @@ main:									# Функция main
 	mov	esi, r14d			# esi = [-12]			 | Вызов функции 
 	mov	rdi, rbx			# rdi = [-8]			 | подсчета чисел
 	call	count						# count(*string, length) | 
-	mov	DWORD PTR -16[rbp], eax			# [-16] = eax			 | [-16] <=> counter
-	mov	esi, DWORD PTR -16[rbp]			# esi = [-16]			 | 
+	mov	r13d, eax			# [-16] = eax			 | [-16] <=> counter
+	mov	esi, r13d			# esi = [-16]			 | 
 	lea	rax, .LC0[rip]					# rax = *("%d\n")		 | Вызываем printf
 	mov	rdi, rax						# rdi = rax				 | со значением counter
 	call	printf@PLT					# print("%d\n", counter) | 
