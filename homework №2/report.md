@@ -115,3 +115,9 @@ gcc -masm=intel \
 	DWORD PTR -28[rbp] -> r14d     # Переменная lenght
 	BYTE PTR -4[rbp] -> r15b       # Переменные метода проверки char  
 ```
+
+## Финальные тесты 
+Проведем тесты и убедимся, что после всех модификаций программа работает корректно.
+![image info](images/second_test.png)
+## Разница 
+Модифицированная файл [clean.s](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%962/clean.s)  занимает 155 строк кода, что на 37 строк меньше, чем программа [program.s](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%962/program.s) (192 строки)
