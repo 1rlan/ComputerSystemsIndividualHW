@@ -109,9 +109,9 @@ gcc -masm=intel \
 ## Оптимизация
 Выполним замены для оптимизации работы программы, будем использовать регистры:
 ```assembly
-
 	QWORD PTR -24[rbp] -> rbx      # Основная строка
 	DWORD PTR -8[rbp] -> r12d      # Счетчик цикла (i)
 	DWORD PTR -4[rbp] -> r13d      # Переменные counter и size	
 	DWORD PTR -28[rbp] -> r14d     # Переменная lenght
+	BYTE PTR -4[rbp] -> r15b       # Переменные метода проверки char  
 ```
