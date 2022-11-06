@@ -6,10 +6,10 @@ isDigit:								# Функция isDigit		 |
 	push	rbp							# Кладем rbp на стек	 | Не выделяем память	
 	mov	rbp, rsp						# rbp = rsp				 | 
 	mov	eax, edi						# eax = edi				 | Принимаем ch		
-	mov	BYTE PTR -4[rbp], al			# [-4] = al 			 | [-4] <=> ch
-	cmp	BYTE PTR -4[rbp], 57			# compare(char, 57)		 | Сравниваем коды
+	mov	r15b, al			# [-4] = al 			 | [-4] <=> ch
+	cmp	r15b, 57			# compare(char, 57)		 | Сравниваем коды
 	jg	.L2								# goto L2				 | Если ch > 57 -> false и выход
-	cmp	BYTE PTR -4[rbp], 47			# compare(char, 47)	     | Сравниваем коды
+	cmp	r15b, 47			# compare(char, 47)	     | Сравниваем коды
 	jle	.L2								# goto L2				 | Если ch <= 47 -> false и выход
 	mov	eax, 1							# return = 1			 | Иначе -> true
 	jmp	.L4								# goto L4				 | Переход к метке выхода
@@ -24,10 +24,10 @@ isNotDigit:								# Функция isNotDigit     |
 	push	rbp							# Кладем rbp на стек	 | Не выделяем память
 	mov	rbp, rsp						# rbp - rsp				 | 
 	mov	eax, edi						# eax = edi				 | Принимаем ch		
-	mov	BYTE PTR -4[rbp], al			# [-4] = al 			 | [-4] <=> ch
-	cmp	BYTE PTR -4[rbp], 57			# compare(char, 57)		 | Сравниваем коды
+	mov	r15b, al			# [-4] = al 			 | [-4] <=> ch
+	cmp	r15b, 57			# compare(char, 57)		 | Сравниваем коды
 	jg	.L6								# goto L2				 | Если ch > 57 -> true и выход
-	cmp	BYTE PTR -4[rbp], 47			# compare(char, 47)	     | Сравниваем коды
+	cmp	r15b, 47			# compare(char, 47)	     | Сравниваем коды
 	jg	.L7								# goto L2				 | Если ch > 47 -> false и выход
 .L6:	
 	mov	eax, 1							# return = 1			 | Возвращаем trur
