@@ -78,10 +78,10 @@ count:									# Функция isDigit
 	mov	QWORD PTR -24[rbp], rdi			# [-24] = rdi			 | [-24] <=> *string
 	mov	DWORD PTR -28[rbp], esi			# [-28] = esi			 | [-28] <=> length
 	mov	DWORD PTR -4[rbp], 0			# [-4] = 0				 | [-4]  <=> counter
-	mov	DWORD PTR -8[rbp], 1			# [-8] = 1				 | [-8]  <=> i
+	mov	r12d, 1			# [-8] = 1				 | [-8]  <=> i
 	jmp	.L14							# goto L14
 .L16:
-	mov	eax, DWORD PTR -8[rbp]			# eax = [-8]			 | eax = i				
+	mov	eax, r12d			# eax = [-8]			 | eax = i				
 	movsx	rdx, eax					# rdx = eax				 | rdx = i
 	mov	rax, QWORD PTR -24[rbp]			# rax = *[-24]           | rax = *string
 	add	rax, rdx						# rax += rdx             | string += i
@@ -91,7 +91,7 @@ count:									# Функция isDigit
 	call	isDigit						# isDigit(edi)			 | Проверка на цифру 
 	test	eax, eax					# if (eax == 0)			 | Если цифра, то проваливаемся 
 	je	.L15							# goto L15				 | Иначе - следующая итеарация
-	mov	eax, DWORD PTR -8[rbp]			# eax = i 				 | eax = i 
+	mov	eax, r12d			# eax = i 				 | eax = i 
 	lea	rdx, -1[rax]					# rdx = *array[rax]		 | rdx = [rax]
 	mov	rax, QWORD PTR -24[rbp]			# rax = [-24]			 | rax = *string
 	add	rax, rdx						# rax += rdx			 | rax += rdx
@@ -103,10 +103,10 @@ count:									# Функция isDigit
 	je	.L15							# goto L15				 | Иначе - следующая итерация
 	add	DWORD PTR -4[rbp], 1			# [-4] += 1				 | ++counter
 .L15:
-	add	DWORD PTR -8[rbp], 1			# [-8] += 1				 | ++i
+	add	r12d, 1			# [-8] += 1				 | ++i
 
 .L14:
-	mov	eax, DWORD PTR -8[rbp]			# eax = [-8]			 |eax = i
+	mov	eax, r12d			# eax = [-8]			 |eax = i
 	cmp	eax, DWORD PTR -28[rbp]			# compare(i, length)	 | если i < length 
 	jl	.L16							#						 | итерируемся дальше
 	lea	rdx, -1[rax]					# rdx = *array[rax]		 | rdx = [rax]
