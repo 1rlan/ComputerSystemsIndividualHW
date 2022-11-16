@@ -21,7 +21,7 @@ int main() {
     if (n != 0) {
         printf("%lf\n", root(n));
     } else {
-        printf(0);
+        printf("%d\n", 0);
     }
     return 0;
 }
