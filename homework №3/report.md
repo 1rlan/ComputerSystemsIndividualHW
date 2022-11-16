@@ -53,7 +53,7 @@ gcc -masm=intel \
 
 Удалим экспорт символов методов:
 ```assembly
-	.type main, @function
+	.type nextStep, @function
 	.type root, @function
 	.type main, @function
 ```
@@ -82,13 +82,13 @@ gcc -masm=intel \
 
 
 ## Замены
-Будем класть значения в регистр rsi напрямую. Рассмотрим, например, вызов scanf, в нем можно заменить строки
+Будем класть значения в регистры напрямую:
 ```
-	lea rax, -8[rbp]
-	mov rsi, rax
-
+	mov rax, QWORD PTR -8[rbp]
+	mov rdi, rax
+		
 	# Заменяем на:
-
-	mov rsi, -8[rbp]
+		
+	mov rdi, QWORD PTR -8[rbp]
 ```
 

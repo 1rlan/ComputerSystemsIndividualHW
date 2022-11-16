@@ -1,10 +1,11 @@
 	.intel_syntax noprefix
 	.text
 	.globl	nextStep
-	.type	nextStep, @function
+
 nextStep:
-	push	rbp
-	mov	rbp, rsp
+	push	rbp                                    # Выделяем память под функцию
+	mov	rbp, rsp                                   #
+
 	movsd	QWORD PTR -8[rbp], xmm0
 	movsd	QWORD PTR -16[rbp], xmm1
 	movsd	xmm0, QWORD PTR -8[rbp]
@@ -22,24 +23,28 @@ nextStep:
 	movq	xmm0, rax
 	pop	rbp
 	ret
+
 	.globl	root
-	
 root:
-	push	rbp
-	mov	rbp, rsp
-	sub	rsp, 24
-	movsd	QWORD PTR -24[rbp], xmm0
-	movsd	xmm0, QWORD PTR -24[rbp]
-	movsd	xmm1, QWORD PTR .LC0[rip]
-	divsd	xmm0, xmm1
-	movsd	QWORD PTR -8[rbp], xmm0
-	movsd	xmm0, QWORD PTR -24[rbp]
-	mov	rax, QWORD PTR -8[rbp]
-	movapd	xmm1, xmm0
-	movq	xmm0, rax
-	call	nextStep
-	movq	rax, xmm0
-	mov	QWORD PTR -16[rbp], rax
+	push	rbp                                    #                      
+	mov	rbp, rsp                                   # Выделяем память под функцию
+	sub	rsp, 24                                    #
+
+	movsd	QWORD PTR -24[rbp], xmm0               # [-24] = number
+
+	movsd	xmm0, QWORD PTR -24[rbp]               # xmm0 = number
+	movsd	xmm1, QWORD PTR .LC0[rip]              # xmm1 = 3
+	divsd	xmm0, xmm1                             # xmm0 /= 3
+	movsd	QWORD PTR -8[rbp], xmm0                # previousStep = xmm0
+
+	movsd	xmm0, QWORD PTR -24[rbp]               # xmm0 = number
+	mov	rax, QWORD PTR -8[rbp]                     # rax = previousStep
+	movapd	xmm1, xmm0                             # xmm1 = number
+	movq	xmm0, rax                              # xmm0 = previousStep
+	call	nextStep                               # nextStep(xmm0, xmm1)
+	movq	rax, xmm0                              # rax = xmm0
+	mov	QWORD PTR -16[rbp], rax                    # [-16] = step
+
 	jmp	.L4
 .L5:
 	movsd	xmm0, QWORD PTR -16[rbp]
@@ -79,18 +84,22 @@ main:
 	mov	rbp, rsp                                   # Выделяем память под функцию
 	sub	rsp, 16                                    # 
 
-	mov	rsi, -8[rbp]
-	mov	rdi, .LC3[rip]
-	call	__isoc99_scanf@PLT
+	lea	rax, -8[rbp]							   
+	mov	rsi, rax                                   # rsi = n
+	lea	rax, .LC3[rip]
+	mov	rdi, rax                                   # rdi = "%lf"
+	mov	eax, 0
+	call	__isoc99_scanf@PLT                     # scanf(rdi, rsi)
 
 	
-	movsd	xmm0, QWORD PTR -8[rbp]
+	movsd	xmm0, QWORD PTR -8[rbp]					
 	pxor	xmm1, xmm1
 	ucomisd	xmm0, xmm1
 	jp	.L12
 	pxor	xmm1, xmm1
 	ucomisd	xmm0, xmm1
 	je	.L8
+
 .L12:
 	mov	rax, QWORD PTR -8[rbp]
 	movq	xmm0, rax
@@ -112,6 +121,7 @@ main:
 	mov	eax, 0
 	leave
 	ret
+
 	.section	.rodata
 	.align 8
 .LC0:
