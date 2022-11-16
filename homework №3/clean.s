@@ -37,10 +37,8 @@ root:
 	divsd	xmm0, xmm1                             # xmm0 /= 3
 	movsd	QWORD PTR -8[rbp], xmm0                # previousStep = xmm0
 
-	movsd	xmm0, QWORD PTR -24[rbp]               # xmm0 = number
-	mov	rax, QWORD PTR -8[rbp]                     # rax = previousStep
-	movapd	xmm1, xmm0                             # xmm1 = number
-	movq	xmm0, rax                              # xmm0 = previousStep
+	movapd	xmm1, QWORD PTR -24[rbp]                             # xmm1 = number
+	movq	xmm0, QWORD PTR -8[rbp]                             # xmm0 = previousStep
 	call	nextStep                               # nextStep(xmm0, xmm1)
 	movq	rax, xmm0                              # rax = xmm0
 	mov	QWORD PTR -16[rbp], rax                    # [-16] = step
