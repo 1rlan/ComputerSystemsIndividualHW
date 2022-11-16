@@ -32,6 +32,30 @@
             }
           },
           {
+            "id": "847a62aa58b31045",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "homework №3/README.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "bc022f24b74b7449",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "homework №3/report.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "945c48f0dfcd82fb",
             "type": "leaf",
             "state": {
@@ -44,7 +68,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -110,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "homework №2/report.md",
+                "file": "homework №3/report.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "homework №2/report.md",
+                "file": "homework №3/report.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "homework №2/report.md"
+                "file": "homework №3/report.md"
               }
             }
           }
@@ -161,17 +185,17 @@
     "width": 200,
     "collapsed": true
   },
-  "active": "e158dca22e4afd65",
+  "active": "bc022f24b74b7449",
   "lastOpenFiles": [
     "homework №1/report.md",
     "homework №1/README.md",
-    "homework №2/report.md",
-    "homework №2/README.md",
     "homework №2/images/first_test.png",
+    "homework №3/report.md",
+    "homework №2/README.md",
+    "homework №2/report.md",
+    "homework №2/images/second_test.png",
+    "homework №3/README.md",
     "README.md",
-    "2022-10-31.md",
-    "().md",
-    "homework №1/images/test_final.png",
-    "homework №1/images/test_first.png"
+    "2022-10-31.md"
   ]
 }
