@@ -79,13 +79,11 @@ main:
 	mov	rbp, rsp                                   # Выделяем память под функцию
 	sub	rsp, 16                                    # 
 
-
 	mov	rsi, -8[rbp]
-	mov	rdi, .LC3[rip]
+	lea	rax, .LC3[rip]
+	mov	rdi, rax
 	mov	eax, 0
 	call	__isoc99_scanf@PLT
-
-
 	movsd	xmm0, QWORD PTR -8[rbp]
 	pxor	xmm1, xmm1
 	ucomisd	xmm0, xmm1
