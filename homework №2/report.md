@@ -39,19 +39,19 @@ gcc -masm=intel \
 
 Уберем "копеечные оптимизации", удалив строки:
 ```assembly
+	mov eax, 0
+	endbr64
+	cdqe
+```
+
+Уберем все строки:
+```assembly
 	.size main, .-main 
 	.size isDigit, .-isDigit
 	.size isNotDigit, .-isNotDigit
 	.size input, .-input
 	.size count, .-count
 	.size main, .-main
-```
-
-Уберем все строки:
-```assembly
-	mov eax, 0
-	endbr64
-	cdqe
 ```
 
 Удалим экспорт символов методов:
