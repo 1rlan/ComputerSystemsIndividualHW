@@ -38,9 +38,10 @@ gcc -masm=intel \
 	.file   "program.c
 ```
 
-Уберем команду:
+Уберем команды:
 ```assembly
 	endbr64
+	mov eax, 0
 ```
 
 Уберем все строки:

@@ -79,10 +79,8 @@ main:
 	mov	rbp, rsp                                   # Выделяем память под функцию
 	sub	rsp, 16                                    # 
 
-	lea	rax, -8[rbp]
-	mov	rsi, rax
-	lea	rax, .LC3[rip]
-	mov	rdi, rax
+	mov	rsi, -8[rbp]
+	mov	rdi, .LC3[rip]
 	call	__isoc99_scanf@PLT
 
 	
