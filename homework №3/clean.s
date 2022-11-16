@@ -6,21 +6,26 @@ nextStep:
 	push	rbp                                    # Выделяем память под функцию
 	mov	rbp, rsp                                   #
 
-	movsd	QWORD PTR -8[rbp], xmm0
-	movsd	QWORD PTR -16[rbp], xmm1
-	movsd	xmm0, QWORD PTR -8[rbp]
-	movapd	xmm1, xmm0
-	addsd	xmm1, xmm0
-	movsd	xmm0, QWORD PTR -8[rbp]
-	movapd	xmm2, xmm0
-	mulsd	xmm2, xmm0
-	movsd	xmm0, QWORD PTR -16[rbp]
-	divsd	xmm0, xmm2
-	addsd	xmm0, xmm1
-	movsd	xmm1, QWORD PTR .LC0[rip]
-	divsd	xmm0, xmm1
-	movq	rax, xmm0
-	movq	xmm0, rax
+	movsd	QWORD PTR -8[rbp], xmm0                # [-8] = prediction
+	movsd	QWORD PTR -16[rbp], xmm1               # [-16] = n
+
+	movsd	xmm0, QWORD PTR -8[rbp]                # xmm0 = prediction
+	movapd	xmm1, xmm0                             # xmm1 = prediction
+	addsd	xmm1, xmm0                             # xmm1 += prediction             | (2 * prediction)
+
+	movsd	xmm0, QWORD PTR -8[rbp]                # xmm0 = prediction
+	movapd	xmm2, xmm0                             # xmm2 = prediction
+	mulsd	xmm2, xmm0                             # xmm2 *= xmm0                   | (prediction * prediction)
+
+	movsd	xmm0, QWORD PTR -16[rbp]               # xmm0 = n
+	divsd	xmm0, xmm2                             # xmm0 /= xmm2                   | (n / (prediction * prediction))
+
+	addsd	xmm0, xmm1                             # xmm0 += xmm1                   | (2 * prediction) + (n / (prediction * prediction))
+
+	movsd	xmm1, QWORD PTR .LC0[rip]              # xmm1 = 3.0
+	divsd	xmm0, xmm1                             # xmm0 /= xmm1                   | ((2 * prediction) + (n / (prediction * prediction))) / 3.0
+
+
 	pop	rbp
 	ret
 
@@ -37,16 +42,19 @@ root:
 	divsd	xmm0, xmm1                             # xmm0 /= 3
 	movsd	QWORD PTR -8[rbp], xmm0                # previousStep = xmm0
 
-	movapd	xmm1, QWORD PTR -24[rbp]                             # xmm1 = number
-	movq	xmm0, QWORD PTR -8[rbp]                             # xmm0 = previousStep
+	movsd	xmm0, QWORD PTR -24[rbp]               # xmm0 = number
+	mov	rax, QWORD PTR -8[rbp]                     # rax = previousStep
+	movapd	xmm1, xmm0                             # xmm1 = number
+	movq	xmm0, rax                              # xmm0 = previousStep
 	call	nextStep                               # nextStep(xmm0, xmm1)
 	movq	rax, xmm0                              # rax = xmm0
 	mov	QWORD PTR -16[rbp], rax                    # [-16] = step
 
 	jmp	.L4
 .L5:
-	movsd	xmm0, QWORD PTR -16[rbp]
-	movsd	QWORD PTR -8[rbp], xmm0
+	movsd	xmm0, QWORD PTR -16[rbp]               # xmm = step
+	movsd	QWORD PTR -8[rbp], xmm0                # previousStep = step
+
 	movsd	xmm0, QWORD PTR -24[rbp]
 	mov	rax, QWORD PTR -8[rbp]
 	movapd	xmm1, xmm0
@@ -66,6 +74,7 @@ root:
 	movq	xmm0, rax
 	leave
 	ret
+
 	.section	.rodata
 .LC3:
 	.string	"%lf"
