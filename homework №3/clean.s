@@ -81,10 +81,11 @@ main:
 
 	lea	rax, -8[rbp]
 	mov	rsi, rax
-	mov	rdi, .LC3[rip]
+	lea	rax, .LC3[rip]
+	mov	rdi, rax
 	call	__isoc99_scanf@PLT
 
-
+	
 	movsd	xmm0, QWORD PTR -8[rbp]
 	pxor	xmm1, xmm1
 	ucomisd	xmm0, xmm1
