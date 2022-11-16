@@ -45,18 +45,15 @@ gcc -masm=intel \
 
 Уберем все строки:
 ```assembly
-	.size main, .-main 
-	.size isDigit, .-isDigit
-	.size isNotDigit, .-isNotDigit
-	.size input, .-input
-	.size count, .-count
+	.size root, .-root
+	.size nextStep, .-nextStep
 	.size main, .-main
 ```
 
 Удалим экспорт символов методов:
 ```assembly
-	.size root, .-root
-	.size nextStep, .-nextStep
+	.type main, @function
+	.type root, @function
 	.type main, @function
 ```
 
@@ -80,5 +77,17 @@ gcc -masm=intel \
 3:
 	.align 8
 4:
+```
+
+
+## Замены
+Будем класть значения в регистр rsi напрямую. Рассмотрим, например, вызов scanf, в нем можно заменить строки
+```
+	lea rax, -8[rbp]
+	mov rsi, rax
+
+	# Заменяем на:
+
+	mov rsi, -8[rbp]
 ```
 

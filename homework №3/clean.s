@@ -23,7 +23,7 @@ nextStep:
 	pop	rbp
 	ret
 	.globl	root
-	.type	root, @function
+	
 root:
 	push	rbp
 	mov	rbp, rsp
@@ -70,19 +70,22 @@ root:
 	.string	"%lf\n"
 .LC6:
 	.string	"%d\n"
+	
 	.text
 	.globl	main
-	.type	main, @function
+
 main:
-	push	rbp
-	mov	rbp, rsp
-	sub	rsp, 16
-	lea	rax, -8[rbp]
-	mov	rsi, rax
-	lea	rax, .LC3[rip]
-	mov	rdi, rax
+	push	rbp                                    #
+	mov	rbp, rsp                                   # Выделяем память под функцию
+	sub	rsp, 16                                    # 
+
+
+	mov	rsi, -8[rbp]
+	mov	rdi, .LC3[rip]
 	mov	eax, 0
 	call	__isoc99_scanf@PLT
+
+
 	movsd	xmm0, QWORD PTR -8[rbp]
 	pxor	xmm1, xmm1
 	ucomisd	xmm0, xmm1
