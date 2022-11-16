@@ -25,7 +25,8 @@ nextStep:
 	movsd	xmm1, QWORD PTR .LC0[rip]              # xmm1 = 3.0
 	divsd	xmm0, xmm1                             # xmm0 /= xmm1                   | ((2 * prediction) + (n / (prediction * prediction))) / 3.0
 
-
+	movq	rax, xmm0                              # rax = xmm0 
+	movq	xmm0, rax
 	pop	rbp
 	ret
 
@@ -40,7 +41,7 @@ root:
 	movsd	xmm0, QWORD PTR -24[rbp]               # xmm0 = number
 	movsd	xmm1, QWORD PTR .LC0[rip]              # xmm1 = 3
 	divsd	xmm0, xmm1                             # xmm0 /= 3
-	movsd	QWORD PTR -8[rbp], xmm0                # previousStep = xmm0
+	movsd	QWORD PTR -8[rbp], xmm0                # previousStep = xmm0  
 
 	movsd	xmm0, QWORD PTR -24[rbp]               # xmm0 = number
 	mov	rax, QWORD PTR -8[rbp]                     # rax = previousStep
