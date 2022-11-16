@@ -82,7 +82,6 @@ main:
 	lea	rax, -8[rbp]
 	mov	rsi, rax
 	mov	rdi, .LC3[rip]
-	mov	eax, 0
 	call	__isoc99_scanf@PLT
 
 
