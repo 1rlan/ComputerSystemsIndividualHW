@@ -79,7 +79,8 @@ main:
 	mov	rbp, rsp                                   # Выделяем память под функцию
 	sub	rsp, 16                                    # 
 
-	mov	rsi, -8[rbp]
+	lea	rax, -8[rbp]
+	mov	rsi, rax
 	lea	rax, .LC3[rip]
 	mov	rdi, rax
 	mov	eax, 0
