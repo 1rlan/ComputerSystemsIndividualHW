@@ -41,9 +41,9 @@ root:
 	comisd	xmm0, QWORD PTR .LC2[rip]              # compare(fabs(xmm0), epsilon)
 	ja	.L5                                        # if (fabs(xmm0) > epsilon) goto .L5
 	movsd	xmm0, QWORD PTR -16[rbp]               # return step
-	add rsp, 24
-	mov rsp, rbp
-	pop rbp
+	add rsp, 24                                    #
+	mov rsp, rbp                                   # Освобождаем память
+	pop rbp                                        # 
 	ret
 
 	.globl	main
@@ -75,9 +75,9 @@ main:
 	mov	esi, 0                                     # esi = 0                             
 	call	printf@PLT                             # printf("%d\n", 0)
 .L10:
-	add rsp, 16
-	mov rsp, rbp
-	pop rbp
+	add rsp, 16                                    #
+	mov rsp, rbp                                   # Освобождаем память
+	pop rbp                                        #
 	ret
 
 	.section	.rodata                            #
