@@ -141,3 +141,9 @@ gcc -masm=intel \
 ```
 И так везде...
 
+### Функция root
+Удалим ненужую работу с возвратом:
+```assembly
+	movq rax, xmm0 
+	movq xmm0, rax
+```

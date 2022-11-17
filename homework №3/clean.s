@@ -90,13 +90,10 @@ main:
 	je	.L8                                        # if (n != 0) goto .L8
 
 
-.L12:
-	mov	rax, QWORD PTR -8[rbp]                     
-	movq	xmm0, rax                              # xmm0 = n
+.L12:                
+	movq	xmm0, QWORD PTR -8[rbp]                # xmm0 = n
 	call	root                                   # root(xmm0)
-	movq	rax, xmm0                              # rax = root(xmm0)
 
-	movq	xmm0, rax                              # xmm0 = rax
 	lea	rax, .LC5[rip]                             # rax = "%lf\n"
 	mov	rdi, rax                                   # rdi = "%lf\n"                                 
 	call	printf@PLT                             # print("%lf\n", xmm0)
@@ -111,7 +108,6 @@ main:
 .L10:
 	leave
 	ret
-
 
 
 	.section	.rodata                            #
