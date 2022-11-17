@@ -8,7 +8,7 @@ nextStep:
 	addsd	xmm1, xmm1                             # xmm1 += prediction              | (2 * prediction)
 	movapd	xmm2, xmm0                             # xmm2 = prediction
 	mulsd	xmm2, xmm2                             # xmm2 *= xmm2                    | (prediction * prediction)
-	movsd	xmm0, xmm7               			   # xmm0 = number
+	movsd	xmm0, xmm7                             # xmm0 = number
 	divsd	xmm0, xmm2                             # xmm0 /= xmm2                    | (n / (prediction * prediction))
 	addsd	xmm0, xmm1                             # xmm0 += xmm1                    | (2 * prediction) + (n / (prediction * prediction))
 	divsd	xmm0, QWORD PTR .LC0[rip]              # xmm0 /= 3.0                     | ((2 * prediction) + (n / (prediction * prediction))) / 3.0
