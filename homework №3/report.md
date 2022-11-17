@@ -117,7 +117,6 @@ gcc -masm=intel \
 	addsd  xmm1, xmm1 
 ```
 
-### Функция root
 Вновь уберем перекидываение регистров:
 ```assembly
 	movq rax, xmm0
@@ -140,10 +139,3 @@ gcc -masm=intel \
 	movsd	xmm0, QWORD PTR -8[rbp]
 ```
 И так везде...
-
-### Функция root
-Удалим ненужую работу с возвратом:
-```assembly
-	movq rax, xmm0 
-	movq xmm0, rax
-```

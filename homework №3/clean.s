@@ -5,22 +5,15 @@
 nextStep:
 	movsd	QWORD PTR -8[rbp], xmm0                # [-8] = prediction
 	movsd	QWORD PTR -16[rbp], xmm1               # [-16] = n
-
 	movapd	xmm1, xmm0                             # xmm1 = prediction
 	addsd	xmm1, xmm1                             # xmm1 += prediction        | (2 * prediction)
-
 	movapd	xmm2, xmm0                             # xmm2 = prediction
 	mulsd	xmm2, xmm2                             # xmm2 *= xmm2              | (prediction * prediction)
-
 	movsd	xmm0, QWORD PTR -16[rbp]               # xmm0 = n
 	divsd	xmm0, xmm2                             # xmm0 /= xmm2              | (n / (prediction * prediction))
-
 	addsd	xmm0, xmm1                             # xmm0 += xmm1              | (2 * prediction) + (n / (prediction * prediction))
-
 	divsd	xmm0, QWORD PTR .LC0[rip]              # xmm0 /= 3.0               | ((2 * prediction) + (n / (prediction * prediction))) / 3.0
-	
 	ret                                            # return xmm0
-
 
 	.globl	root
 root:
@@ -30,9 +23,7 @@ root:
 
 	movsd	QWORD PTR -24[rbp], xmm0               # [-24] = number
 
-	movsd	xmm0, QWORD PTR -24[rbp]               # xmm0 = number
 	divsd	xmm0, QWORD PTR .LC0[rip]              # xmm0 /= 3                 | number / 3
-	movsd	QWORD PTR -8[rbp], xmm0                # [-8] = previousStep  
 
 	movsd	xmm0, QWORD PTR -8[rbp]                # xmm0 = previousStep
 	movsd	xmm1, QWORD PTR -24[rbp]               # xmm1 = number
@@ -63,8 +54,6 @@ root:
 
 	movsd	xmm0, QWORD PTR -16[rbp]               # xmm0 = step
 
-	movq	rax, xmm0
-	movq	xmm0, rax                              # xmm0 = valueToReturn (step)
 	leave
 	ret
 
@@ -74,12 +63,11 @@ main:
 	mov	rbp, rsp                                   # Выделяем память под функцию
 	sub	rsp, 16                                    # 
 
-	lea	rax, -8[rbp]							   
-	mov	rsi, rax                                   # rsi = n
 	lea	rax, .LC3[rip]
 	mov	rdi, rax                                   # rdi = "%lf"
+	lea	rax, -8[rbp]							   
+	mov	rsi, rax                                   # rsi = n
 	call	__isoc99_scanf@PLT                     # scanf("%lf", n)
-
 
 	movsd	xmm0, QWORD PTR -8[rbp]				   # xmm0 = n
 	pxor	xmm1, xmm1                             
@@ -94,15 +82,15 @@ main:
 	movq	xmm0, QWORD PTR -8[rbp]                # xmm0 = n
 	call	root                                   # root(xmm0)
 
-	lea	rax, .LC5[rip]                             # rax = "%lf\n"
+	lea	rax, .LC5[rip]                             
 	mov	rdi, rax                                   # rdi = "%lf\n"                                 
 	call	printf@PLT                             # print("%lf\n", xmm0)
 	jmp	.L10
 
 .L8:
-	mov	esi, 0                                     # esi = 0
 	lea	rax, .LC6[rip]                              
-	mov	rdi, rax                                   # rdi = "%d\n"                                 
+	mov	rdi, rax                                   # rdi = "%d\n"    
+	mov	esi, 0                                     # esi = 0                             
 	call	printf@PLT                             # printf("%d\n", 0)
 
 .L10:
