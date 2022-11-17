@@ -104,7 +104,6 @@ main:
 	mov	rsi, rax                                   # rsi = n
 	lea	rax, .LC3[rip]
 	mov	rdi, rax                                   # rdi = "%lf"
-	mov	eax, 0
 	call	__isoc99_scanf@PLT                     # scanf(rdi, rsi)
 
 	
@@ -133,12 +132,10 @@ main:
 .L8:
 	mov	esi, 0                                     # esi = 0
 	lea	rax, .LC6[rip]                             # rax = "%d\n" 
-	mov	rdi, rax                                   # rdi = rax
-	mov	eax, 0                                 
+	mov	rdi, rax                                   # rdi = rax                                 
 	call	printf@PLT                             # printf("%d\n", 0)
 
 .L10:
-	mov	eax, 0
 	leave
 	ret
 
