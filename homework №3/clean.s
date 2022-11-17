@@ -23,9 +23,6 @@ nextStep:
 
 	movsd	xmm1, QWORD PTR .LC0[rip]              # xmm1 = 3.0
 	divsd	xmm0, xmm1                             # xmm0 /= xmm1                   | ((2 * prediction) + (n / (prediction * prediction))) / 3.0
-
-	movq	rax, xmm0                              
-	movq	xmm0, rax                              # xmm0 = valueToReturn
 	
 	ret
 
