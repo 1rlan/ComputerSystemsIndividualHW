@@ -83,7 +83,7 @@ gcc -masm=intel \
 
 ## Замены
 Будем класть значения в регистры напрямую:
-```
+```assembly
 	mov rax, QWORD PTR -8[rbp]
 	mov rdi, rax
 		
@@ -92,3 +92,10 @@ gcc -masm=intel \
 	mov rdi, QWORD PTR -8[rbp]
 ```
 
+Заметим, что nextStep не создает внутри себя переменных, следовательно можно обойтись без "нулевого" выделения памяти, удалив строки:
+```assembly
+	push rbp 
+	mov rbp, rsp
+	...	
+	pop rbp
+```

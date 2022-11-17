@@ -1,10 +1,9 @@
-	.intel_syntax noprefix
+	.intel_syntax noprefix                         # Синтаксис intel
 	
 	.text
 	.globl	nextStep
 nextStep:
-	push	rbp                                    # Выделяем память под функцию
-	mov	rbp, rsp                                   #
+	
 
 	movsd	QWORD PTR -8[rbp], xmm0                # [-8] = prediction
 	movsd	QWORD PTR -16[rbp], xmm1               # [-16] = n
@@ -27,7 +26,7 @@ nextStep:
 
 	movq	rax, xmm0                              
 	movq	xmm0, rax                              # xmm0 = valueToReturn
-	pop	rbp
+	
 	ret
 
 	.globl	root
@@ -125,6 +124,7 @@ main:
 .L10:
 	leave
 	ret
+
 
 
 	.section	.rodata                            #
