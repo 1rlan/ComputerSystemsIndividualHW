@@ -6,7 +6,7 @@
 Вводится число n. Программа вычисляет кубический корень этого числа с помощью быстросходящегося алгоритм нахождения корня  n-ой степени. Алгоритм - [wiki](https://ru.m.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%BD%D0%B0%D1%85%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BA%D0%BE%D1%80%D0%BD%D1%8F_n-%D0%BD%D0%BE%D0%B9_%D1%81%D1%82%D0%B5%D0%BF%D0%B5%D0%BD%D0%B8).
 
 ## Код на языке Асемблера:
-[program.s](https://github.com/1rlan/ComputerSystemsIndividualHW/tree/master/homework%20%E2%84%963) - код без комментариев и ручного редактирования.\
+[program.s](https://github.com/1rlan/ComputerSystemsIndividualHW/blob/master/homework%20%E2%84%963/program.s) - код без комментариев и ручного редактирования.\
 [clean.s](https://github.com/1rlan/ComputerSystemsIndividualHW/blob/master/homework%20%E2%84%963/clean.s) - код  ```program.c```  c комментариями и оптимизацией.
 
 ## Флаги 
