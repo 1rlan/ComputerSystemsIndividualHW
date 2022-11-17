@@ -92,7 +92,6 @@ gcc -masm=intel \
 	mov rdi, QWORD PTR -8[rbp]
 ```
 
-### Функция nextStep
 Заметим, что nextStep не создает внутри себя переменных, следовательно можно обойтись без "нулевого" выделения памяти, удалив строки:
 ```assembly
 	push rbp 
@@ -105,7 +104,7 @@ gcc -masm=intel \
 	movq rax, xmm0
 	movq xmm0, rax
 ```
-И уберем лишние перебрасывания регистров:
+И уберем лишние перебрасывания регистров в остальных функциях:
 ```assembly
 	movsd xmm0, QWORD PTR -8[rbp]
 	movapd xmm1, xmm0
@@ -117,7 +116,7 @@ gcc -masm=intel \
 	addsd  xmm1, xmm1 
 ```
 
-Вновь уберем перекидываение регистров:
+Аналогично:
 ```assembly
 	movq rax, xmm0
 	mov  QWORD PTR -16[rbp], rax 
@@ -126,7 +125,7 @@ gcc -masm=intel \
 
 	movsd	QWORD PTR -16[rbp], xmm0    
 ```
-Аналогично:
+И тут аналогично:
 ```assembly
 	movsd xmm0, QWORD PTR -24[rbp] 
 	mov   rax, QWORD PTR -8[rbp] 
@@ -138,4 +137,29 @@ gcc -masm=intel \
 	movsd   xmm1, QWORD PTR -24[rbp]                                         
 	movsd	xmm0, QWORD PTR -8[rbp]
 ```
-И так везде...
+И далее по списку...
+
+Объединим все константы в одном месте, уберем все rodata:
+```assembly
+	.section .rodata 
+.LC0: 
+	.long 0 
+	.long 1074266112 
+.LC1: 
+	.long -1 
+	.long 2147483647 
+	.long 0 
+	.long 0
+.LC2:
+	.long -755914244 
+	.long 1061184077 
+.LC3: 
+	.string "%lf" 
+.LC5: 
+	.string "%lf\n" 
+.LC6: 
+	.string "%d\n" 
+```
+
+
+
