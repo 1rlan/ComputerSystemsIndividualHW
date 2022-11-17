@@ -6,13 +6,13 @@ nextStep:
 	movsd	QWORD PTR -8[rbp], xmm0                # [-8] = prediction
 	movsd	QWORD PTR -16[rbp], xmm1               # [-16] = n
 	movapd	xmm1, xmm0                             # xmm1 = prediction
-	addsd	xmm1, xmm1                             # xmm1 += prediction        | (2 * prediction)
+	addsd	xmm1, xmm1                             # xmm1 += prediction              | (2 * prediction)
 	movapd	xmm2, xmm0                             # xmm2 = prediction
-	mulsd	xmm2, xmm2                             # xmm2 *= xmm2              | (prediction * prediction)
+	mulsd	xmm2, xmm2                             # xmm2 *= xmm2                    | (prediction * prediction)
 	movsd	xmm0, QWORD PTR -16[rbp]               # xmm0 = n
-	divsd	xmm0, xmm2                             # xmm0 /= xmm2              | (n / (prediction * prediction))
-	addsd	xmm0, xmm1                             # xmm0 += xmm1              | (2 * prediction) + (n / (prediction * prediction))
-	divsd	xmm0, QWORD PTR .LC0[rip]              # xmm0 /= 3.0               | ((2 * prediction) + (n / (prediction * prediction))) / 3.0
+	divsd	xmm0, xmm2                             # xmm0 /= xmm2                    | (n / (prediction * prediction))
+	addsd	xmm0, xmm1                             # xmm0 += xmm1                    | (2 * prediction) + (n / (prediction * prediction))
+	divsd	xmm0, QWORD PTR .LC0[rip]              # xmm0 /= 3.0                     | ((2 * prediction) + (n / (prediction * prediction))) / 3.0
 	ret                                            # return xmm0
 
 	.globl	root
@@ -20,26 +20,20 @@ root:
 	push	rbp                                    #                      
 	mov	rbp, rsp                                   # Выделяем память под функцию
 	sub	rsp, 24                                    # 
-
 	movsd	QWORD PTR -24[rbp], xmm0               # [-24] = number
-
-	divsd	xmm0, QWORD PTR .LC0[rip]              # xmm0 /= 3                 | number / 3
-	movsd	QWORD PTR -8[rbp], xmm0                # [-8] = previousStep  
+	divsd	xmm0, QWORD PTR .LC0[rip]              # xmm0 /= 3                       | number / 3.0
+	movsd	QWORD PTR -8[rbp], xmm0                # [-8] = previousStep             | previousStep = number / 3.0
 	movsd	xmm1, QWORD PTR -24[rbp]               # xmm1 = number
 	call	nextStep                               # nextStep(xmm0, xmm1)
-	movsd	QWORD PTR -16[rbp], xmm0               # [-16] = step (returnedValue)
-
+	movsd	QWORD PTR -16[rbp], xmm0               # atep = valueToReturn            | step = nextStep(previousStep, number)
 	jmp	.L4
 
 .L5:
 	movsd	xmm0, QWORD PTR -16[rbp]               # xmm = step
 	movsd	QWORD PTR -8[rbp], xmm0                # previousStep = step
-
-	movsd	xmm0, QWORD PTR -8[rbp]                # xmm0 = previousStep
 	movsd	xmm1, QWORD PTR -24[rbp]               # xmm1 = number
 	call	nextStep                               # nextStep(previousStep, number)
-                          
-	movsd	QWORD PTR -16[rbp], xmm0               # step = valueToReturn
+	movsd	QWORD PTR -16[rbp], xmm0               # step = valueToReturn            | step = nextStep(previousStep, number);
 
 .L4:
 	movsd	xmm0, QWORD PTR -8[rbp]                # xmm0 = previousStep
