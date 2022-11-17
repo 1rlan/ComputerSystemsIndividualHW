@@ -2,12 +2,12 @@
 *Вариант №19. Разработать программу вычисления корня кубического из заданного числа n согласно быстро сходящемуся итерационному алгоритму определения корня k-ой степени с точностью не хуже 0,05%.* 
 
 ## Код на языке С:
-[Битая ссылка](https://github.com/1rlan/csaihw/blob/mhomework%20%E2%84%961/program.c)  - код программ\
+[program.c](https://github.com/1rlan/ComputerSystemsIndividualHW/blob/master/homework%20%E2%84%963/program.c)  - код программы\
 Вводится число n. Программа вычисляет кубический корень этого числа с помощью быстросходящегося алгоритм нахождения корня  n-ой степени. Алгоритм - [wiki](https://ru.m.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%BD%D0%B0%D1%85%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BA%D0%BE%D1%80%D0%BD%D1%8F_n-%D0%BD%D0%BE%D0%B9_%D1%81%D1%82%D0%B5%D0%BF%D0%B5%D0%BD%D0%B8).
 
 ## Код на языке Асемблера:
-[Битая ссылка]() - код без комментариев и ручного редактирования.\
-[Битая ссылка]() - код  ```program.c```  c комментариями и оптимизацией.
+[program.s](https://github.com/1rlan/ComputerSystemsIndividualHW/tree/master/homework%20%E2%84%963) - код без комментариев и ручного редактирования.\
+[clean.s](https://github.com/1rlan/ComputerSystemsIndividualHW/blob/master/homework%20%E2%84%963/clean.s) - код  ```program.c```  c комментариями и оптимизацией.
 
 ## Флаги 
 Дизасемблирование осуществлялось с использованием флагов:
@@ -22,8 +22,8 @@ gcc -masm=intel \
 ```
 
 ## Тесты 
-[Битая ссылка](://github.com/1rlan/csaihw/tree/master/homework%20%E2%84%961/tests) - папка с тестами\
-Для проверки корректности программы использовались тесты, проверяющие крайние значения - единицы и нули, различные целые и нецелые числа, отрицательные числа. Программа должно удовлетворять значению точности не менее 0.0005.
+[tests](https://github.com/1rlan/ComputerSystemsIndividualHW/tree/master/homework%20%E2%84%963/tests) - папка с тестами\
+Для проверки корректности программы использовались тесты, проверяющие крайние значения - единицы и нули, различные целые и нецелые числа, отрицательные числа. Программа должно удовлетворять значению точности не менее 0.0005. Все ручные тесты проводились с помощью вычислений корня на сайте [wolfram](https://www.wolframalpha.com/).\
 
 Проведем первые тесты на "чистом" ассемблерном файле и убедимся, что все работает:
 ![image info](images/firstTest.png)
@@ -115,7 +115,6 @@ gcc -masm=intel \
 	movapd xmm1, xmm0 
 	addsd  xmm1, xmm1 
 ```
-
 Аналогично:
 ```assembly
 	movq rax, xmm0
@@ -160,8 +159,6 @@ gcc -masm=intel \
 .LC6: 
 	.string "%d\n" 
 ```
-
-
 Заменим макрос leave на:
 ```assembly
 	add rsp, x
@@ -185,3 +182,11 @@ gcc -masm=intel \
 	QWORD PTR -16[rbp] -> xmm6      # Число step
 	QWORD PTR -16[rbp] -> xmm5      # Число previousStep
 ```
+В функции main используется одно вынужденое обращение к регистру, оставим его.
+
+
+## Финальные тесты 
+Проведем тесты и убедимся, что после всех модификаций программа работает корректно.
+![image info](images/secondTest.png)
+## Разница 
+Модифицированная файл [clean.s](https://github.com/1rlan/ComputerSystemsIndividualHW/blob/master/homework%20%E2%84%963/clean.s)  занимает ровно 100 строк кода, что на 53 строк меньше, чем программа [program.s](https://github.com/1rlan/ComputerSystemsIndividualHW/blob/master/homework%20%E2%84%963/program.s) (153 строки)
