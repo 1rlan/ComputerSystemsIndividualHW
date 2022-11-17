@@ -25,8 +25,6 @@ root:
 
 	divsd	xmm0, QWORD PTR .LC0[rip]              # xmm0 /= 3                 | number / 3
 	movsd	QWORD PTR -8[rbp], xmm0                # [-8] = previousStep  
-
-	movsd	xmm0, QWORD PTR -8[rbp]                # xmm0 = previousStep
 	movsd	xmm1, QWORD PTR -24[rbp]               # xmm1 = number
 	call	nextStep                               # nextStep(xmm0, xmm1)
 	movsd	QWORD PTR -16[rbp], xmm0               # [-16] = step (returnedValue)
