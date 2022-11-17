@@ -125,7 +125,7 @@ main:
 	movq	xmm0, rax                              # xmm0 = rax
 	lea	rax, .LC5[rip]                             # rax = "%lf\n"
 	mov	rdi, rax                                   # rdi = "%lf\n"
-	mov	eax, 1                                     #
+	# mov	eax, 1                                     #
 	call	printf@PLT                             # print("%lf\n", xmm0)
 	jmp	.L10
 
