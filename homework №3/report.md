@@ -162,8 +162,8 @@ gcc -masm=intel \
 Заменим макрос leave на:
 ```assembly
 	add rsp, x
-    mov rsp, rbp
-    pop rbp
+    	mov rsp, rbp
+    	pop rbp
 ```
 
 
