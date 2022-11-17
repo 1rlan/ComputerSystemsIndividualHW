@@ -92,6 +92,7 @@ gcc -masm=intel \
 	mov rdi, QWORD PTR -8[rbp]
 ```
 
+### Функция nextStep
 Заметим, что nextStep не создает внутри себя переменных, следовательно можно обойтись без "нулевого" выделения памяти, удалив строки:
 ```assembly
 	push rbp 
@@ -103,4 +104,38 @@ gcc -masm=intel \
 ```assembly
 	movq rax, xmm0
 	movq xmm0, rax
+```
+И уберем лишние перебрасывания регистров:
+```assembly
+	movsd xmm0, QWORD PTR -8[rbp]
+	movapd xmm1, xmm0
+	addsd xmm1, xmm1
+
+	# Заменим на 
+
+	movapd xmm1, xmm0 
+	addsd  xmm1, xmm1 
+```
+
+### Функция root
+Вновь уберем перекидываение регистров:
+```assembly
+	movq rax, xmm0
+	mov  QWORD PTR -16[rbp], rax 
+
+	# Заменим на 
+
+	movsd	QWORD PTR -16[rbp], xmm0    
+```
+Аналогично:
+```assembly
+	movsd xmm0, QWORD PTR -24[rbp] 
+	mov   rax, QWORD PTR -8[rbp] 
+	movapd xmm1, xmm0 
+	movq  xmm0, rax 
+	
+	# Заменим на
+
+	movsd   xmm1, QWORD PTR -24[rbp]                                         
+	movsd	xmm0, QWORD PTR -8[rbp]
 ```
