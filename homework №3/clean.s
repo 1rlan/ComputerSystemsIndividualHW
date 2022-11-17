@@ -82,18 +82,6 @@ root:
 	leave
 	ret
 
-
-	.section	.rodata                            #
-.LC3:                                              #
-	.string	"%lf"                                  # 
-.LC5:                                              # Секция констант
-	.string	"%lf\n"                                #
-.LC6:                                              #
-	.string	"%d\n"                                 #
-	
-
-
-	.text
 	.globl	main
 main:
 	push	rbp                                    #
@@ -104,16 +92,16 @@ main:
 	mov	rsi, rax                                   # rsi = n
 	lea	rax, .LC3[rip]
 	mov	rdi, rax                                   # rdi = "%lf"
-	call	__isoc99_scanf@PLT                     # scanf(rdi, rsi)
+	call	__isoc99_scanf@PLT                     # scanf("%lf", n)
 
-	
+
 	movsd	xmm0, QWORD PTR -8[rbp]				   # xmm0 = n
 	pxor	xmm1, xmm1                             
 	ucomisd	xmm0, xmm1
-	jp	.L12                                       # if (xmm0 == n) goto .L12
+	jp	.L12                                       # if (n == 0) goto .L12
 	pxor	xmm1, xmm1
 	ucomisd	xmm0, xmm1
-	je	.L8                                        # if (xmm0 != n) goto .L8
+	je	.L8                                        # if (n != 0) goto .L8
 
 
 .L12:
@@ -124,15 +112,14 @@ main:
 
 	movq	xmm0, rax                              # xmm0 = rax
 	lea	rax, .LC5[rip]                             # rax = "%lf\n"
-	mov	rdi, rax                                   # rdi = "%lf\n"
-	# mov	eax, 1                                     #
+	mov	rdi, rax                                   # rdi = "%lf\n"                                 
 	call	printf@PLT                             # print("%lf\n", xmm0)
 	jmp	.L10
 
 .L8:
 	mov	esi, 0                                     # esi = 0
-	lea	rax, .LC6[rip]                             # rax = "%d\n" 
-	mov	rdi, rax                                   # rdi = rax                                 
+	lea	rax, .LC6[rip]                              
+	mov	rdi, rax                                   # rdi = "%d\n"                                 
 	call	printf@PLT                             # printf("%d\n", 0)
 
 .L10:
@@ -147,12 +134,20 @@ main:
 	.long	1074266112                             #
 	.align 16                                      #
 .LC1:                                              #
-	.long	-1                                     # Секция констант
+	.long	-1                                     # 
 	.long	2147483647                             #
 	.long	0                                      #
-	.long	0                                      #
-	.align 8                                       #
+	.long	0                                      # 
+	.align 8                                       # Секция констант
 .LC2:                                              #
 	.long	-755914244                             #
 	.long	1061184077                             #
+	                                               #
+	.section	.rodata                            #
+.LC3:                                              #
+	.string	"%lf"                                  # 
+.LC5:                                              # 
+	.string	"%lf\n"                                #
+.LC6:                                              #
+	.string	"%d\n"                                 #
 	
