@@ -115,22 +115,17 @@ main:
 
 
 	.section	.rodata                            #
-	.align 8                                       #
 .LC0:                                              #
 	.long	0                                      #
 	.long	1074266112                             #
-	.align 16                                      #
 .LC1:                                              #
 	.long	-1                                     # 
 	.long	2147483647                             #
 	.long	0                                      #
-	.long	0                                      # 
-	.align 8                                       # Секция констант
-.LC2:                                              #
+	.long	0                                      # Секция констант
+.LC2:                                              # 
 	.long	-755914244                             #
 	.long	1061184077                             #
-	                                               #
-	.section	.rodata                            #
 .LC3:                                              #
 	.string	"%lf"                                  # 
 .LC5:                                              # 
