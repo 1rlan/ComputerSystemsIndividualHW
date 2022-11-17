@@ -3,7 +3,7 @@
 	.text
 	.globl	nextStep
 nextStep:
-	movsd	xmm7, xmm1                             # [-16] = number
+	movsd	xmm7, xmm1                             # xmm7 = number
 	movapd	xmm1, xmm0                             # xmm1 = prediction
 	addsd	xmm1, xmm1                             # xmm1 += prediction              | (2 * prediction)
 	movapd	xmm2, xmm0                             # xmm2 = prediction
@@ -19,9 +19,9 @@ root:
 	push	rbp                                    #                      
 	mov	rbp, rsp                                   # Выделяем память под функцию
 	sub	rsp, 24                                    # 
-	movapd	xmm7, xmm0                             # [-24] = number
+	movapd	xmm7, xmm0                             # xmm7 = number
 	divsd	xmm0, QWORD PTR .LC0[rip]              # xmm0 /= 3                       | number / 3.0
-	movapd	xmm5, xmm0                             # [-8] = previousStep             | previousStep = number / 3.0
+	movapd	xmm5, xmm0                             # xmm5 = previousStep             | previousStep = number / 3.0
 	movapd	xmm1, xmm7                             # xmm1 = number
 	call	nextStep                               # nextStep(xmm0, xmm1)
 	movapd	xmm6, xmm0                             # step = valueToReturn            | step = nextStep(previousStep, number)

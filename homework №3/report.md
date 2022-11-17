@@ -185,8 +185,3 @@ gcc -masm=intel \
 	QWORD PTR -16[rbp] -> xmm6      # Число step
 	QWORD PTR -16[rbp] -> xmm5      # Число previousStep
 ```
-В функции main удалим строку (она идет после вызона scanf):
-```assembly
-	movsd xmm0, QWORD PTR -8[rbp] 
-```
-Так как число 
