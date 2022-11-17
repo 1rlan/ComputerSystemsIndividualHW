@@ -3,7 +3,7 @@
 	.text
 	.globl	nextStep
 nextStep:
-	movapd	xmm7, xmm0                # [-8] = prediction
+	movsd	QWORD PTR -8[rbp], xmm0                # [-8] = prediction
 	movsd	QWORD PTR -16[rbp], xmm1               # [-16] = n
 	movapd	xmm1, xmm0                             # xmm1 = prediction
 	addsd	xmm1, xmm1                             # xmm1 += prediction              | (2 * prediction)
@@ -22,26 +22,28 @@ root:
 	sub	rsp, 24                                    # 
 	movsd	QWORD PTR -24[rbp], xmm0               # [-24] = number
 	divsd	xmm0, QWORD PTR .LC0[rip]              # xmm0 /= 3                       | number / 3.0
-	movapd	xmm7, xmm0                # [-8] = previousStep             | previousStep = number / 3.0
+	movsd	QWORD PTR -8[rbp], xmm0                # [-8] = previousStep             | previousStep = number / 3.0
 	movsd	xmm1, QWORD PTR -24[rbp]               # xmm1 = number
 	call	nextStep                               # nextStep(xmm0, xmm1)
 	movsd	QWORD PTR -16[rbp], xmm0               # atep = valueToReturn            | step = nextStep(previousStep, number)
 	jmp	.L4
 .L5:
 	movsd	xmm0, QWORD PTR -16[rbp]               # xmm0 = step
-	movapd	xmm7, xmm0                # previousStep = step
+	movsd	QWORD PTR -8[rbp], xmm0                # previousStep = step
 	movsd	xmm1, QWORD PTR -24[rbp]               # xmm1 = number
 	call	nextStep                               # nextStep(previousStep, number)
 	movsd	QWORD PTR -16[rbp], xmm0               # step = valueToReturn            | step = nextStep(previousStep, number);
 .L4:
-	movapd	xmm0, xmm7                # xmm0 = previousStep
+	movsd	xmm0, QWORD PTR -8[rbp]                # xmm0 = previousStep
 	subsd	xmm0, QWORD PTR -16[rbp]               # xmm0 -= step
 	movq	xmm1, QWORD PTR .LC1[rip]              # xmm1 = 0.0005
 	andpd	xmm0, xmm1                             # fabs((previousStep - step), 0.005)
 	comisd	xmm0, QWORD PTR .LC2[rip]              # compare(fabs(xmm0), epsilon)
 	ja	.L5                                        # if (fabs(xmm0) > epsilon) goto .L5
 	movsd	xmm0, QWORD PTR -16[rbp]               # return step
-	leave
+	add rsp, 24
+	mov rsp, rbp
+	pop rbp
 	ret
 
 	.globl	main
@@ -54,7 +56,7 @@ main:
 	lea	rax, -8[rbp]							   
 	mov	rsi, rax                                   # rsi = n
 	call	__isoc99_scanf@PLT                     # scanf("%lf", n)
-	movapd	xmm0, xmm7				   # xmm0 = n
+	movsd	xmm0, QWORD PTR -8[rbp]				   # xmm0 = n
 	pxor	xmm1, xmm1                             
 	ucomisd	xmm0, xmm1
 	jp	.L12                                       # if (n == 0) goto .L12
@@ -73,7 +75,9 @@ main:
 	mov	esi, 0                                     # esi = 0                             
 	call	printf@PLT                             # printf("%d\n", 0)
 .L10:
-	leave
+	add rsp, 16
+	mov rsp, rbp
+	pop rbp
 	ret
 
 	.section	.rodata                            #
