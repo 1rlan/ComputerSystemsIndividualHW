@@ -168,3 +168,25 @@ gcc -masm=intel \
     mov rsp, rbp
     pop rbp
 ```
+
+
+## Оптимизация
+Выполним замены для оптимизации работы программы, будем использовать регистры, метод nextStep:
+```assembly
+	QWORD PTR -16[rbp] -> xmm7      # Число n
+```
+Удалим следующую строку, так как значение [-8] на стеке не используется в функции, только в контекста xmm0
+```assembly
+	movsd QWORD PTR -8[rbp], xmm0 # [-8] = prediction
+```
+В функции root:
+```assembly
+	QWORD PTR -24[rbp] -> xmm7      # Число n
+	QWORD PTR -16[rbp] -> xmm6      # Число step
+	QWORD PTR -16[rbp] -> xmm5      # Число previousStep
+```
+В функции main удалим строку (она идет после вызона scanf):
+```assembly
+	movsd xmm0, QWORD PTR -8[rbp] 
+```
+Так как число 
