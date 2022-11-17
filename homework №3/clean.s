@@ -56,7 +56,7 @@ root:
 	subsd	xmm0, QWORD PTR -16[rbp]               # xmm0 -= step
 
 	movq	xmm1, QWORD PTR .LC1[rip]
-	andsd	xmm0, xmm1                             # fabs(xmm0)
+	andpd	xmm0, xmm1                             # fabs(xmm0)
 
 	comisd	xmm0, QWORD PTR .LC2[rip]              # compare(fabs(xmm0), epsilon)
 	ja	.L5                                        # if (fabs(xmm0) > epsilon) goto .L5
