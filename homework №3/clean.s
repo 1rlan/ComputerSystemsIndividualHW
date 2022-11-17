@@ -31,8 +31,7 @@ root:
 	movsd	QWORD PTR -24[rbp], xmm0               # [-24] = number
 
 	movsd	xmm0, QWORD PTR -24[rbp]               # xmm0 = number
-	movsd	xmm1, QWORD PTR .LC0[rip]              # xmm1 = 3
-	divsd	xmm0, xmm1                             # xmm0 /= 3                 | number / 3
+	divsd	xmm0, QWORD PTR .LC0[rip]              # xmm0 /= 3                 | number / 3
 	movsd	QWORD PTR -8[rbp], xmm0                # [-8] = previousStep  
 
 	movsd	xmm0, QWORD PTR -8[rbp]                # xmm0 = previousStep
@@ -46,21 +45,19 @@ root:
 	movsd	xmm0, QWORD PTR -16[rbp]               # xmm = step
 	movsd	QWORD PTR -8[rbp], xmm0                # previousStep = step
 
-	movsd	xmm0, QWORD PTR -24[rbp]               # xmm0 = number
-	mov	rax, QWORD PTR -8[rbp]                     # rax = previousStep
-	movapd	xmm1, xmm0                             # xmm1 = number
-	movq	xmm0, rax                              # xmm0 = previousStep
+	movsd	xmm0, QWORD PTR -8[rbp]                # xmm0 = previousStep
+	movsd	xmm1, QWORD PTR -24[rbp]               # xmm1 = number
 	call	nextStep                               # nextStep(previousStep, number)
-
-	movq	rax, xmm0                              
-	mov	QWORD PTR -16[rbp], rax                    # step = valueToReturn
+                          
+	movsd	QWORD PTR -16[rbp], xmm0               # step = valueToReturn
 
 .L4:
 	movsd	xmm0, QWORD PTR -8[rbp]                # xmm0 = previousStep
 	subsd	xmm0, QWORD PTR -16[rbp]               # xmm0 -= step
 
-	movq	xmm1, QWORD PTR .LC1[rip]
-	andpd	xmm0, xmm1                             # fabs(xmm0)
+
+	andsd	xmm0, QWORD PTR .LC1[rip]                             # fabs(xmm0)
+
 
 	comisd	xmm0, QWORD PTR .LC2[rip]              # compare(fabs(xmm0), epsilon)
 	ja	.L5                                        # if (fabs(xmm0) > epsilon) goto .L5

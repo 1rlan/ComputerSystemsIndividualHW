@@ -139,3 +139,5 @@ gcc -masm=intel \
 	movsd   xmm1, QWORD PTR -24[rbp]                                         
 	movsd	xmm0, QWORD PTR -8[rbp]
 ```
+И так везде...
+
