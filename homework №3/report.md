@@ -6,7 +6,7 @@
 Вводится число n. Программа вычисляет кубический корень этого числа с помощью быстросходящегося алгоритм нахождения корня  n-ой степени. Алгоритм - [wiki](https://ru.m.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%BD%D0%B0%D1%85%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BA%D0%BE%D1%80%D0%BD%D1%8F_n-%D0%BD%D0%BE%D0%B9_%D1%81%D1%82%D0%B5%D0%BF%D0%B5%D0%BD%D0%B8).
 
 ## Код на языке Асемблера:
-[program.s](https://github.com/1rlan/ComputerSystemsIndividualHW/tree/master/homework%20%E2%84%963) - код без комментариев и ручного редактирования.\
+[program.s](https://github.com/1rlan/ComputerSystemsIndividualHW/blob/master/homework%20%E2%84%963/program.s) - код без комментариев и ручного редактирования.\
 [clean.s](https://github.com/1rlan/ComputerSystemsIndividualHW/blob/master/homework%20%E2%84%963/clean.s) - код  ```program.c```  c комментариями и оптимизацией.
 
 ## Флаги 
@@ -23,7 +23,7 @@ gcc -masm=intel \
 
 ## Тесты 
 [tests](https://github.com/1rlan/ComputerSystemsIndividualHW/tree/master/homework%20%E2%84%963/tests) - папка с тестами\
-Для проверки корректности программы использовались тесты, проверяющие крайние значения - единицы и нули, различные целые и нецелые числа, отрицательные числа. Программа должно удовлетворять значению точности не менее 0.0005. Все ручные тесты проводились с помощью вычислений корня на сайте [wolfram](https://www.wolframalpha.com/).\
+Для проверки корректности программы использовались тесты, проверяющие крайние значения - единицы и нули, различные целые и нецелые числа, отрицательные числа. Программа должно удовлетворять значению точности не менее 0.0005. Все ручные тесты проводились с помощью вычислений корня на сайте [wolfram](https://www.wolframalpha.com/).
 
 Проведем первые тесты на "чистом" ассемблерном файле и убедимся, что все работает:
 ![image info](images/firstTest.png)
@@ -162,8 +162,8 @@ gcc -masm=intel \
 Заменим макрос leave на:
 ```assembly
 	add rsp, x
-    mov rsp, rbp
-    pop rbp
+    	mov rsp, rbp
+    	pop rbp
 ```
 
 
@@ -188,5 +188,9 @@ gcc -masm=intel \
 ## Финальные тесты 
 Проведем тесты и убедимся, что после всех модификаций программа работает корректно.
 ![image info](images/secondTest.png)
-## Разница 
+## Сравнение бинарников
+Сравним код программы [program.s](https://github.com/1rlan/ComputerSystemsIndividualHW/blob/master/homework%20%E2%84%963/program.s)  с оптимизированным и очищенным кодом [clean.s](https://github.com/1rlan/ComputerSystemsIndividualHW/blob/master/homework%20%E2%84%963/clean.s): 
+![image info](images/comparing.png)Прекрасно видна разница в более чем два раза! Победа!
+
+## Разница строк 
 Модифицированная файл [clean.s](https://github.com/1rlan/ComputerSystemsIndividualHW/blob/master/homework%20%E2%84%963/clean.s)  занимает ровно 100 строк кода, что на 53 строк меньше, чем программа [program.s](https://github.com/1rlan/ComputerSystemsIndividualHW/blob/master/homework%20%E2%84%963/program.s) (153 строки)
