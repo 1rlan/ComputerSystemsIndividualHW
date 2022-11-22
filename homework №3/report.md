@@ -11,7 +11,7 @@
 
 ## Флаги 
 Дизасемблирование осуществлялось с использованием флагов:
-```terminal
+```gcc
 gcc -masm=intel \
     -fno-asynchronous-unwind-tables \
     -fno-jump-tables \
