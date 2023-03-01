@@ -87,49 +87,49 @@ gcc -masm=intel \
 
 ## Замены
 Будем класть значения в регистр rsi напрямую. Рассмотрим, например, вызов scanf, в нем можно заменить строки
-```
+```assembly
         lea rax, -92[rbp]
         mov rsi, rax
 
-		# Заменяем на:
+	# Заменяем на:
 
-		mov rsi, -92[rbp]
+	mov rsi, -92[rbp]
 ```
 
 
 Перепишем огромный и непонятный блок создания массивов new_array и old_array (161-206 и 214-260 строки [program.s](https://github.com/1rlan/csaihw/blob/master/homework%20%E2%84%961/program.c)) череp malloc:
 Выделяем память:
-```
-		mov rax, -92[rbp]
-		shl rax, 3 
-		mov rdi, rax 
-		call malloc@PLT 
-		mov QWORD PTR -64[rbp], rax 
+```assembly
+	mov rax, -92[rbp]
+	shl rax, 3 
+	mov rdi, rax 
+	call malloc@PLT 
+	mov QWORD PTR -64[rbp], rax 
 
 
-		mov DWORD PTR -68[rbp], eax
-		shl rax, 3 
-		mov rdi, rax 
-		call malloc@PLT #
-		mov QWORD PTR -88[rbp], rax
+	mov DWORD PTR -68[rbp], eax
+	shl rax, 3 
+	mov rdi, rax 
+	call malloc@PLT #
+	mov QWORD PTR -88[rbp], rax
 ```
 Чистим память:
-```
-		mov rdi, QWORD PTR -64[rbp] 
-		call free@PLT
+```assembly
+	mov rdi, QWORD PTR -64[rbp] 
+	call free@PLT
 
-		mov rdi, QWORD PTR -88[rbp] 
-		call free@PLT 
+	mov rdi, QWORD PTR -88[rbp] 
+	call free@PLT 
 ```
 *Комментарии к происходящему выше находятся в файле clean.s*
 
 ## Оптимизация
 Заменим значения на стеке регистрами:
-```
-i          -> r12               # Счетчик для всех циклов
-size       -> r13d
-x          -> r14d
-valid_size -> r15					
+```assembly
+	i          -> r12               # Счетчик для всех циклов
+	size       -> r13d
+	x          -> r14d
+	valid_size -> r15					
 ```
 
 
